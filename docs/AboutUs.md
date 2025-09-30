@@ -16,7 +16,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](https://github.com/zekaistic)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Developer
+* Role: Team Lead, Developer
 * Responsibilities: Deliverables and deadlines, Documentation
 
 ### Jane Doe
