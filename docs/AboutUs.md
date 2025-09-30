@@ -9,15 +9,15 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Lim Zhi Yan
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/zzzyans.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
+[[github](https://github.com/zzzyans)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Project Advisor
+* Role: Developer
+* Responsibilities: UI, Scheduling and tracking
 
 ### Jane Doe
 
@@ -26,7 +26,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](http://github.com/johndoe)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Team Lead
+* Role: Project Advisor
 * Responsibilities: UI
 
 ### Johnny Doe
