@@ -9,15 +9,25 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Yap Ze Kai
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/zekaistic.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
+[[github](https://github.com/zekaistic)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Project Advisor
+* Role: Team Lead, Developer
+* Responsibilities: Deliverables and deadlines, Documentation
+
+### Reyna Bong
+
+<img src="images/reynabxr.png" width="200px">
+
+[[github](http://github.com/reynabxr)]
+[[portfolio](team/johndoe.md)]
+
+* Role: Developer
+* Responsibilities: UI
 
 ### Ong Yan Sheng
 
@@ -28,15 +38,6 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Developer
 * Responsibilities: UI, Code Quality
-
-### Johnny Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
-
-* Role: Developer
-* Responsibilities: Data
 
 ### Jean Doe
 
