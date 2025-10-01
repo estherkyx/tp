@@ -1,4 +1,4 @@
-[![CI Status](https://github.com/se-edu/addressbook-level3/workflows/Java%20CI/badge.svg)](https://github.com/se-edu/addressbook-level3/actions)
+[![CI Status](https://github.com/AY2526S1-CS2103T-T11-4/tp/workflows/Java%20CI/badge.svg)](https://github.com/AY2526S1-CS2103T-T11-4/tp/actions)
 
 ![Ui](docs/images/Ui.png)
 
@@ -16,4 +16,7 @@ TutorFlow is a desktop application designed for **tuition centre managers**, par
 
 ## About the Project
 
-TutorFlow was developed as a project for Software Engineering students, showcasing good object-oriented programming (OOP) practices and a well-structured codebase. While comprehensive in contact and schedule management, it's important to note that this application currently focuses exclusively on these aspects and does not manage grades or tuition fees.
+TutorFlow was developed as a project for Software Engineering students, showcasing good object-oriented programming (OOP) practices and a well-structured codebase. While comprehensive in contact and schedule management, it's important to note that this application currently focuses exclusively on these aspects and does not manage grades or tuition fees
+
+* This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
+

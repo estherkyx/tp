@@ -39,22 +39,22 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: UI, Code Quality
 
-### Jean Doe
+### Esther Ker
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/estherkyx.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](https://github.com/estherkyx)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Developer
-* Responsibilities: Dev Ops + Threading
+* Responsibilities: Testing
 
-### James Doe
+### Lim Zhi Yan
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/zzzyans.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](https://github.com/zzzyans)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Developer
-* Responsibilities: UI
+* Responsibilities: UI, Scheduling and tracking

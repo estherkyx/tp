@@ -260,74 +260,168 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ### Product scope
 
-**Target user profile**:
+**Target user profile**: The target user is a **Tech-savvy GP (General Paper) tuition receptionist**. More broadly,
+this includes tech-savvy tuition teachers and receptionists who need to manage a significant number of contacts
+across various groups and schedules. The ideal user:
+* Can type fast.
+* Prefers typing and using a CLI over mouse interactions.
+* Prefers desktop applications for management tasks.
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
-
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
-
+**Value proposition**: Helps a tuition centre manager keep track of students, their personal details (like family
+contacts), their classes, and schedules. The app allows for quick management of contact details and classes for a
+number of JC-level tutees and their tutors, enabling users to manage contacts faster than with a typical
+mouse/GUI-driven app. It will not manage other details such as grades and tuition fees.
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
-
-*{More to be added}*
+| Priority | As a …​        | I want to …​                                                   | So that I can…​                                                          |
+|----------|----------------|----------------------------------------------------------------|--------------------------------------------------------------------------|
+| `* * *`  | new user       | add a new student with their personal details                  | keep their records                                                       |
+| `* * *`  | new user       | add a parent with their personal details                       | link each student to a parent                                            |
+| `* * *`  | new user       | add a tutor with their details                                 | assign students to them                                                  |
+| `* * *`  | new user       | view the details of each student                               | access their data                                                        |
+| `* * *`  | new user       | view the details of each parent                                | access their data                                                        |
+| `* * *`  | new user       | view the details of each tutor                                 | access their data                                                        |
+| `* * *`  | regular user   | delete an existing student and their details                   | remove a student that leaves the tuition centre                          |
+| `* * *`  | regular user   | delete an existing parent and their details                    | remove a parent of a student that has left the tuition centre            |
+| `* * *`  | regular user   | delete an existing tutor and their details                     | remove a tutor that leaves the tuition centre                            |
+| `* *`    | new user       | create class timings                                           | schedule sessions for students                                           |
+| `* *`    | new user       | assign each student to a tutor, a class timing and a parent    | establish relationships                                                  |
+| `* *`    | regular user   | search for a student by name                                   | find their personal details quickly                                      |
+| `*`      | expert user    | move a student from one class to another                       | easily accommodate schedule changes for students                         |
+| `*`      | expert user    | view a tutor's weekly schedule                                 | know when they are teaching, and when they are free                      |
+| `*`      | expert user    | tag students (eg. "Different GP syllabus", "Needs extra help") | filter them                                                              |
+| `*`      | long-time user | export student, tutor or class lists                           | share them with other stakeholders and keep them for their own reference |
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is `TutorFlow` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case: UC1 - Add a person**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to add a person with a specific category (student, parent, or tutor), name, phone number, and email.
+2.  TutorFlow validates the inputs and adds the person to the contact list.
+3.  TutorFlow shows the newly added contact at the top of the list with a success message.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+*   1a. The user enters an invalid command or format.
+    *   1a1. TutorFlow shows an error message indicating unrecognized input.
 
-  Use case ends.
+        Use case ends.
 
-* 3a. The given index is invalid.
+*   2a. The user enters an invalid category (not "student", "tutor", or "parent").
+    *   2a1. TutorFlow shows an error message: "Whoops! That role doesn't exist. Try again with "student", "tutor", or "parent"."
 
-    * 3a1. AddressBook shows an error message.
+        Use case ends.
 
-      Use case resumes at step 2.
+*   2b. The user provides an empty name.
+    *   2b1. TutorFlow shows an error message: "Whoops! Please enter a valid name."
 
-*{More to be added}*
+        Use case ends.
+
+*   2c. The user provides an invalid phone number (e.g., not 8 digits).
+    *   2c1. TutorFlow shows an error message: "Whoops! Please enter a valid Singapore phone number."
+
+        Use case ends.
+
+*   2d. The user provides an invalid email format.
+    *   2d1. TutorFlow shows an error message: "Whoops! Please enter a valid email address."
+
+        Use case ends.
+
+*   2e. The provided phone number or email already exists in the contact list.
+    *   2e1. TutorFlow shows a warning message: "Whoops! That phone/email already belongs to [Existing Contact]. Do you still want to add [New Contact]? (Y/N)".
+    *   2e2. User enters "Y".
+    *   2e3. TutorFlow adds the new contact.
+
+        Use case resumes at step 3.
+
+    *   2e4. User enters "N".
+
+        Use case ends.
+
+**Use case: UC2 - Delete a person**
+
+**MSS**
+
+1.  User requests to list persons.
+2.  TutorFlow shows a list of persons.
+3.  User requests to delete a specific person in the list by their index.
+4.  TutorFlow deletes the person.
+5.  TutorFlow refreshes the contact list and shows a success message.
+
+    Use case ends.
+
+**Extensions**
+
+*   2a. The list is empty.
+
+    Use case ends.
+
+*   3a. The given index is not a number.
+    *   3a1. TutorFlow shows an error message: "Whoops! Index must be a number."
+
+        Use case ends.
+
+*   3b. The given index is out of range (e.g., ≤ 0 or greater than the list size).
+    *   3b1. TutorFlow shows an error message: "Whoops! Index is out of range. Please enter a valid index."
+
+        Use case ends.
+
+**Use case: UC3 - View persons**
+
+**MSS**
+
+1.  User requests to list all persons.
+2.  TutorFlow displays the full numbered list of all persons.
+
+    Use case ends.
+
+**Alternative Scenario: View by category**
+
+1.  User requests to list persons belonging to a specific category (student, tutor, or parent).
+2.  TutorFlow displays a filtered, numbered list of persons in that category.
+
+    Use case ends.
+
+**Extensions**
+
+*   1a. The user provides an invalid category.
+    *   1a1. TutorFlow shows an error message: "Whoops! That role doesn't exist. Try again with "student", "tutor", or "parent"."
+
+        Use case ends.
+
+*   2a. There are no contacts to display.
+    *   2a1. TutorFlow shows an empty list.
+
+        Use case ends.
+
+*   2b. The system encounters an error reading the contact list from storage.
+    *   2b1. TutorFlow shows an error message: "Whoops! I couldn't load your contacts. Please try again."
+
+        Use case ends.
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-*{More to be added}*
+1. Should work on any mainstream OS as long as it has Java 17 or above installed.
+2. Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+3. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
-
+* **Actor**: An entity that interacts with TutorFlow. In most use cases, this is the user.
+* **Category**: The role assigned to a contact, which can be 'student', 'parent', or 'tutor'.
+* **CLI** (Command-Line Interface): The text-based input field where users type commands to interact with the application.
+* **Index**: The 1-based number that identifies a contact's position in the displayed list.
+* **Mainstream OS**: Windows, Linux, Unix, MacOS.
+* **MSS** (Main Success Scenario): A term used in use cases to describe the ideal workflow where everything happens as expected without any errors.
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for manual testing**
