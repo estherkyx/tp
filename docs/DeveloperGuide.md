@@ -258,7 +258,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ## **Appendix: Requirements**
 
-### Product scopev
+### Product scope
 
 **Target user profile**: The target user is a **Tech-savvy GP (General Paper) tuition receptionist**. More broadly,
 this includes tech-savvy tuition teachers and receptionists who need to manage a significant number of contacts
