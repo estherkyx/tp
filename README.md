@@ -18,5 +18,4 @@ TutorFlow is a desktop application designed for **tuition centre managers**, par
 
 TutorFlow was developed as a project for Software Engineering students, showcasing good object-oriented programming (OOP) practices and a well-structured codebase. While comprehensive in contact and schedule management, it's important to note that this application currently focuses exclusively on these aspects and does not manage grades or tuition fees
 
-* This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
-
+This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
