@@ -422,6 +422,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Index**: The 1-based number that identifies a contact's position in the displayed list.
 * **Mainstream OS**: Windows, Linux, Unix, MacOS.
 * **MSS** (Main Success Scenario): A term used in use cases to describe the ideal workflow where everything happens as expected without any errors.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for manual testing**
