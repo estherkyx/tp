@@ -21,6 +21,7 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.GetParentCommand;
 import seedu.address.logic.commands.GetStudentsCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -97,6 +98,14 @@ public class AddressBookParserTest {
         GetStudentsCommand command = (GetStudentsCommand) parser.parseCommand(
                 GetStudentsCommand.COMMAND_WORD + " " + PREFIX_NAME + tutor);
         assertEquals(new GetStudentsCommand(new Name(tutor)), command);
+    }
+
+    @Test
+    public void parseCommand_getParent() throws Exception {
+        String student = "John Doe";
+        GetParentCommand command = (GetParentCommand) parser.parseCommand(
+                GetParentCommand.COMMAND_WORD + " " + PREFIX_NAME + student);
+        assertEquals(new GetParentCommand(new Name(student)), command);
     }
 
     @Test
