@@ -159,8 +159,12 @@ public class AddCommandParserTest {
     public void parse_compulsoryFieldMissing_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
 
+        // missing category prefix
+        assertParseFailure(parser, VALID_CATEGORY_BOB + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + ADDRESS_DESC_BOB, expectedMessage);
+
         // missing name prefix
-        assertParseFailure(parser, VALID_CATEGORY_BOB + VALID_NAME_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+        assertParseFailure(parser, CATEGORY_DESC_BOB + VALID_NAME_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB, expectedMessage);
 
         // missing phone prefix
@@ -182,8 +186,11 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_invalidValue_failure() {
+        // invalid category
+        assertParseFailure(parser, INVALID_CATEGORY_DESC + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, "Invalid category"); // to implement later
         // invalid name
-        assertParseFailure(parser, INVALID_CATEGORY_DESC + INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
+        assertParseFailure(parser, CATEGORY_DESC_BOB + INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Name.MESSAGE_CONSTRAINTS);
 
         // invalid phone
@@ -203,7 +210,7 @@ public class AddCommandParserTest {
                 + ADDRESS_DESC_BOB + INVALID_TAG_DESC + VALID_TAG_FRIEND, Tag.MESSAGE_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
-        assertParseFailure(parser, INVALID_CATEGORY_DESC + INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
+        assertParseFailure(parser, CATEGORY_DESC_BOB + INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + INVALID_ADDRESS_DESC, Name.MESSAGE_CONSTRAINTS);
 
         // non-empty preamble

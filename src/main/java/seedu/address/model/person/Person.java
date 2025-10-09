@@ -70,8 +70,8 @@ public class Person {
     }
 
     /**
-     * Returns true if both persons have the same name.
-     * This defines a weaker notion of equality between two persons.
+     * Returns true if both persons have the same identity fields.
+     * Identity is defined as matching category and name.
      */
     public boolean isSamePerson(Person otherPerson) {
         if (otherPerson == this) {
@@ -79,6 +79,7 @@ public class Person {
         }
 
         return otherPerson != null
+                && otherPerson.getCategory().equals(getCategory())
                 && otherPerson.getName().equals(getName());
     }
 

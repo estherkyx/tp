@@ -39,9 +39,13 @@ public class ParserUtil {
      * Parses a {@code String category} into a {@code String}.
      * Leading and trailing whitespaces will be trimmed.
      */
-    public static String parseCategory(String category) {
+    public static String parseCategory(String category) throws ParseException {
         requireNonNull(category);
         String trimmedCategory = category.trim();
+        if (!trimmedCategory.equals("student") && !trimmedCategory.equals("parent")
+            && !trimmedCategory.equals("tutor")) {
+            throw new ParseException("Invalid category"); // to implement later
+        }
         return trimmedCategory;
     }
 
