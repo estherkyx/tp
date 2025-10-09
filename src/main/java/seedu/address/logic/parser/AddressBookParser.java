@@ -17,8 +17,8 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.GetStudentsCommand;
 import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.LinkTutorCommand;
 import seedu.address.logic.commands.LinkParentCommand;
+import seedu.address.logic.commands.LinkTutorCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
