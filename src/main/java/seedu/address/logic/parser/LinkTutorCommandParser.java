@@ -1,15 +1,19 @@
 package seedu.address.logic.parser;
 
-import seedu.address.logic.commands.LinkTutorCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Name;
-
-import java.util.List;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
+import java.util.List;
+
+import seedu.address.logic.commands.LinkTutorCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Name;
+
+
+/**
+ * Parses input arguments and creates a new LinkTutorCommand object
+ */
 public class LinkTutorCommandParser implements Parser<LinkTutorCommand> {
 
     /**
