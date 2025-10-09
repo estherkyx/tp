@@ -36,6 +36,16 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String category} into a {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static String parseCategory(String category) {
+        requireNonNull(category);
+        String trimmedCategory = category.trim();
+        return trimmedCategory;
+    }
+
+    /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
      *
