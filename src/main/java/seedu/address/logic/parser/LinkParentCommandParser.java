@@ -10,6 +10,9 @@ import seedu.address.logic.commands.LinkParentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Name;
 
+/**
+ * Parses input arguments and creates a new LinkParentCommand object.
+ */
 public class LinkParentCommandParser implements Parser<LinkParentCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the LinkParentCommand

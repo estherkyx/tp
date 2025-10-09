@@ -7,6 +7,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Name;
 
+/**
+ * Links a student to a parent in the address book.
+ */
 public class LinkParentCommand extends Command {
     public static final String COMMAND_WORD = "linkParent";
 
