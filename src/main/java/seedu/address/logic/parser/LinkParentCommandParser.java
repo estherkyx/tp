@@ -36,6 +36,7 @@ public class LinkParentCommandParser implements Parser<LinkParentCommand> {
 
         return new LinkParentCommand(studentName, parentName);
     }
+
 }
 
 
