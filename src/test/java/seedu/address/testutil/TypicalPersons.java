@@ -41,10 +41,10 @@ public class TypicalPersons {
     public static final Person ELLE = new PersonBuilder().withCategory("student")
         .withName("Elle Meyer").withPhone("9482224")
             .withEmail("werner@example.com").withAddress("michegan ave").build();
-    public static final Person FIONA = new PersonBuilder().withCategory("student")
+    public static final Person FIONA = new PersonBuilder().withCategory("parent")
         .withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("little tokyo").build();
-    public static final Person GEORGE = new PersonBuilder().withCategory("student")
+    public static final Person GEORGE = new PersonBuilder().withCategory("tutor")
         .withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("4th street").build();
 
