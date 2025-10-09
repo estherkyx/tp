@@ -6,6 +6,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Name;
 
+/**
+ * Retrieves all students of a specified tutor in the address book.
+ */
 public class GetStudentsCommand extends Command {
 
     public static final String COMMAND_WORD = "getStudents";
@@ -28,7 +31,7 @@ public class GetStudentsCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model) throws CommandException{
+    public CommandResult execute(Model model) throws CommandException {
         throw new CommandException(String.format(MESSAGE_ARGUMENTS, tutorName));
     }
 
