@@ -16,8 +16,11 @@ import seedu.address.model.tag.Tag;
  */
 public class Person {
 
+    // Stable identity
+    private final PersonId id;
+
     // Category
-    private final String category; // to implement Category class in v1.3
+    private final String category;
 
     // Identity fields
     private final Name name;
@@ -33,12 +36,31 @@ public class Person {
      */
     public Person(String category, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(category, name, phone, email, address, tags);
+        this.id = PersonId.newId();
         this.category = category;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+    }
+
+    /**
+     * Overloaded constructor to explicitly provide a {@link PersonId}.
+     */
+    public Person(PersonId id, String category, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+        requireAllNonNull(id, category, name, phone, email, address, tags);
+        this.id = id;
+        this.category = category;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.tags.addAll(tags);
+    }
+
+    public PersonId getId() {
+        return id;
     }
 
     public String getCategory() {
@@ -116,6 +138,7 @@ public class Person {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
+                .add("id", id)
                 .add("category", category)
                 .add("name", name)
                 .add("phone", phone)
