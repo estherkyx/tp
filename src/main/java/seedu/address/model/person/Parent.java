@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,7 +25,7 @@ public class Parent extends Person {
     }
 
     public Set<PersonId> getChildrenIds() {
-        return this.childrenIds;
+        return Collections.unmodifiableSet(childrenIds);
     }
 
     /**
