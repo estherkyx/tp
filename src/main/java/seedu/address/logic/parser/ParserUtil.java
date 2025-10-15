@@ -10,6 +10,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Category;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -36,17 +37,17 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String category} into a {@code String}.
+     * Parses a {@code String category} into a {@link Category}.
      * Leading and trailing whitespaces will be trimmed.
+     * Parsing is case-insensitive for values: student, tutor, parent.
      */
-    public static String parseCategory(String category) throws ParseException {
+    public static Category parseCategory(String category) throws ParseException {
         requireNonNull(category);
-        String trimmedCategory = category.trim();
-        if (!trimmedCategory.equals("student") && !trimmedCategory.equals("parent")
-            && !trimmedCategory.equals("tutor")) {
-            throw new ParseException("Invalid category"); // to implement later
+        try {
+            return Category.fromString(category);
+        } catch (IllegalArgumentException ex) {
+            throw new ParseException("Invalid category");
         }
-        return trimmedCategory;
     }
 
     /**

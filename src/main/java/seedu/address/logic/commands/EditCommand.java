@@ -23,6 +23,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Category;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -98,7 +99,7 @@ public class EditCommand extends Command {
     private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
 
-        String updatedCategory = editPersonDescriptor.getCategory().orElse(personToEdit.getCategory());
+        Category updatedCategory = editPersonDescriptor.getCategory().orElse(personToEdit.getCategory());
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
@@ -137,7 +138,7 @@ public class EditCommand extends Command {
      * corresponding field value of the person.
      */
     public static class EditPersonDescriptor {
-        private String category;
+        private Category category;
         private Name name;
         private Phone phone;
         private Email email;
@@ -166,11 +167,11 @@ public class EditCommand extends Command {
             return CollectionUtil.isAnyNonNull(category, name, phone, email, address, tags);
         }
 
-        public void setCategory(String category) {
+        public void setCategory(Category category) {
             this.category = category;
         }
 
-        public Optional<String> getCategory() {
+        public Optional<Category> getCategory() {
             return Optional.ofNullable(category);
         }
 
