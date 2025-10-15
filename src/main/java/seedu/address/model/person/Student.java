@@ -33,6 +33,7 @@ public class Student extends Person {
         this.linkedTutorId = null;
     }
 
+    @Override
     public PersonId getParentId() {
         return linkedParentId;
     }
