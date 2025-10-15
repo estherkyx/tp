@@ -16,11 +16,11 @@ public class Parent extends Person {
     // each parent can have multiple children (students)
     private final Set<PersonId> childrenIds = new HashSet<>();
 
-    public Parent(String category, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Parent(Category category, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         super(category, name, phone, email, address, tags);
     }
 
-    public Parent(PersonId id, String category, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Parent(PersonId id, Category category, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         super(id, category, name, phone, email, address, tags);
     }
 

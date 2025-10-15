@@ -5,6 +5,7 @@ import java.util.Set;
 
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Category;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonId;
@@ -24,7 +25,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
 
     private PersonId id;
-    private String category;
+    private Category category;
     private Name name;
     private Phone phone;
     private Email email;
@@ -36,7 +37,7 @@ public class PersonBuilder {
      */
     public PersonBuilder() {
         id = PersonId.newId();
-        category = DEFAULT_CATEGORY;
+        category = Category.fromString(DEFAULT_CATEGORY);
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
@@ -69,7 +70,7 @@ public class PersonBuilder {
      * Sets the {@code Category} of the {@code Person} that we are building.
      */
     public PersonBuilder withCategory(String category) {
-        this.category = category;
+        this.category = Category.fromString(category);
         return this;
     }
 

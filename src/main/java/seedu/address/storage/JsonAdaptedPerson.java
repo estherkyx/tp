@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Category;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -53,7 +54,7 @@ class JsonAdaptedPerson {
      * Converts a given {@code Person} into this class for Jackson use.
      */
     public JsonAdaptedPerson(Person source) {
-        category = source.getCategory();
+        category = source.getCategory().toString();
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
@@ -107,7 +108,13 @@ class JsonAdaptedPerson {
         final Address modelAddress = new Address(address);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(category, modelName, modelPhone, modelEmail, modelAddress, modelTags);
+        Category modelCategory;
+        try {
+            modelCategory = Category.fromString(category);
+        } catch (IllegalArgumentException ex) {
+            throw new IllegalValueException("Invalid category");
+        }
+        return new Person(modelCategory, modelName, modelPhone, modelEmail, modelAddress, modelTags);
     }
 
 }
