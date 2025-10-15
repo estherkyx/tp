@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Category;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Parent;
@@ -71,7 +72,7 @@ class JsonAdaptedPerson {
      */
     public JsonAdaptedPerson(Person source) {
         id = source.getId().getValue();
-        category = source.getCategory();
+        category = source.getCategory().toString();
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
@@ -113,11 +114,6 @@ class JsonAdaptedPerson {
         }
         final PersonId modelId = new PersonId(id);
 
-        if (category == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "category"));
-        }
-        final String modelCategory = category;
-
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
         }
@@ -151,32 +147,13 @@ class JsonAdaptedPerson {
         final Address modelAddress = new Address(address);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-
-        Person person;
-        switch(modelCategory.toLowerCase()) {
-        case "student":
-            Student student = new Student(modelId, modelCategory, modelName, modelPhone, modelEmail, modelAddress, modelTags);
-            if (linkedParentId != null) {
-                student.setParentId(new PersonId(linkedParentId));
-            }
-            person = student;
-            break;
-        case "parent":
-            Parent parent = new Parent(modelId, modelCategory, modelName, modelPhone, modelEmail, modelAddress, modelTags);
-            for (String childId : childrenIds) {
-                parent.addChildId(new PersonId(childId));
-            }
-            person = parent;
-            break;
-        case "tutor":
-            // Handle tutor similarly if it has specific fields to save
-            person = new Tutor(modelId, modelCategory, modelName, modelPhone, modelEmail, modelAddress, modelTags);
-            break;
-        default:
-            person = new Person(modelId, modelCategory, modelName, modelPhone, modelEmail, modelAddress, modelTags);
+        Category modelCategory;
+        try {
+            modelCategory = Category.fromString(category);
+        } catch (IllegalArgumentException ex) {
+            throw new IllegalValueException("Invalid category");
         }
-
-        return person;
+        return new Person(modelCategory, modelName, modelPhone, modelEmail, modelAddress, modelTags);
     }
 
 }

@@ -18,7 +18,7 @@ public class Student extends Person {
     /**
      * Constructs a {@code Student}.
      */
-    public Student(String category, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Student(Category category, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         super(category, name, phone, email, address, tags);
         this.linkedParentId = null;
         this.linkedTutorId = null;
@@ -27,7 +27,8 @@ public class Student extends Person {
     /**
      * Constructs a {@code Student} with a given ID.
      */
-    public Student(PersonId id, String category, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Student(PersonId id, Category category, Name name, Phone phone, Email email,
+                    Address address, Set<Tag> tags) {
         super(id, category, name, phone, email, address, tags);
         this.linkedParentId = null;
         this.linkedTutorId = null;

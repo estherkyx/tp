@@ -16,11 +16,11 @@ public class Tutor extends Person {
     // each tutor can have multiple students
     private final Set<PersonId> linkedStudentIds = new HashSet<>();
 
-    public Tutor(String category, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Tutor(Category category, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         super(category, name, phone, email, address, tags);
     }
 
-    public Tutor(PersonId id, String category, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Tutor(PersonId id, Category category, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         super(id, category, name, phone, email, address, tags);
     }
 
