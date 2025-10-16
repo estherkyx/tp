@@ -12,13 +12,12 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Tutor;
 import seedu.address.model.person.Student;
+import seedu.address.model.person.Tutor;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for LinkTutorCommand.
@@ -35,7 +34,7 @@ public class LinkTutorCommandTest {
         LinkTutorCommand linkTutorCommand = new LinkTutorCommand(studentToLink.getName(), tutorToLink.getName());
 
         String expectedMessage = String.format(LinkTutorCommand.MESSAGE_SUCCESS,
-                Messages.format(studentToLink), Messages.format(tutorToLink));
+               studentToLink.getName(), tutorToLink.getName());
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
@@ -62,7 +61,7 @@ public class LinkTutorCommandTest {
     @Test
     public void execute_tutorNotFound_throwsCommandException() {
         Name nonExistentTutorName = new Name("NonExistent Tutor");
-        LinkTutorCommand command = new LinkTutorCommand(nonExistentTutorName, DANIEL.getName());
+        LinkTutorCommand command = new LinkTutorCommand(ALICE.getName(), nonExistentTutorName);
 
         assertCommandFailure(command, model, String.format(LinkTutorCommand.MESSAGE_TUTOR_NOT_FOUND,
                 nonExistentTutorName));

@@ -70,7 +70,7 @@ class JsonAdaptedPerson {
             this.childrenIds = new ArrayList<>();
         }
         this.linkedTutorId = linkedTutorId;
-        if(studentIds != null) {
+        if (studentIds != null) {
             this.studentIds = new ArrayList<>(studentIds);
         } else {
             this.studentIds = new ArrayList<>();

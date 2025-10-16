@@ -2,10 +2,10 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_TUTOR_FIONA;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_STUDENT_ALICE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TUTOR_NAME_FIONA;
+import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_TUTOR_FIONA;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STUDENT_NAME_ALICE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TUTOR_NAME_FIONA;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 

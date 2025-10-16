@@ -1,20 +1,15 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
 
-import java.util.Optional;
-import java.util.logging.Logger;
 
 /**
  * Links a student to a tutor using it's displayed index from the address book.
@@ -57,13 +52,15 @@ public class LinkTutorCommand extends Command {
                 .filter(p -> p instanceof Student)
                 .map(p -> (Student) p)
                 .filter(t -> t.getName().equals(studentName))
-                .findFirst().orElseThrow(() -> new CommandException(String.format(MESSAGE_STUDENT_NOT_FOUND, studentName)));
+                .findFirst()
+                .orElseThrow(() -> new CommandException(String.format(MESSAGE_STUDENT_NOT_FOUND, studentName)));
 
         Tutor tutor = model.getAddressBook().getPersonList().stream()
                 .filter(p -> p instanceof Tutor)
                 .map(p -> (Tutor) p)
                 .filter(t -> t.getName().equals(tutorName))
-                .findFirst().orElseThrow(() -> new CommandException(String.format(MESSAGE_TUTOR_NOT_FOUND, tutorName)));
+                .findFirst()
+                .orElseThrow(() -> new CommandException(String.format(MESSAGE_TUTOR_NOT_FOUND, tutorName)));
 
         student.setTutor(tutor);
         tutor.addStudent(student);
