@@ -243,7 +243,8 @@ Action | Format, Examples
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit** | `edit INDEX [c/CATEGORY] [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Link Parent** | `linkParent n/STUDENT_NAME n/PARENT_NAME`<br> e.g., `linkParent n/Alice Pauline n/Fiona Kunz`
+**Link Parent** | `linkParent n/STUDENT_NAME n/PARENT_NAME`<br> e.g., `linkParent n/Alice Pauline n/Daniel Meier`
+**Link Tutor** | `linkTutor n/STUDENT_NAME n/Tutor_NAME`<br> e.g., `linkTutor n/Alice Pauline n/Fiona Kunz`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Get Parent** | `getParent n/STUDENT_NAME`<br> e.g., `getParent n/John Doe`
 **Get Students** | `getStudents n/TUTOR_NAME`<br> e.g., `getStudents n/Roy Balakrishnan`
