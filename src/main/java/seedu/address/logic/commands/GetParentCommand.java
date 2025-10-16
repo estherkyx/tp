@@ -79,7 +79,7 @@ public class GetParentCommand extends Command {
                 person.getId().equals(parentId));
 
         // Return parent details
-        return new CommandResult(String.format(MESSAGE_SUCCESS, studentName, targetParent));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, studentName, targetParent.getName()));
     }
 
     @Override

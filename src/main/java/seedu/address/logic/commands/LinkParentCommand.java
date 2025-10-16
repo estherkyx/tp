@@ -82,7 +82,7 @@ public class LinkParentCommand extends Command {
         model.setPerson(parentOpt.get(), parentToLink);
 
         return new CommandResult(String.format(MESSAGE_LINK_SUCCESS,
-                Messages.format(studentToLink), Messages.format(parentToLink)));
+                studentToLink.getName(), parentToLink.getName()));
     }
 
     @Override
