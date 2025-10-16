@@ -3,9 +3,16 @@ package seedu.address.logic.commands;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
+import java.util.List;
+import java.util.Optional;
+
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Parent;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Student;
 
 /**
  * Links a student to a parent in the address book.
@@ -14,7 +21,7 @@ public class LinkParentCommand extends Command {
     public static final String COMMAND_WORD = "linkParent";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": links a Student to a Tutor "
+            + ": links a student to a parent by their names "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_NAME + "NAME "
@@ -22,8 +29,9 @@ public class LinkParentCommand extends Command {
             + PREFIX_NAME + "John Doe "
             + PREFIX_NAME + "Amy Tan";
 
-
-    public static final String MESSAGE_ARGUMENTS = "Student: %1$s, Parent: %2$s";
+    public static final String MESSAGE_LINK_SUCCESS = "Linked Student %1$s to Parent %2$s";
+    public static final String MESSAGE_PERSON_NOT_FOUND = "The person with name %s could not be found.";
+    public static final String MESSAGE_WRONG_PERSON_TYPE = "The person %s is not a %s.";
 
     private final Name studentName;
     private final Name parentName;
@@ -40,7 +48,41 @@ public class LinkParentCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        throw new CommandException(String.format(MESSAGE_ARGUMENTS, studentName, parentName));
+        requireAllNonNull(model);
+        List<Person> personList = model.getAddressBook().getPersonList();
+
+        // Find the student
+        Optional<Person> studentOpt = personList.stream()
+                .filter(p -> p.getName().equals(studentName)).findFirst();
+        if (studentOpt.isEmpty()) {
+            throw new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND, studentName));
+        }
+        if (!(studentOpt.get() instanceof Student)) {
+            throw new CommandException(String.format(MESSAGE_WRONG_PERSON_TYPE, studentName, "Student"));
+        }
+        Student studentToLink = (Student) studentOpt.get();
+
+        // Find the parent
+        Optional<Person> parentOpt = personList.stream()
+                .filter(p -> p.getName().equals(parentName)).findFirst();
+        if (parentOpt.isEmpty()) {
+            throw new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND, parentName));
+        }
+        if (!(parentOpt.get() instanceof Parent)) {
+            throw new CommandException(String.format(MESSAGE_WRONG_PERSON_TYPE, parentName, "Parent"));
+        }
+        Parent parentToLink = (Parent) parentOpt.get();
+
+        // Link the student and parent
+        studentToLink.setParentId(parentToLink.getId());
+        parentToLink.addChildId(studentToLink.getId());
+
+        // Even though the objects are mutated, use setPerson to ensure the UI updates
+        model.setPerson(studentOpt.get(), studentToLink);
+        model.setPerson(parentOpt.get(), parentToLink);
+
+        return new CommandResult(String.format(MESSAGE_LINK_SUCCESS,
+                Messages.format(studentToLink), Messages.format(parentToLink)));
     }
 
     @Override
