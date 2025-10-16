@@ -110,6 +110,20 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+### Linking a student to a parent : `linkParent`
+
+Links an existing student to an existing parent in the address book.
+
+Format: `linkParent n/STUDENT_NAME n/PARENT_NAME`
+
+* Links the student identified by STUDENT_NAME to the parent identified by PARENT_NAME.
+* Both the student and the parent must already exist in the address book.
+* The names must be an exact match to the names stored in TutorFlow.
+* The person identified as the student must have the 'student' category, and the person identified as the parent must have the 'parent' category.
+
+Example:
+* `linkParent n/Alice Pauline n/Fiona Kunz` Links the student 'Alice Pauline' to the parent 'Fiona Kunz', assuming both exist in the address book with the correct categories.
+
 ### Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords.
@@ -192,5 +206,6 @@ Action | Format, Examples
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit** | `edit INDEX [c/CATEGORY] [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+**Link Parent** | `linkParent n/STUDENT_NAME n/PARENT_NAME`<br> e.g., `linkParent n/Alice Pauline n/Fiona Kunz`
 **List** | `list`
 **Help** | `help`
