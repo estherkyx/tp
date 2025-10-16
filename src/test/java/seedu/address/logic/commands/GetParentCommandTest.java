@@ -73,6 +73,9 @@ public class GetParentCommandTest {
 
         CommandResult result = command.execute(model);
         assertEquals(expectedMessage, result.getFeedbackToUser());
+
+        assertEquals(1, model.getFilteredPersonList().size());
+        assertEquals(parent, model.getFilteredPersonList().get(0));
     }
 
     @Test
@@ -96,6 +99,34 @@ public class GetParentCommandTest {
 
         assertEquals(String.format(GetParentCommand.MESSAGE_NO_PARENT_LINKED,
                         new Name("Mary Jane")), exception.getMessage());
+    }
+
+    @Test
+    public void execute_filteredListBeforeCommand_stillFindsStudent() throws CommandException {
+        model.updateFilteredPersonList(person -> person.getCategory().equals(PARENT));
+
+        assertFalse(model.getFilteredPersonList().isEmpty(), "Should have at least one parent");
+
+        GetParentCommand command = new GetParentCommand(new Name("John Doe"));
+        CommandResult result = command.execute(model);
+
+        assertTrue(result.getFeedbackToUser().contains("Reyna Bong"));
+
+        assertEquals(1, model.getFilteredPersonList().size());
+        assertEquals("Reyna Bong", model.getFilteredPersonList().get(0).getName().fullName);
+    }
+
+    @Test
+    public void execute_multiplePersonsInList_filtersToShowOnlyParent() throws CommandException {
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+        int initialSize = model.getFilteredPersonList().size();
+        assertTrue(initialSize > 1, "Should have multiple persons in the list");
+
+        GetParentCommand command = new GetParentCommand(new Name("John Doe"));
+        command.execute(model);
+
+        assertEquals(1, model.getFilteredPersonList().size());
+        assertEquals(parent, model.getFilteredPersonList().get(0));
     }
 
     @Test

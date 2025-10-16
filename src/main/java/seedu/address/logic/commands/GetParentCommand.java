@@ -40,10 +40,12 @@ public class GetParentCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Person> lastShownList = model.getFilteredPersonList();
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+        List<Person> personList = model.getFilteredPersonList();
+
         // Find the student with the matching name
         Person targetStudent = null;
-        for (Person person : lastShownList) {
+        for (Person person : personList) {
             if (person.getCategory().equals(STUDENT) && person.getName().equals(studentName)) {
                 targetStudent = person;
                 break;
@@ -65,12 +67,16 @@ public class GetParentCommand extends Command {
 
         // Find parent with the matching ID
         Person targetParent = null;
-        for (Person person : lastShownList) {
+        for (Person person : personList) {
             if (person.getCategory().equals(PARENT) && person.getId().equals(parentId)) {
                 targetParent = person;
                 break;
             }
         }
+
+        // Update UI to show parent
+        model.updateFilteredPersonList(person ->
+                person.getId().equals(parentId));
 
         // Return parent details
         return new CommandResult(String.format(MESSAGE_SUCCESS, studentName, targetParent));
