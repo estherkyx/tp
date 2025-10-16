@@ -122,7 +122,21 @@ Format: `linkParent n/STUDENT_NAME n/PARENT_NAME`
 * The person identified as the student must have the 'student' category, and the person identified as the parent must have the 'parent' category.
 
 Example:
-* `linkParent n/Alice Pauline n/Fiona Kunz` Links the student 'Alice Pauline' to the parent 'Fiona Kunz', assuming both exist in the address book with the correct categories.
+* `linkParent n/Alice Pauline n/Daniel Meier` Links the student 'Alice Pauline' to the parent 'Daniel Meier', assuming both exist in the address book with the correct categories.
+
+### Linking a student to a tutor : `linkTutor`
+
+Links an existing student to an existing tutor in the address book.
+
+Format: `linkTutor n/STUDENT_NAME n/TUTOR_NAME`
+
+* Links the student identified by STUDENT_NAME to the tutor identified by TUTOR_NAME.
+* Both the student and the tutor must already exist in the address book.
+* The names must be an exact match to the names stored in TutorFlow.
+* The person identified as the student must have the 'student' category, and the person identified as the tutor must have the 'tutor' category.
+
+Example:
+* `linkTutor n/Alice Pauline n/Fiona Kunz` Links the student 'Alice Pauline' to the tutor 'Fiona Kunz', assuming both exist in the address book with the correct categories.
 
 ### Locating persons by name: `find`
 
