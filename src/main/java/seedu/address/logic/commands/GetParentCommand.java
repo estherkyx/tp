@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.person.Category.PARENT;
+import static seedu.address.model.person.Category.STUDENT;
 
 import java.util.List;
 
@@ -42,7 +44,7 @@ public class GetParentCommand extends Command {
         // Find the student with the matching name
         Person targetStudent = null;
         for (Person person : lastShownList) {
-            if (person.getCategory().equals("student") && person.getName().equals(studentName)) {
+            if (person.getCategory().equals(STUDENT) && person.getName().equals(studentName)) {
                 targetStudent = person;
                 break;
             }
@@ -64,7 +66,7 @@ public class GetParentCommand extends Command {
         // Find parent with the matching ID
         Person targetParent = null;
         for (Person person : lastShownList) {
-            if (person.getCategory().equals("parent") && person.getId().equals(parentId)) {
+            if (person.getCategory().equals(PARENT) && person.getId().equals(parentId)) {
                 targetParent = person;
                 break;
             }

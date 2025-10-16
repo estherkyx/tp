@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.model.person.Category.PARENT;
+import static seedu.address.model.person.Category.STUDENT;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.HashSet;
@@ -35,14 +37,14 @@ public class GetParentCommandTest {
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-        parent = new Parent("parent",
+        parent = new Parent(PARENT,
                 new Name("Reyna Bong"),
                 new Phone("98765432"),
                 new Email("reyna@example.com"),
                 new Address("123 Street"),
                 new HashSet<>());
 
-        studentWithParent = new Student("student",
+        studentWithParent = new Student(STUDENT,
                 new Name("John Doe"),
                 new Phone("87654321"),
                 new Email("john@example.com"),
@@ -50,7 +52,7 @@ public class GetParentCommandTest {
                 new HashSet<>());
         studentWithParent.setParent(parent);
 
-        studentWithoutParent = new Student("student",
+        studentWithoutParent = new Student(STUDENT,
                 new Name("Mary Jane"),
                 new Phone("87654321"),
                 new Email("mary@example.com"),
