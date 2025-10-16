@@ -36,14 +36,14 @@ public class TypicalPersons {
     public static final Person CARL = new PersonBuilder().withCategory("student")
         .withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street").build();
-    public static final Person DANIEL = new PersonBuilder().withCategory("student")
+    public static final Person DANIEL = new PersonBuilder().withCategory("parent")
         .withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street").withTags("friends")
             .build();
-    public static final Person ELLE = new PersonBuilder().withCategory("student")
+    public static final Person ELLE = new PersonBuilder().withCategory("parent")
         .withName("Elle Meyer").withPhone("9482224")
             .withEmail("werner@example.com").withAddress("michegan ave").build();
-    public static final Person FIONA = new PersonBuilder().withCategory("parent")
+    public static final Person FIONA = new PersonBuilder().withCategory("tutor")
         .withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("little tokyo").build();
     public static final Person GEORGE = new PersonBuilder().withCategory("tutor")

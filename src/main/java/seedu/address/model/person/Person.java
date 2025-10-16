@@ -106,6 +106,18 @@ public class Person {
     }
 
     /**
+     * Returns ID of the parent for the specified student.
+     * This is a default implementation indicating that this person does not have an
+     * associated parent. This method is intended to be overridden by subclass {@link Student}.
+     *
+     * @return PersonId of associated parent.
+     */
+    public PersonId getParentId() {
+        // Default implementation for non-students
+        return null;
+    }
+
+    /**
      * Returns true if both persons have the same identity and data fields.
      * This defines a stronger notion of equality between two persons.
      */

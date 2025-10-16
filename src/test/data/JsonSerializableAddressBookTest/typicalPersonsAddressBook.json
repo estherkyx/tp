@@ -32,7 +32,7 @@
     "childrenIds": []
   }, {
     "id": "4d4d4d4d-4444-4444-4444-444444444444",
-    "category" : "student",
+    "category" : "parent",
     "name" : "Daniel Meier",
     "phone" : "87652533",
     "email" : "cornelia@example.com",
@@ -42,7 +42,7 @@
     "childrenIds": []
   }, {
     "id": "5e5e5e5e-5555-5555-5555-555555555555",
-    "category" : "student",
+    "category" : "parent",
     "name" : "Elle Meyer",
     "phone" : "9482224",
     "email" : "werner@example.com",
@@ -52,7 +52,7 @@
     "childrenIds": []
   }, {
     "id": "6f6f6f6f-6666-6666-6666-666666666666",
-    "category" : "parent",
+    "category" : "tutor",
     "name" : "Fiona Kunz",
     "phone" : "9482427",
     "email" : "lydia@example.com",
