@@ -22,21 +22,21 @@
     "address" : "wall street",
     "tags" : [ ]
   }, {
-    "category" : "student",
+    "category" : "parent",
     "name" : "Daniel Meier",
     "phone" : "87652533",
     "email" : "cornelia@example.com",
     "address" : "10th street",
     "tags" : [ "friends" ]
   }, {
-    "category" : "student",
+    "category" : "parent",
     "name" : "Elle Meyer",
     "phone" : "9482224",
     "email" : "werner@example.com",
     "address" : "michegan ave",
     "tags" : [ ]
   }, {
-    "category" : "parent",
+    "category" : "tutor",
     "name" : "Fiona Kunz",
     "phone" : "9482427",
     "email" : "lydia@example.com",
