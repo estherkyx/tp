@@ -22,7 +22,10 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Student;
+import seedu.address.model.person.Tutor;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -157,6 +160,21 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public void addParent(Parent parent) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addTutor(Tutor tutor) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addStudent(Student student) {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**
@@ -193,6 +211,24 @@ public class AddCommandTest {
         public void addPerson(Person person) {
             requireNonNull(person);
             personsAdded.add(person);
+        }
+
+        @Override
+        public void addParent(Parent parent) {
+            requireNonNull(parent);
+            personsAdded.add(parent);
+        }
+
+        @Override
+        public void addTutor(Tutor tutor) {
+            requireNonNull(tutor);
+            personsAdded.add(tutor);
+        }
+
+        @Override
+        public void addStudent(Student student) {
+            requireNonNull(student);
+            personsAdded.add(student);
         }
 
         @Override
