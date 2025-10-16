@@ -25,7 +25,7 @@ import seedu.address.model.person.Tutor;
 import seedu.address.testutil.PersonBuilder;
 
 /**
- * Contains integration tests and unit tests for GetStudentsCommandTest.
+ * Contains integration tests and unit tests for GetStudentsCommand.
  */
 public class GetStudentsCommandTest {
 
