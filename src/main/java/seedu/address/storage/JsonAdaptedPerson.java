@@ -15,6 +15,7 @@ import seedu.address.model.person.Category;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonFactory;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
@@ -114,7 +115,7 @@ class JsonAdaptedPerson {
         } catch (IllegalArgumentException ex) {
             throw new IllegalValueException("Invalid category");
         }
-        return new Person(modelCategory, modelName, modelPhone, modelEmail, modelAddress, modelTags);
+        return PersonFactory.createPerson(modelCategory, modelName, modelPhone, modelEmail, modelAddress, modelTags);
     }
 
 }

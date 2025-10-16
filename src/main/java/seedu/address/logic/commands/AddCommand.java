@@ -12,7 +12,11 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.Category;
+import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Student;
+import seedu.address.model.person.Tutor;
 
 /**
  * Adds a person to the address book.
@@ -59,7 +63,14 @@ public class AddCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        model.addPerson(toAdd);
+        // Add the person to the appropriate category-specific list
+        if (toAdd.getCategory().equals(Category.PARENT)) {
+            model.addParent((Parent) toAdd);
+        } else if (toAdd.getCategory().equals(Category.TUTOR)) {
+            model.addTutor((Tutor) toAdd);
+        } else if (toAdd.getCategory().equals(Category.STUDENT)) {
+            model.addStudent((Student) toAdd);
+        }
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 
