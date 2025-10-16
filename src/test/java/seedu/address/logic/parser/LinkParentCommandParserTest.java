@@ -2,9 +2,9 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_PARENT_FIONA;
+import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_PARENT_DANIEL;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_STUDENT_ALICE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PARENT_NAME_FIONA;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PARENT_NAME_DANIEL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STUDENT_NAME_ALICE;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -25,10 +25,10 @@ public class LinkParentCommandParserTest {
     public void parse_validArgs_returnsLinkParentCommand() {
         // Expected command
         LinkParentCommand expectedCommand =
-                new LinkParentCommand(new Name(VALID_STUDENT_NAME_ALICE), new Name(VALID_PARENT_NAME_FIONA));
+                new LinkParentCommand(new Name(VALID_STUDENT_NAME_ALICE), new Name(VALID_PARENT_NAME_DANIEL));
 
         // Command string using constants
-        String userInput = NAME_DESC_STUDENT_ALICE + NAME_DESC_PARENT_FIONA;
+        String userInput = NAME_DESC_STUDENT_ALICE + NAME_DESC_PARENT_DANIEL;
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }
@@ -39,7 +39,7 @@ public class LinkParentCommandParserTest {
         assertParseFailure(parser, NAME_DESC_STUDENT_ALICE, MESSAGE_INVALID_FORMAT);
 
         // Missing student name
-        assertParseFailure(parser, NAME_DESC_PARENT_FIONA, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, NAME_DESC_PARENT_DANIEL, MESSAGE_INVALID_FORMAT);
 
         // No input
         assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
@@ -48,7 +48,7 @@ public class LinkParentCommandParserTest {
     @Test
     public void parse_invalidValue_failure() {
         // Invalid student name
-        assertParseFailure(parser, INVALID_NAME_DESC + NAME_DESC_PARENT_FIONA, Name.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, INVALID_NAME_DESC + NAME_DESC_PARENT_DANIEL, Name.MESSAGE_CONSTRAINTS);
 
         // Invalid parent name
         assertParseFailure(parser, NAME_DESC_STUDENT_ALICE + INVALID_NAME_DESC, Name.MESSAGE_CONSTRAINTS);
@@ -59,7 +59,7 @@ public class LinkParentCommandParserTest {
 
     @Test
     public void parse_preambleNotEmpty_failure() {
-        String userInput = "some random text" + NAME_DESC_STUDENT_ALICE + NAME_DESC_PARENT_FIONA;
+        String userInput = "some random text" + NAME_DESC_STUDENT_ALICE + NAME_DESC_PARENT_DANIEL;
         assertParseFailure(parser, userInput, MESSAGE_INVALID_FORMAT);
     }
 }

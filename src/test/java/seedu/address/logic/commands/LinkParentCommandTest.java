@@ -6,6 +6,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.DANIEL;
 import static seedu.address.testutil.TypicalPersons.FIONA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -29,7 +30,7 @@ public class LinkParentCommandTest {
     @Test
     public void execute_validStudentAndParent_success() {
         Student studentToLink = (Student) ALICE;
-        Parent parentToLink = (Parent) FIONA;
+        Parent parentToLink = (Parent) DANIEL;
 
         LinkParentCommand linkParentCommand = new LinkParentCommand(studentToLink.getName(), parentToLink.getName());
 
