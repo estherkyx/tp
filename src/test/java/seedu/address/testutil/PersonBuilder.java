@@ -4,9 +4,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Category;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonFactory;
 import seedu.address.model.person.PersonId;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -24,7 +26,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
 
     private PersonId id;
-    private String category;
+    private Category category;
     private Name name;
     private Phone phone;
     private Email email;
@@ -36,7 +38,7 @@ public class PersonBuilder {
      */
     public PersonBuilder() {
         id = PersonId.newId();
-        category = DEFAULT_CATEGORY;
+        category = Category.fromString(DEFAULT_CATEGORY);
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
@@ -69,7 +71,7 @@ public class PersonBuilder {
      * Sets the {@code Category} of the {@code Person} that we are building.
      */
     public PersonBuilder withCategory(String category) {
-        this.category = category;
+        this.category = Category.fromString(category);
         return this;
     }
 
@@ -114,7 +116,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(id, category, name, phone, email, address, tags);
+        return PersonFactory.createPerson(id, category, name, phone, email, address, tags);
     }
 
 }

@@ -20,7 +20,7 @@ public class Person {
     private final PersonId id;
 
     // Category
-    private final String category;
+    private final Category category;
 
     // Identity fields
     private final Name name;
@@ -34,7 +34,7 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(String category, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Category category, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(category, name, phone, email, address, tags);
         this.id = PersonId.newId();
         this.category = category;
@@ -48,7 +48,7 @@ public class Person {
     /**
      * Overloaded constructor to explicitly provide a {@link PersonId}.
      */
-    public Person(PersonId id, String category, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(PersonId id, Category category, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(id, category, name, phone, email, address, tags);
         this.id = id;
         this.category = category;
@@ -63,7 +63,7 @@ public class Person {
         return id;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
