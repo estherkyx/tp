@@ -20,6 +20,7 @@ import seedu.address.model.person.PersonFactory;
 import seedu.address.model.person.PersonId;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Student;
+import seedu.address.model.person.Tutor;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -38,6 +39,8 @@ class JsonAdaptedPerson {
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final String linkedParentId;
     private final List<String> childrenIds;
+    private final String linkedTutorId;
+    private final List<String> studentIds;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -48,7 +51,9 @@ class JsonAdaptedPerson {
             @JsonProperty("email") String email, @JsonProperty("address") String address,
             @JsonProperty("tags") List<JsonAdaptedTag> tags,
             @JsonProperty("linkedParentId") String linkedParentId,
-            @JsonProperty("childrenIds") List<String> childrenIds) {
+            @JsonProperty("childrenIds") List<String> childrenIds,
+            @JsonProperty("linkedTutorId") String linkedTutorId,
+            @JsonProperty("studentIds") List<String> studentIds) {
         this.id = id;
         this.category = category;
         this.name = name;
@@ -63,6 +68,12 @@ class JsonAdaptedPerson {
             this.childrenIds = new ArrayList<>(childrenIds);
         } else {
             this.childrenIds = new ArrayList<>();
+        }
+        this.linkedTutorId = linkedTutorId;
+        if(studentIds != null) {
+            this.studentIds = new ArrayList<>(studentIds);
+        } else {
+            this.studentIds = new ArrayList<>();
         }
     }
 
@@ -80,21 +91,35 @@ class JsonAdaptedPerson {
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
 
-        // Handle Student and Parent specific fields
+        // Handle Student, Parent and Tutor specific fields
         if (source instanceof Student) {
             Student student = (Student) source;
             this.linkedParentId = student.getParentId() != null ? student.getParentId().getValue() : null;
             this.childrenIds = new ArrayList<>(); // Student has no children
+            this.linkedTutorId = student.getTutorId() != null ? student.getTutorId().getValue() : null;
+            this.studentIds = new ArrayList<>(); //Student has no tutor
         } else if (source instanceof Parent) {
             Parent parent = (Parent) source;
             this.linkedParentId = null; // Parent has no linked parent
             this.childrenIds = parent.getChildrenIds().stream()
                     .map(PersonId::getValue)
                     .collect(Collectors.toList());
+            this.linkedTutorId = null; // Parent has no linked tutor
+            this.studentIds = new ArrayList<>();
+        } else if (source instanceof Tutor) {
+            Tutor tutor = (Tutor) source;
+            this.linkedParentId = null; // Tutor has no linked parent
+            this.childrenIds = new ArrayList<>();
+            this.linkedTutorId = null; // Tutor has no linked tutor
+            this.studentIds = tutor.getStudentsIds().stream()
+                    .map(PersonId::getValue)
+                    .collect(Collectors.toList());
         } else {
-            // Default case for Tutor or other Person types
+            // Default case for other Person types
             this.linkedParentId = null;
             this.childrenIds = new ArrayList<>();
+            this.linkedTutorId = null;
+            this.studentIds = new ArrayList<>();
         }
     }
 

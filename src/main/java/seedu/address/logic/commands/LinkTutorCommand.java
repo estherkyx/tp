@@ -31,9 +31,9 @@ public class LinkTutorCommand extends Command {
             + PREFIX_NAME + "Ze Kai";
 
     public static final String MESSAGE_ARGUMENTS = "Student: %1$s, Parent: %2$s";
-    private static final String MESSAGE_STUDENT_NOT_FOUND = "No student found by the name %1$s";
-    private static final String MESSAGE_TUTOR_NOT_FOUND = "No tutor found by the name %1$s";
-    private static final String MESSAGE_SUCCESS = "Student %1$s linked to tutor %2$s!";
+    public static final String MESSAGE_STUDENT_NOT_FOUND = "No student found by the name %1$s";
+    public static final String MESSAGE_TUTOR_NOT_FOUND = "No tutor found by the name %1$s";
+    public static final String MESSAGE_SUCCESS = "Student %1$s linked to tutor %2$s!";
 
     private final Name studentName;
     private final Name tutorName;
