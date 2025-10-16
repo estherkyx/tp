@@ -142,6 +142,30 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
+### Finding a student's parent: `getParent`
+
+Displays the parent of a specified student.
+
+Format: `getParent n/STUDENT_NAME`
+* The student must already exist in the address book.
+* The student name must be an exact match to the name stored in TutorFlow.
+* The student identified must have the 'student' category.
+
+Examples:
+* `getParent n/John Doe` shows the parent of student John Doe.
+
+### Finding all students of a tutor: `getStudents`
+
+Displays all students of a specified tutor.
+
+Format: `getStudents n/TUTOR_NAME`
+* The tutor must already exist in the address book.
+* The tutor name must be an exact match to the name stored in TutorFlow.
+* The tutor identified must have the 'tutor' category.
+
+Examples:
+* `getStudents n/Roy Balakrishnan` shows all students of  tutor Roy Balakrishnan.
+
 ### Deleting a person : `delete`
 
 Deletes the specified person from the address book.
@@ -155,15 +179,6 @@ Format: `delete INDEX`
 Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
-
-### Getting a student's parent: `getParent`
-
-Displays the parent of a specified student.
-
-Format: `getParent n/STUDENT_NAME`
-
-Examples:
-* `getParent n/John Doe` shows the parent of student John Doe.
 
 ### Clearing all entries : `clear`
 
@@ -214,7 +229,9 @@ Action | Format, Examples
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit** | `edit INDEX [c/CATEGORY] [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Link Parent** | `linkParent n/STUDENT_NAME n/PARENT_NAME`<br> e.g., `linkParent n/Alice Pauline n/Fiona Kunz`
+**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+**Get Parent** | `getParent n/STUDENT_NAME`<br> e.g., `getParent n/John Doe`
+**Get Students** | `getStudents n/TUTOR_NAME`<br> e.g., `getStudents n/Roy Balakrishnan`
 **List** | `list`
 **Help** | `help`
