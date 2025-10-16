@@ -1,53 +1,74 @@
 {
   "_comment": "AddressBook save file which contains the same Person values as in TypicalPersons#getTypicalAddressBook()",
   "persons" : [ {
+    "id": "1a1a1a1a-1111-1111-1111-111111111111",
     "category" : "student",
     "name" : "Alice Pauline",
     "phone" : "94351253",
     "email" : "alice@example.com",
     "address" : "123, Jurong West Ave 6, #08-111",
-    "tags" : [ "friends" ]
+    "tags" : [ "friends" ],
+    "linkedParentId": null,
+    "childrenIds": []
   }, {
+    "id": "2b2b2b2b-2222-2222-2222-222222222222",
     "category" : "student",
     "name" : "Benson Meier",
     "phone" : "98765432",
     "email" : "johnd@example.com",
     "address" : "311, Clementi Ave 2, #02-25",
-    "tags" : [ "owesMoney", "friends" ]
+    "tags" : [ "owesMoney", "friends" ],
+    "linkedParentId": null,
+    "childrenIds": []
   }, {
+    "id": "3c3c3c3c-3333-3333-3333-333333333333",
     "category" : "student",
     "name" : "Carl Kurz",
     "phone" : "95352563",
     "email" : "heinz@example.com",
     "address" : "wall street",
-    "tags" : [ ]
+    "tags" : [ ],
+    "linkedParentId": null,
+    "childrenIds": []
   }, {
+    "id": "4d4d4d4d-4444-4444-4444-444444444444",
     "category" : "student",
     "name" : "Daniel Meier",
     "phone" : "87652533",
     "email" : "cornelia@example.com",
     "address" : "10th street",
-    "tags" : [ "friends" ]
+    "tags" : [ "friends" ],
+    "linkedParentId": null,
+    "childrenIds": []
   }, {
+    "id": "5e5e5e5e-5555-5555-5555-555555555555",
     "category" : "student",
     "name" : "Elle Meyer",
     "phone" : "9482224",
     "email" : "werner@example.com",
     "address" : "michegan ave",
-    "tags" : [ ]
+    "tags" : [ ],
+    "linkedParentId": null,
+    "childrenIds": []
   }, {
+    "id": "6f6f6f6f-6666-6666-6666-666666666666",
     "category" : "parent",
     "name" : "Fiona Kunz",
     "phone" : "9482427",
     "email" : "lydia@example.com",
     "address" : "little tokyo",
-    "tags" : [ ]
+    "tags" : [ ],
+    "linkedParentId": null,
+    "childrenIds": []
   }, {
+    "id": "7g7g7g7g-7777-7777-7777-777777777777",
     "category" : "tutor",
     "name" : "George Best",
     "phone" : "9482442",
     "email" : "anna@example.com",
     "address" : "4th street",
-    "tags" : [ ]
+    "tags" : [ ],
+    "linkedParentId": null,
+    "childrenIds": []
   } ]
 }

@@ -20,7 +20,6 @@ import seedu.address.model.person.PersonFactory;
 import seedu.address.model.person.PersonId;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Student;
-import seedu.address.model.person.Tutor;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -37,7 +36,6 @@ class JsonAdaptedPerson {
     private final String email;
     private final String address;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
-
     private final String linkedParentId;
     private final List<String> childrenIds;
 
@@ -111,9 +109,10 @@ class JsonAdaptedPerson {
             personTags.add(tag.toModelType());
         }
         if (id == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, PersonId.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    PersonId.class.getSimpleName()));
         }
-        final PersonId modelId = new PersonId(id);
+        final PersonId modelId = PersonId.of(id);
 
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
@@ -148,13 +147,20 @@ class JsonAdaptedPerson {
         final Address modelAddress = new Address(address);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
+
+        if (category == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Category.class.getSimpleName()));
+        }
+
         Category modelCategory;
         try {
             modelCategory = Category.fromString(category);
         } catch (IllegalArgumentException ex) {
             throw new IllegalValueException("Invalid category");
         }
-        return PersonFactory.createPerson(modelCategory, modelName, modelPhone, modelEmail, modelAddress, modelTags);
+        return PersonFactory.createPerson(modelId, modelCategory, modelName, modelPhone,
+                modelEmail, modelAddress, modelTags);
     }
 
 }

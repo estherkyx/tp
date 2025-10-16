@@ -1,5 +1,7 @@
 package seedu.address.model.person;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Objects;
 import java.util.UUID;
 
@@ -26,6 +28,15 @@ public final class PersonId {
      */
     public String getValue() {
         return value;
+    }
+
+    /**
+     * Creates a {@code PersonId} from a given string value.
+     * For use when reconstructing an object from storage.
+     */
+    public static PersonId of(String value) {
+        requireNonNull(value);
+        return new PersonId(value);
     }
 
     @Override
