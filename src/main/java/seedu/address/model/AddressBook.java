@@ -6,7 +6,10 @@ import java.util.List;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Student;
+import seedu.address.model.person.Tutor;
 import seedu.address.model.person.UniquePersonList;
 
 /**
@@ -92,6 +95,30 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removePerson(Person key) {
         persons.remove(key);
+    }
+
+    /**
+     * Adds a parent to the address book.
+     * The parent must not already exist in the address book.
+     */
+    public void addParent(Parent parent) {
+        persons.add(parent);
+    }
+
+    /**
+     * Adds a tutor to the address book.
+     * The tutor must not already exist in the address book.
+     */
+    public void addTutor(Tutor tutor) {
+        persons.add(tutor);
+    }
+
+    /**
+     * Adds a student to the address book.
+     * The student must not already exist in the address book.
+     */
+    public void addStudent(Student student) {
+        persons.add(student);
     }
 
     //// util methods
