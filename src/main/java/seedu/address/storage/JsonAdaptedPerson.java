@@ -184,8 +184,31 @@ class JsonAdaptedPerson {
         } catch (IllegalArgumentException ex) {
             throw new IllegalValueException("Invalid category");
         }
-        return PersonFactory.createPerson(modelId, modelCategory, modelName, modelPhone,
+        Person person = PersonFactory.createPerson(modelId, modelCategory, modelName, modelPhone,
                 modelEmail, modelAddress, modelTags);
+
+        if (person instanceof Student) {
+            Student student = (Student) person;
+            if (linkedParentId != null) {
+                student.setParentId(PersonId.of(linkedParentId));
+            }
+            if (linkedTutorId != null) {
+                student.setTutorId(PersonId.of(linkedTutorId));
+            }
+        }
+        if (person instanceof Parent && childrenIds != null) {
+            Parent parent = (Parent) person;
+            for (String childId : childrenIds) {
+                parent.addChildId(PersonId.of(childId));
+            }
+        }
+        if (person instanceof Tutor && studentIds != null) {
+            Tutor tutor = (Tutor) person;
+            for (String studentId : studentIds) {
+                tutor.addStudentId(PersonId.of(studentId));
+            }
+        }
+        return person;
     }
 
 }
