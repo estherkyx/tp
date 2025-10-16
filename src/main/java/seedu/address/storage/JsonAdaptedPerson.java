@@ -188,24 +188,26 @@ class JsonAdaptedPerson {
                 modelEmail, modelAddress, modelTags);
 
         if (person instanceof Student) {
+            Student student = (Student) person;
             if (linkedParentId != null) {
-                ((Student) person).setParentId(PersonId.of(linkedParentId));
+                student.setParentId(PersonId.of(linkedParentId));
             }
             if (linkedTutorId != null) {
-                ((Student) person).setTutorId(PersonId.of(linkedTutorId));
+                student.setTutorId(PersonId.of(linkedTutorId));
             }
         }
         if (person instanceof Parent && childrenIds != null) {
+            Parent parent = (Parent) person;
             for (String childId : childrenIds) {
-                ((Parent) person).addChildId(PersonId.of(childId));
+                parent.addChildId(PersonId.of(childId));
             }
         }
         if (person instanceof Tutor && studentIds != null) {
+            Tutor tutor = (Tutor) person;
             for (String studentId : studentIds) {
-                ((Tutor) person).addStudentId(PersonId.of(studentId));
+                tutor.addStudentId(PersonId.of(studentId));
             }
         }
-
         return person;
     }
 
