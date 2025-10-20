@@ -40,6 +40,16 @@ h2, h3, h4, h5, h6 {
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
+/* Ensure anchored headings appear below the sticky header */
+:target {
+  scroll-margin-top: 80px;
+}
+
+/* Apply offset to headings for browsers that support it */
+h1, h2, h3, h4, h5, h6 {
+  scroll-margin-top: 80px;
+}
+
 /* Header text and link colors */
 .site-header {
   color: #fdf6e3;
