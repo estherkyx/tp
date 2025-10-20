@@ -32,3 +32,39 @@ h2, h3, h4, h5, h6 {
   }
 }
 
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #496a72;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Header text and link colors */
+.site-header {
+  color: #fdf6e3;
+}
+
+.site-header .site-title,
+.site-header .site-title:visited {
+  color: #fdf6e3;
+}
+
+.site-header .site-title:hover,
+.site-header .site-title:focus {
+  color: #fdf6e3;
+}
+
+.site-header .site-nav .page-link {
+  color: #fdf6e3;
+}
+
+.site-header .site-nav .page-link:hover,
+.site-header .site-nav .page-link:focus {
+  color: #e6e6e6;
+}
+
+/* Optional: GitHub icon link color */
+.site-header .site-nav .page-link.no-hover {
+  color: #fdf6e3;
+}
