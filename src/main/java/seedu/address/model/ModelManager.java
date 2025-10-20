@@ -15,6 +15,8 @@ import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
+import seedu.address.model.tuitionclass.TuitionClass;
+
 /**
  * Represents the in-memory model of the address book data.
  */
@@ -24,6 +26,7 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private final FilteredList<TuitionClass> filteredTuitionClasses;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -36,6 +39,7 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredTuitionClasses = new FilteredList<>(this.addressBook.getTuitionClassList());
     }
 
     public ModelManager() {
@@ -127,6 +131,33 @@ public class ModelManager implements Model {
         addressBook.setPerson(target, editedPerson);
     }
 
+    //=========== TuitionClass =====================================================================
+
+    @Override
+    public boolean hasTuitionClass(TuitionClass tuitionClass) {
+        requireNonNull(tuitionClass);
+        return addressBook.hasTuitionClass(tuitionClass);
+    }
+
+    @Override
+    public void addTuitionClass(TuitionClass tuitionClass) {
+        addressBook.addTuitionClass(tuitionClass);
+        updateFilteredTuitionClassList(PREDICATE_SHOW_ALL_CLASSES);
+    }
+
+    //=========== Filtered Tuition Class List Accessors ============================================
+
+    @Override
+    public ObservableList<TuitionClass> getFilteredTuitionClassList() {
+        return filteredTuitionClasses;
+    }
+
+    @Override
+    public void updateFilteredTuitionClassList(Predicate<TuitionClass> predicate) {
+        requireNonNull(predicate);
+        filteredTuitionClasses.setPredicate(predicate);
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -158,7 +189,8 @@ public class ModelManager implements Model {
         ModelManager otherModelManager = (ModelManager) other;
         return addressBook.equals(otherModelManager.addressBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
-                && filteredPersons.equals(otherModelManager.filteredPersons);
+                && filteredPersons.equals(otherModelManager.filteredPersons)
+                && filteredTuitionClasses.equals(otherModelManager.filteredTuitionClasses);
     }
 
 }

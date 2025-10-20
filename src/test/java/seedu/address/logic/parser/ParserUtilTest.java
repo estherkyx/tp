@@ -19,6 +19,8 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tuitionclass.Day;
+import seedu.address.model.tuitionclass.Time;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
@@ -34,6 +36,12 @@ public class ParserUtilTest {
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
+    private static final String INVALID_DAY = "funday";
+    private static final String INVALID_TIME = "h13";
+
+    private static final String VALID_DAY = "Monday";
+    private static final String VALID_TIME = "H14";
+
     private static final String WHITESPACE = " \t\r\n";
 
     @Test
@@ -44,7 +52,7 @@ public class ParserUtilTest {
     @Test
     public void parseIndex_outOfRangeInput_throwsParseException() {
         assertThrows(ParseException.class, MESSAGE_INVALID_INDEX, ()
-            -> ParserUtil.parseIndex(Long.toString(Integer.MAX_VALUE + 1)));
+                -> ParserUtil.parseIndex(Long.toString(Integer.MAX_VALUE + 1)));
     }
 
     @Test
@@ -192,5 +200,47 @@ public class ParserUtilTest {
         Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
+    }
+
+    @Test
+    public void parseDay_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseDay(null));
+    }
+
+    @Test
+    public void parseDay_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, Day.MESSAGE_CONSTRAINTS, () -> ParserUtil.parseDay(INVALID_DAY));
+    }
+
+    @Test
+    public void parseDay_validValueWithoutWhitespace_returnsDay() throws Exception {
+        assertEquals(Day.MONDAY, ParserUtil.parseDay(VALID_DAY));
+    }
+
+    @Test
+    public void parseDay_validValueWithWhitespace_returnsTrimmedDay() throws Exception {
+        String dayWithWhitespace = WHITESPACE + VALID_DAY + WHITESPACE;
+        assertEquals(Day.MONDAY, ParserUtil.parseDay(dayWithWhitespace));
+    }
+
+    @Test
+    public void parseTime_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseTime(null));
+    }
+
+    @Test
+    public void parseTime_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, Time.MESSAGE_CONSTRAINTS, () -> ParserUtil.parseTime(INVALID_TIME));
+    }
+
+    @Test
+    public void parseTime_validValueWithoutWhitespace_returnsTime() throws Exception {
+        assertEquals(Time.H14, ParserUtil.parseTime(VALID_TIME));
+    }
+
+    @Test
+    public void parseTime_validValueWithWhitespace_returnsTrimmedTime() throws Exception {
+        String timeWithWhitespace = WHITESPACE + VALID_TIME + WHITESPACE;
+        assertEquals(Time.H14, ParserUtil.parseTime(timeWithWhitespace));
     }
 }
