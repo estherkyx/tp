@@ -97,8 +97,4 @@ public class Student extends Person {
         this.tuitionTime = time;
     }
 
-    public void clearTuitionClass() {
-        this.tuitionDay = null;
-        this.tuitionTime = null;
-    }
 }

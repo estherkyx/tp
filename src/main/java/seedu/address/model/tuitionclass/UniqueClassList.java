@@ -20,11 +20,24 @@ public class UniqueClassList implements Iterable<TuitionClass> {
     private final ObservableList<TuitionClass> internalUnmodifiableList =
             FXCollections.unmodifiableObservableList(internalList);
 
+    /**
+     * Returns true if the list contains an equivalent tuition class as the given argument.
+     *
+     * @param toCheck The tuition class to check for existence in the list. Must not be null.
+     * @return True if an equivalent tuition class is found, false otherwise.
+     */
     public boolean contains(TuitionClass toCheck) {
         requireNonNull(toCheck);
         return internalList.stream().anyMatch(toCheck::equals);
     }
 
+    /**
+     * Adds a tuition class to the list.
+     * The tuition class must not already exist in the list.
+     *
+     * @param toAdd The tuition class to add. Must not be null.
+     * @throws DuplicateTuitionClassException If the tuition class to add is a duplicate of an existing tuition class.
+     */
     public void add(TuitionClass toAdd) {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
@@ -33,6 +46,13 @@ public class UniqueClassList implements Iterable<TuitionClass> {
         internalList.add(toAdd);
     }
 
+    /**
+     * Replaces the tuition classes in the list with {@code tuitionClasses}.
+     * {@code tuitionClasses} must not contain duplicate tuition classes.
+     *
+     * @param tuitionClasses The list of tuition classes to set. Must not be null and must not contain duplicates.
+     * @throws DuplicateTuitionClassException If {@code tuitionClasses} contains duplicate tuition classes.
+     */
     public void setTuitionClasses(List<TuitionClass> tuitionClasses) {
         requireAllNonNull(tuitionClasses);
         if (!tuitionClassesAreUnique(tuitionClasses)) {
@@ -41,6 +61,11 @@ public class UniqueClassList implements Iterable<TuitionClass> {
         internalList.setAll(tuitionClasses);
     }
 
+    /**
+     * Returns the internal list as an unmodifiable {@code ObservableList}.
+     *
+     * @return An unmodifiable view of the tuition classes.
+     */
     public ObservableList<TuitionClass> asUnmodifiableObservableList() {
         return internalUnmodifiableList;
     }
