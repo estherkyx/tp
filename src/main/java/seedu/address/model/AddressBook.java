@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.Objects;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
@@ -11,6 +12,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.tuitionclass.TuitionClass;
+import seedu.address.model.tuitionclass.UniqueClassList;
 
 /**
  * Wraps all data at the address-book level
@@ -19,6 +22,7 @@ import seedu.address.model.person.UniquePersonList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
+    private final UniqueClassList tuitionClasses;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -29,6 +33,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         persons = new UniquePersonList();
+        tuitionClasses = new UniqueClassList();
     }
 
     public AddressBook() {}
@@ -58,6 +63,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
 
         setPersons(newData.getPersonList());
+        setTuitionClasses(newData.getTuitionClassList());
     }
 
     //// person-level operations
@@ -121,6 +127,32 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.add(student);
     }
 
+    //// TuitionClass level operations
+    /**
+     * Returns true if a tuition class with the same identity as {@code tuitionClass} exists in the address book.
+     */
+    public boolean hasTuitionClass(TuitionClass tuitionClass) {
+        requireNonNull(tuitionClass);
+        return tuitionClasses.contains(tuitionClass);
+    }
+
+    /**
+     * Adds a tuition class to the address book.
+     * The class must not already exist in the address book.
+     */
+    public void addTuitionClass(TuitionClass t) {
+        tuitionClasses.add(t);
+    }
+
+    public void setTuitionClasses(List<TuitionClass> tuitionClasses) {
+        this.tuitionClasses.setTuitionClasses(tuitionClasses);
+    }
+
+    @Override
+    public ObservableList<TuitionClass> getTuitionClassList() {
+        return tuitionClasses.asUnmodifiableObservableList();
+    }
+
     //// util methods
 
     @Override
@@ -147,11 +179,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
 
         AddressBook otherAddressBook = (AddressBook) other;
-        return persons.equals(otherAddressBook.persons);
+        return persons.equals(otherAddressBook.persons)
+                && tuitionClasses.equals(otherAddressBook.tuitionClasses);
     }
 
     @Override
     public int hashCode() {
-        return persons.hashCode();
+        return Objects.hash(persons, tuitionClasses);
     }
 }
