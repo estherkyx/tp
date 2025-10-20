@@ -193,7 +193,7 @@ Examples:
 * `createClass MONDAY 1600` creates a class on Monday at 4:00 PM.
 * `createClass SATURDAY 1000` creates a class on Saturday at 10:00 AM.
 
-See also: [`linkClass`](#linking-a-person-to-a-class-time-linkclass), [`getClassDetails`](#viewing-class-details-getclassdetails) 
+See also: [`linkClass`](#linking-a-person-to-a-class-time-linkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
 
 • [Back to Command Summary](#command-summary)
 
@@ -212,7 +212,7 @@ Examples:
 * `linkClass MONDAY 1600 n/Roy Balakrishnan` links tutor Roy Balakrishnan to the Monday 4:00 PM class.
 * `linkClass SATURDAY 1000 n/Alice Pauline` links student Alice Pauline to the Saturday 10:00 AM class.
 
-See also: [`createClass`](#creating-a-class-time-createclass), [`unlinkClass`](#removing-a-person-from-a-class-time-unlinkclass), [`getClassDetails`](#viewing-class-details-getclassdetails) 
+See also: [`createClass`](#creating-a-class-time-createclass), [`unlinkClass`](#removing-a-person-from-a-class-time-unlinkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
 
 • [Back to Command Summary](#command-summary)
 
@@ -229,7 +229,7 @@ Examples:
 * `unlinkClass MONDAY 1600 n/Roy Balakrishnan` removes tutor Roy Balakrishnan from the Monday 4:00 PM class.
 * `unlinkClass SATURDAY 1000 n/Alice Pauline` removes student Alice Pauline from the Saturday 10:00 AM class.
 
-See also: [`linkClass`](#linking-a-person-to-a-class-time-linkclass), [`getClassDetails`](#viewing-class-details-getclassdetails) 
+See also: [`linkClass`](#linking-a-person-to-a-class-time-linkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
 
 • [Back to Command Summary](#command-summary)
 
@@ -246,7 +246,7 @@ Examples:
 * `getClassDetails MONDAY 1600`
 * `getClassDetails SATURDAY 1000`
 
-See also: [`linkClass`](#linking-a-person-to-a-class-time-linkclass), [`getClasses`](#listing-classes-getclasses) 
+See also: [`linkClass`](#linking-a-person-to-a-class-time-linkclass), [`getClasses`](#listing-classes-getclasses)
 
 • [Back to Command Summary](#command-summary)
 
@@ -263,7 +263,7 @@ Examples:
 * `getClasses` shows all classes.
 * `getClasses n/Roy Balakrishnan` shows classes linked to tutor Roy Balakrishnan.
 
-See also: [`getClassDetails`](#viewing-class-details-getclassdetails), [`linkClass`](#linking-a-person-to-a-class-time-linkclass) 
+See also: [`getClassDetails`](#viewing-class-details-getclassdetails), [`linkClass`](#linking-a-person-to-a-class-time-linkclass)
 
 • [Back to Command Summary](#command-summary)
 
