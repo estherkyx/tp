@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-TutorFlow is a **desktop app for managing contacts for a tuition centre, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, TutorFlow can get your contact management tasks done faster than traditional GUI apps.
+TutorFlow is a **lightweight desktop address-book application** for **managing contacts at small-to-medium GP tuition centres**. It is optimized for use through a **Command Line Interface (CLI)** while also providing a simple a **Graphical User Interface (GUI)** for visual tasks. This guide explains how to install, run and use TutorFlow to manage students, parents and tutors. For the tech-savvy GP tuition centre receptionists **comfortable with a command line and basic file operations**, TutorFlow can get your contact management tasks done faster than traditional GUI apps.
 
 * Table of Contents
 {:toc}
@@ -15,20 +15,20 @@ TutorFlow is a **desktop app for managing contacts for a tuition centre, optimiz
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-T11-4/tp/releases).
+2. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-T11-4/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+3. Copy the file to the folder you want to use as the _home folder_ for your address book.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar tutorflow.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar TutorFlow.jar` command to run the application.<br>
+   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br><br>
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
    * `list` : Lists all contacts.
 
-   * `add c/student n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a student named `John Doe` to the Address Book.
+   * `add c/student n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a student named `John Doe` to the address book.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -36,7 +36,7 @@ TutorFlow is a **desktop app for managing contacts for a tuition centre, optimiz
 
    * `exit` : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+6. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
