@@ -2,9 +2,12 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tuitionclass.Day;
+import seedu.address.model.tuitionclass.Time;
 
 /**
  * Represents a Student in the address book.
@@ -14,6 +17,8 @@ public class Student extends Person {
     // each student can have one parent
     private PersonId linkedParentId;
     private PersonId linkedTutorId;
+    private Day tuitionDay;
+    private Time tuitionTime;
 
     /**
      * Constructs a {@code Student}.
@@ -22,6 +27,8 @@ public class Student extends Person {
         super(category, name, phone, email, address, tags);
         this.linkedParentId = null;
         this.linkedTutorId = null;
+        this.tuitionDay = null;
+        this.tuitionTime = null;
     }
 
     /**
@@ -76,4 +83,18 @@ public class Student extends Person {
     public void clearTutor() {
         this.linkedTutorId = null;
     }
+
+    public Optional<Day> getTuitionDay() {
+        return Optional.ofNullable(tuitionDay);
+    }
+
+    public Optional<Time> getTuitionTime() {
+        return Optional.ofNullable(tuitionTime);
+    }
+
+    public void setTuitionClass(Day day, Time time) {
+        this.tuitionDay = day;
+        this.tuitionTime = time;
+    }
+
 }

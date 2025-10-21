@@ -69,7 +69,7 @@ public class GetParentCommandTest {
         GetParentCommand command = new GetParentCommand(new Name("John Doe"));
 
         String expectedMessage = String.format(GetParentCommand.MESSAGE_SUCCESS,
-                studentWithParent.getName(), parent);
+                studentWithParent.getName(), parent.getName());
 
         CommandResult result = command.execute(model);
         assertEquals(expectedMessage, result.getFeedbackToUser());

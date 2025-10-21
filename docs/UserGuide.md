@@ -10,25 +10,25 @@ TutorFlow is a **lightweight desktop address-book application** for **managing c
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Quick start
+## Quick Start
 
-1. Ensure you have Java `17` or above installed in your Computer.<br>
-   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+1. Install Java `17` or newer on your computer.<br>
+   **Mac users:** Follow the guide [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-2. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-T11-4/tp/releases).
+1. Download the latest app file (`.jar`) from [the Releases page](https://github.com/AY2526S1-CS2103T-T11-4/tp/releases).
 
-3. Copy the file to the folder you want to use as the _home folder_ for your address book.
+1. Copy the file into a folder where you want your TutorFlow data to be saved.
 
-4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar TutorFlow.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br><br>
+1. Open a command window/terminal, go to that folder, and run: `java -jar tutorflow.jar`<br>
+   The app window should appear with sample data so you can try things out.<br>
    ![Ui](images/Ui.png)
 
-5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+1. Type a command in the box and press Enter. For example, type **`help`** and press Enter to open the help window.<br>
    Some example commands you can try:
 
    * `list` : Lists all contacts.
 
-   * `add c/student n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a student named `John Doe` to the address book.
+   * `add c/student n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a student named `John Doe` to the Address Book.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -36,7 +36,7 @@ TutorFlow is a **lightweight desktop address-book application** for **managing c
 
    * `exit` : Exits the app.
 
-6. Refer to the [Features](#features) below for details of each command.
+1. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 

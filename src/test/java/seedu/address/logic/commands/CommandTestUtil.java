@@ -63,9 +63,11 @@ public class CommandTestUtil {
 
     public static final String VALID_STUDENT_NAME_ALICE = "Alice Pauline"; // From TypicalPersons
     public static final String VALID_PARENT_NAME_DANIEL = "Daniel Meier"; // From TypicalPersons
+    public static final String VALID_TUTOR_NAME_FIONA = "Fiona Kunz"; // From TypicalPersons
 
     public static final String NAME_DESC_STUDENT_ALICE = " " + PREFIX_NAME + VALID_STUDENT_NAME_ALICE;
     public static final String NAME_DESC_PARENT_DANIEL = " " + PREFIX_NAME + VALID_PARENT_NAME_DANIEL;
+    public static final String NAME_DESC_TUTOR_FIONA = " " + PREFIX_NAME + VALID_TUTOR_NAME_FIONA;
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
