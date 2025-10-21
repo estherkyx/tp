@@ -22,6 +22,8 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tuitionclass.Day;
+import seedu.address.model.tuitionclass.Time;
 
 /**
  * Jackson-friendly version of {@link Person}.
@@ -41,6 +43,8 @@ class JsonAdaptedPerson {
     private final List<String> childrenIds;
     private final String linkedTutorId;
     private final List<String> studentIds;
+    private final String tuitionDay;
+    private final String tuitionTime;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -53,7 +57,9 @@ class JsonAdaptedPerson {
             @JsonProperty("linkedParentId") String linkedParentId,
             @JsonProperty("childrenIds") List<String> childrenIds,
             @JsonProperty("linkedTutorId") String linkedTutorId,
-            @JsonProperty("studentIds") List<String> studentIds) {
+            @JsonProperty("studentIds") List<String> studentIds,
+            @JsonProperty("tuitionDay") String tuitionDay,
+            @JsonProperty("tuitionTime") String tuitionTime) {
         this.id = id;
         this.category = category;
         this.name = name;
@@ -75,6 +81,8 @@ class JsonAdaptedPerson {
         } else {
             this.studentIds = new ArrayList<>();
         }
+        this.tuitionDay = tuitionDay;
+        this.tuitionTime = tuitionTime;
     }
 
     /**
@@ -89,7 +97,7 @@ class JsonAdaptedPerson {
         address = source.getAddress().value;
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
-                .collect(Collectors.toList()));
+                .toList());
 
         // Handle Student, Parent and Tutor specific fields
         if (source instanceof Student) {
@@ -98,6 +106,8 @@ class JsonAdaptedPerson {
             this.childrenIds = new ArrayList<>(); // Student has no children
             this.linkedTutorId = student.getTutorId() != null ? student.getTutorId().getValue() : null;
             this.studentIds = new ArrayList<>(); //Student has no tutor
+            this.tuitionDay = student.getTuitionDay().map(Enum::toString).orElse(null);
+            this.tuitionTime = student.getTuitionTime().map(Enum::toString).orElse(null);
         } else if (source instanceof Parent) {
             Parent parent = (Parent) source;
             this.linkedParentId = null; // Parent has no linked parent
@@ -106,6 +116,9 @@ class JsonAdaptedPerson {
                     .collect(Collectors.toList());
             this.linkedTutorId = null; // Parent has no linked tutor
             this.studentIds = new ArrayList<>();
+            this.tuitionDay = null;
+            this.tuitionTime = null;
+
         } else if (source instanceof Tutor) {
             Tutor tutor = (Tutor) source;
             this.linkedParentId = null; // Tutor has no linked parent
@@ -114,12 +127,16 @@ class JsonAdaptedPerson {
             this.studentIds = tutor.getStudentsIds().stream()
                     .map(PersonId::getValue)
                     .collect(Collectors.toList());
+            this.tuitionDay = null;
+            this.tuitionTime = null;
         } else {
             // Default case for other Person types
             this.linkedParentId = null;
             this.childrenIds = new ArrayList<>();
             this.linkedTutorId = null;
             this.studentIds = new ArrayList<>();
+            this.tuitionDay = null;
+            this.tuitionTime = null;
         }
     }
 
@@ -189,6 +206,15 @@ class JsonAdaptedPerson {
 
         if (person instanceof Student) {
             Student student = (Student) person;
+            if (tuitionDay != null && tuitionTime != null) {
+                try {
+                    Day modelDay = Day.fromString(tuitionDay);
+                    Time modelTime = Time.fromString(tuitionTime);
+                    student.setTuitionClass(modelDay, modelTime);
+                } catch (IllegalArgumentException e) {
+                    throw new IllegalValueException("Invalid day or time found in storage for student.");
+                }
+            }
             if (linkedParentId != null) {
                 student.setParentId(PersonId.of(linkedParentId));
             }
