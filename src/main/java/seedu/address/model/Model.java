@@ -1,14 +1,18 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
+import seedu.address.model.tuitionclass.Day;
+import seedu.address.model.tuitionclass.Time;
 import seedu.address.model.tuitionclass.TuitionClass;
 
 /**
@@ -79,6 +83,19 @@ public interface Model {
     void updateFilteredTuitionClassList(Predicate<TuitionClass> predicate);
 
     /**
+     * Finds and returns a tuition class by its exact timeslot.
+     * @param day The day of the class.
+     * @param time The time of the class.
+     * @return An Optional containing the TuitionClass if found, or an empty Optional otherwise.
+     */
+    Optional<TuitionClass> findTuitionClass(Day day, Time time);
+
+    /**
+     * Returns an unmodifiable view of the tuition class list.
+     */
+    ObservableList<TuitionClass> getTuitionClassList();
+
+    /**
      * Returns true if a person with the same identity as {@code person} exists in the address book.
      */
     boolean hasPerson(Person person);
@@ -116,4 +133,13 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /**
+     * Finds and returns a person by their exact name.
+     * @param name The name of the person to find.
+     * @return An Optional containing the Person if found, or an empty Optional otherwise.
+     */
+    Optional<Person> findPersonByName(Name name);
+
+
 }

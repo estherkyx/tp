@@ -1,5 +1,6 @@
 package seedu.address.model.tuitionclass;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
@@ -74,7 +75,12 @@ public class TuitionClass {
         this.studentIds.add(studentId);
     }
 
+    /**
+     * Sets the tutor for this class.
+     * @param tutorId The PersonId of the new tutor.
+     */
     public void setTutorId(PersonId tutorId) {
+        requireNonNull(tutorId);
         this.tutorId = tutorId;
     }
 
