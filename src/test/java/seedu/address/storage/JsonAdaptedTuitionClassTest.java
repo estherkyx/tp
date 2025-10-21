@@ -18,7 +18,6 @@ public class JsonAdaptedTuitionClassTest {
 
     private static final String VALID_DAY = MONDAY_CLASS.getDay().toString();
     private static final String VALID_TIME = MONDAY_CLASS.getTime().toString();
-    private static final int VALID_RATE = MONDAY_CLASS.getRate();
     private static final String VALID_TUTOR_ID = MONDAY_CLASS.getTutorId().getValue();
     private static final List<String> VALID_STUDENT_IDS = MONDAY_CLASS.getStudentIds().stream()
             .map(id -> id.getValue())
@@ -33,7 +32,7 @@ public class JsonAdaptedTuitionClassTest {
     @Test
     public void toModelType_invalidDay_throwsIllegalValueException() {
         JsonAdaptedTuitionClass tuitionClass =
-                new JsonAdaptedTuitionClass(INVALID_DAY, VALID_TIME, VALID_RATE,
+                new JsonAdaptedTuitionClass(INVALID_DAY, VALID_TIME,
                         VALID_TUTOR_ID, VALID_STUDENT_IDS);
         assertThrows(IllegalValueException.class, tuitionClass::toModelType);
     }
@@ -41,7 +40,7 @@ public class JsonAdaptedTuitionClassTest {
     @Test
     public void toModelType_invalidTime_throwsIllegalValueException() {
         JsonAdaptedTuitionClass tuitionClass =
-                new JsonAdaptedTuitionClass(VALID_DAY, INVALID_TIME, VALID_RATE,
+                new JsonAdaptedTuitionClass(VALID_DAY, INVALID_TIME,
                         VALID_TUTOR_ID, VALID_STUDENT_IDS);
         assertThrows(IllegalValueException.class, tuitionClass::toModelType);
     }
