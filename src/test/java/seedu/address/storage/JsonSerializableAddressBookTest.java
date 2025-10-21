@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.model.AddressBook;
-import seedu.address.testutil.TypicalPersons;
+import seedu.address.testutil.TypicalTuitionClasses;
 
 public class JsonSerializableAddressBookTest {
 
@@ -25,8 +26,20 @@ public class JsonSerializableAddressBookTest {
         JsonSerializableAddressBook dataFromFile = JsonUtil.readJsonFile(TYPICAL_PERSONS_FILE,
                 JsonSerializableAddressBook.class).get();
         AddressBook addressBookFromFile = dataFromFile.toModelType();
-        AddressBook typicalPersonsAddressBook = TypicalPersons.getTypicalAddressBook();
+        AddressBook typicalPersonsAddressBook = getTypicalAddressBook();
         assertEquals(addressBookFromFile, typicalPersonsAddressBook);
+    }
+
+    @Test
+    public void toModelType_addressBookWithClasses_success() throws Exception {
+        AddressBook ab = getTypicalAddressBook();
+        ab.addTuitionClass(TypicalTuitionClasses.MONDAY_CLASS);
+
+        JsonSerializableAddressBook serializableAb = new JsonSerializableAddressBook(ab);
+        AddressBook deserializedAb = serializableAb.toModelType();
+
+        assertEquals(ab, deserializedAb);
+        assertEquals(ab.getTuitionClassList(), deserializedAb.getTuitionClassList());
     }
 
     @Test
