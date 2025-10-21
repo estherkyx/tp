@@ -28,8 +28,8 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.PersonId;
 import seedu.address.model.person.PersonFactory;
+import seedu.address.model.person.PersonId;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
@@ -130,7 +130,7 @@ public class EditCommand extends Command {
             Parent editedParent = (Parent) editedPerson;
 
             // Preserve children relationships
-            for (PersonId childId : originalParent.getChildrenIds()) {  
+            for (PersonId childId : originalParent.getChildrenIds()) {
                 editedParent.addChildId(childId);
             }
         } else if (personToEdit instanceof Tutor && editedPerson instanceof Tutor) {
