@@ -26,8 +26,13 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Category;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonId;
+import seedu.address.model.person.PersonFactory;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Student;
+import seedu.address.model.person.Tutor;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -106,7 +111,36 @@ public class EditCommand extends Command {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedCategory, updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        // Preserve the Person subclass and relationship data by using PersonFactory with the existing ID
+        Person editedPerson = PersonFactory.createPerson(personToEdit.getId(), updatedCategory, updatedName,
+                updatedPhone, updatedEmail, updatedAddress, updatedTags);
+
+        // Preserve relationship data for specific subclasses
+        if (personToEdit instanceof Student && editedPerson instanceof Student) {
+            Student originalStudent = (Student) personToEdit;
+            Student editedStudent = (Student) editedPerson;
+
+            // Preserve parent and tutor relationships
+            if (originalStudent.getParentId() != null) {
+                editedStudent.setParentId(originalStudent.getParentId());
+            }
+
+        } else if (personToEdit instanceof Parent && editedPerson instanceof Parent) {
+            Parent originalParent = (Parent) personToEdit;
+            Parent editedParent = (Parent) editedPerson;
+
+            // Preserve children relationships
+            for (PersonId childId : originalParent.getChildrenIds()) {  
+                editedParent.addChildId(childId);
+            }
+        } else if (personToEdit instanceof Tutor && editedPerson instanceof Tutor) {
+            Tutor originalTutor = (Tutor) personToEdit;
+            Tutor editedTutor = (Tutor) editedPerson;
+
+            // TODO: Preserve class relationships
+        }
+
+        return editedPerson;
     }
 
     @Override
