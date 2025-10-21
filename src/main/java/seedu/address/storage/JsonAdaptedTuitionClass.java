@@ -1,5 +1,7 @@
 package seedu.address.storage;
 
+import static seedu.address.storage.JsonAdaptedPerson.MISSING_FIELD_MESSAGE_FORMAT;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -46,7 +48,7 @@ class JsonAdaptedTuitionClass {
     public JsonAdaptedTuitionClass(TuitionClass source) {
         day = source.getDay().toString();
         time = source.getTime().toString();
-        tutorId = source.getTutorId().getValue();
+        tutorId = (source.getTutorId() == null) ? null : source.getTutorId().getValue();
         studentIds.addAll(source.getStudentIds().stream()
                 .map(PersonId::getValue)
                 .collect(Collectors.toList()));
@@ -54,20 +56,47 @@ class JsonAdaptedTuitionClass {
 
     /**
      * Converts this Jackson-friendly adapted class object into the model's {@code TuitionClass} object.
+     * @throws IllegalValueException if there were any data constraints violated in the adapted class.
      */
     public TuitionClass toModelType() throws IllegalValueException {
-        try {
-            final Day modelDay = Day.fromString(day);
-            final Time modelTime = Time.fromString(time);
-            final PersonId modelTutorId = PersonId.of(tutorId);
-            final Set<PersonId> modelStudentIds = new HashSet<>();
-            for (String studentId : studentIds) {
-                modelStudentIds.add(PersonId.of(studentId));
-            }
-
-            return new TuitionClass(modelDay, modelTime, modelTutorId, modelStudentIds);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalValueException("Invalid data found in storage: " + e.getMessage());
+        if (day == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Day.class.getSimpleName()));
         }
+        final Day modelDay;
+        try {
+            modelDay = Day.fromString(day);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalValueException(Day.MESSAGE_CONSTRAINTS);
+        }
+
+        if (time == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Time.class.getSimpleName()));
+        }
+        final Time modelTime;
+        try {
+            modelTime = Time.fromString(time);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalValueException(Time.MESSAGE_CONSTRAINTS);
+        }
+
+        final Set<PersonId> modelStudentIds = new HashSet<>();
+        for (String studentId : studentIds) {
+            modelStudentIds.add(PersonId.of(studentId));
+        }
+
+        // Create the base class first
+        TuitionClass tuitionClass = new TuitionClass(modelDay, modelTime);
+
+        // If a tutorId exists in the JSON, add it to the class object
+        if (tutorId != null) {
+            tuitionClass.setTutorId(PersonId.of(tutorId));
+        }
+
+        // Add all students to the class object
+        for (PersonId studentId : modelStudentIds) {
+            tuitionClass.addStudentId(studentId);
+        }
+
+        return tuitionClass;
     }
 }

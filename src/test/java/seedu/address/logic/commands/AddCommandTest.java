@@ -26,6 +26,7 @@ import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
+import seedu.address.model.tuitionclass.TuitionClass;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -157,7 +158,27 @@ public class AddCommandTest {
         }
 
         @Override
+        public boolean hasTuitionClass(TuitionClass tuitionClass) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addTuitionClass(TuitionClass tuitionClass) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<TuitionClass> getFilteredTuitionClassList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredTuitionClassList(Predicate<TuitionClass> predicate) {
             throw new AssertionError("This method should not be called.");
         }
 

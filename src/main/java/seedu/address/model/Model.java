@@ -9,6 +9,7 @@ import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
+import seedu.address.model.tuitionclass.TuitionClass;
 
 /**
  * The API of the Model component.
@@ -16,6 +17,8 @@ import seedu.address.model.person.Tutor;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+
+    Predicate<TuitionClass> PREDICATE_SHOW_ALL_CLASSES = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -54,6 +57,26 @@ public interface Model {
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
+
+    /**
+     * Returns true if a tuition class with the same identity as {@code tuitionClass} exists in the address book.
+     */
+    boolean hasTuitionClass(TuitionClass tuitionClass);
+
+    /**
+     * Adds the given tuition class.
+     * {@code tuitionClass} must not already exist in the address book.
+     */
+    void addTuitionClass(TuitionClass tuitionClass);
+
+    /** Returns an unmodifiable view of the filtered tuition class list */
+    ObservableList<TuitionClass> getFilteredTuitionClassList();
+
+    /**
+     * Updates the filter of the filtered tuition class list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredTuitionClassList(Predicate<TuitionClass> predicate);
 
     /**
      * Returns true if a person with the same identity as {@code person} exists in the address book.

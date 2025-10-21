@@ -17,11 +17,34 @@ public class TuitionClass {
 
     private final Day day;
     private final Time time;
-    private final PersonId tutorId;
+    private PersonId tutorId;
     private final Set<PersonId> studentIds = new HashSet<>();
 
+
     /**
-     * Every field must be present and not null.
+     * Creates a new {@code TuitionClass} scheduled on the given day and time,
+     * with no tutor assigned and no students enrolled.
+     *
+     * @param day  the day of the week for this class; must not be {@code null}
+     * @param time the time slot for this class; must not be {@code null}
+     * @throws NullPointerException if {@code day} or {@code time} is {@code null}
+     */
+    public TuitionClass(Day day, Time time) {
+        requireAllNonNull(day, time);
+        this.day = day;
+        this.time = time;
+        this.tutorId = null; // No tutor assigned yet
+    }
+
+    /**
+     * Creates a new {@code TuitionClass} scheduled on the given day and time,
+     * with the specified tutor and initial set of students.
+     *
+     * @param day        the day of the week for this class; must not be {@code null}
+     * @param time       the time slot for this class; must not be {@code null}
+     * @param tutorId    the identifier of the tutor; must not be {@code null}
+     * @param studentIds the initial set of student identifiers; must not be {@code null}
+     * @throws NullPointerException if any parameter is {@code null}
      */
     public TuitionClass(Day day, Time time, PersonId tutorId, Set<PersonId> studentIds) {
         requireAllNonNull(day, time, tutorId, studentIds);
@@ -39,7 +62,6 @@ public class TuitionClass {
         return time;
     }
 
-
     public PersonId getTutorId() {
         return tutorId;
     }
@@ -50,6 +72,10 @@ public class TuitionClass {
 
     public void addStudentId(PersonId studentId) {
         this.studentIds.add(studentId);
+    }
+
+    public void setTutorId(PersonId tutorId) {
+        this.tutorId = tutorId;
     }
 
     /**
