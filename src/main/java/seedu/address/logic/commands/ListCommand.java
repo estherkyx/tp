@@ -23,7 +23,7 @@ public class ListCommand extends Command {
             + "Parameters: [c/CATEGORY]\n"
             + "Example: " + COMMAND_WORD + " c/student";
 
-    public static final String MESSAGE_SUCCESS = "Listed all people in '%s' category";
+    public static final String MESSAGE_SUCCESS = "Listed all people in the '%s' category.";
 
     public static final String MESSAGE_SUCCESS_ALL = "Listed all people in the address book.";
 

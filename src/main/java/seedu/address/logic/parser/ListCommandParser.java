@@ -14,10 +14,11 @@ import seedu.address.model.person.Category;
 public class ListCommandParser implements Parser<ListCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the {@code ListCommand}
+     * Parses the given {@code String} of arguments in the context of the {@code ListCommand}.
+     *
      * @param args raw argument string following the command word
-     * @return {@code ListCommand} with the parsed category {@link Category}
-     * @throws ParseException if the input has a non-empty preamble, lacks {@code n/}, or has an empty name
+     * @return {@code ListCommand} with the parsed category {@link Category}, if present
+     * @throws ParseException if the input has a non-empty preamble or contains an invalid category name
      */
     @Override
     public ListCommand parse(String args) throws ParseException {
