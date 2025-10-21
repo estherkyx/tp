@@ -84,5 +84,6 @@
     "childrenIds": [],
     "linkedTutorId": null,
     "studentIds": ["3c3c3c3c-3333-3333-3333-333333333333"]
-  } ]
+  } ],
+  "tuitionClasses": []
 }

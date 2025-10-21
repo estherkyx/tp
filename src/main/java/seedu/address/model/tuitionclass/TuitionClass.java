@@ -17,7 +17,7 @@ public class TuitionClass {
 
     private final Day day;
     private final Time time;
-    private final PersonId tutorId;
+    private PersonId tutorId;
     private final Set<PersonId> studentIds = new HashSet<>();
 
 
@@ -72,6 +72,10 @@ public class TuitionClass {
 
     public void addStudentId(PersonId studentId) {
         this.studentIds.add(studentId);
+    }
+
+    public void setTutorId(PersonId tutorId) {
+        this.tutorId = tutorId;
     }
 
     /**

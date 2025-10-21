@@ -24,5 +24,6 @@
     "childrenIds": [],
     "linkedTutorId": null,
     "studentIds": []
-  } ]
+  } ],
+  "tuitionClasses": []
 }
