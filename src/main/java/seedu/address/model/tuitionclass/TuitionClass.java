@@ -1,5 +1,6 @@
 package seedu.address.model.tuitionclass;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
@@ -17,20 +18,29 @@ public class TuitionClass {
 
     private final Day day;
     private final Time time;
-    private final int rate;
-    private final PersonId tutorId;
-    private final Set<PersonId> studentIds = new HashSet<>();
+    private PersonId tutorId;
+    private Set<PersonId> studentIds = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public TuitionClass(Day day, Time time, int rate, PersonId tutorId, Set<PersonId> studentIds) {
+    public TuitionClass(Day day, Time time, PersonId tutorId, Set<PersonId> studentIds) {
         requireAllNonNull(day, time, tutorId, studentIds);
         this.day = day;
         this.time = time;
-        this.rate = rate;
         this.tutorId = tutorId;
         this.studentIds.addAll(studentIds);
+    }
+
+    /**
+     * Constructor for a new class time slot.
+     * Tutor is initialised to null.
+     */
+    public TuitionClass(Day day, Time time) {
+        requireAllNonNull(day, time);
+        this.day = day;
+        this.time = time;
+        this.tutorId = null; // No tutor assigned yet
     }
 
     public Day getDay() {
@@ -39,10 +49,6 @@ public class TuitionClass {
 
     public Time getTime() {
         return time;
-    }
-
-    public int getRate() {
-        return rate;
     }
 
     public PersonId getTutorId() {
@@ -55,6 +61,15 @@ public class TuitionClass {
 
     public void addStudentId(PersonId studentId) {
         this.studentIds.add(studentId);
+    }
+
+    /**
+     * Sets the tutor for this class.
+     * @param tutorId The PersonId of the new tutor.
+     */
+    public void setTutorId(PersonId tutorId) {
+        requireNonNull(tutorId);
+        this.tutorId = tutorId;
     }
 
     /**

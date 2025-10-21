@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.logic.parser.Prefix;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 
 /**
@@ -18,6 +19,7 @@ public class Messages {
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
+    public static final String MESSAGE_PERSON_NOT_FOUND = "The person with the name '%s' could not be found.";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
@@ -29,6 +31,13 @@ public class Messages {
                 Stream.of(duplicatePrefixes).map(Prefix::toString).collect(Collectors.toSet());
 
         return MESSAGE_DUPLICATE_FIELDS + String.join(" ", duplicateFields);
+    }
+
+    /**
+     * Returns a person not found error message with the specified name.
+     */
+    public static String messagePersonNotFound(Name name) {
+        return String.format(MESSAGE_PERSON_NOT_FOUND, name);
     }
 
     /**

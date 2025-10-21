@@ -11,7 +11,9 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonFactory;
 import seedu.address.model.person.PersonId;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Student;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tuitionclass.TuitionClass;
 import seedu.address.model.util.SampleDataUtil;
 
 /**
@@ -32,6 +34,7 @@ public class PersonBuilder {
     private Email email;
     private Address address;
     private Set<Tag> tags;
+    private TuitionClass tuitionClass;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -44,6 +47,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
+        tuitionClass = null; // Initialize to null
     }
 
     /**
@@ -57,6 +61,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
+        tuitionClass = null;
     }
 
     /**
@@ -115,8 +120,31 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code TuitionClass} for the {@code Person} we are building.
+     * This should only be used when building a Student.
+     */
+    public PersonBuilder withTuitionClass(TuitionClass tuitionClass) {
+        this.tuitionClass = tuitionClass;
+        return this;
+    }
+
+    /**
+     * Builds and returns a {@link Person} object based on the current state of this builder.
+     * If the Person is a {@link Student} and a tuition class has been set, the student's
+     * tuition class will be initialized with the day and time of the assigned class.
+     *
+     * @return the constructed Person
+     */
     public Person build() {
-        return PersonFactory.createPerson(id, category, name, phone, email, address, tags);
+        Person person = PersonFactory.createPerson(id, category, name, phone, email, address, tags);
+
+        if (person instanceof Student && this.tuitionClass != null) {
+            Student student = (Student) person;
+            student.setTuitionClass(this.tuitionClass.getDay(), this.tuitionClass.getTime());
+        }
+
+        return person;
     }
 
 }
