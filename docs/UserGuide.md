@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-TutorFlow is a desktop app for tuition centre managers. It helps you keep track of students, parents, tutors, and classes using simple type-and-press-Enter commands.
+TutorFlow is a desktop app for tuition centre managers. It helps you keep track of students, parents, tutors, and classes using simple type-and-press-Enter commands. For those comfortable with a command line, TutorFlow can get your contact management tasks done quickly and easily.
 
 * Table of Contents
 {:toc}
@@ -15,20 +15,20 @@ TutorFlow is a desktop app for tuition centre managers. It helps you keep track 
 1. Install Java `17` or newer on your computer.<br>
    **Mac users:** Follow the guide [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest app file (`.jar`) from [the Releases page](https://github.com/AY2526S1-CS2103T-T11-4/tp/releases).
+2. Download the latest app file (`.jar`) from [the Releases page](https://github.com/AY2526S1-CS2103T-T11-4/tp/releases).
 
-1. Copy the file into a folder where you want your TutorFlow data to be saved.
+3. Copy the file into a folder where you want your TutorFlow data to be saved.
 
-1. Open a command window/terminal, go to that folder, and run: `java -jar tutorflow.jar`<br>
+4. Open a command window/terminal, go to that folder, and run: `java -jar TutorFlow.jar`<br>
    The app window should appear with sample data so you can try things out.<br>
    ![Ui](images/Ui.png)
 
-1. Type a command in the box and press Enter. For example, type **`help`** and press Enter to open the help window.<br>
+5. Type a command in the box and press Enter. For example, type **`help`** and press Enter to open the help window.<br>
    Some example commands you can try:
 
    * `list` : Lists all contacts.
 
-   * `add c/student n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a student named `John Doe` to the Address Book.
+   * `add c/student n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a student named `John Doe` to the address book.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -36,7 +36,7 @@ TutorFlow is a desktop app for tuition centre managers. It helps you keep track 
 
    * `exit` : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+6. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -89,9 +89,18 @@ Examples:
 
 ### Listing all persons : `list`
 
-Shows a list of all persons in the address book.
+Shows a list of all persons in the address book. If you add a category, it shows all persons belonging to that category.
 
-Format: `list`
+Format: `list [c/CATEGORY]`
+
+* Without `c/CATEGORY`: shows all persons in the system.
+* With `c/CATEGORY`: shows all persons belonging to the specified category (`tutor`, `student`, `parent`).
+
+Examples:
+* `list` shows all persons.
+* `list c/tutor` shows all tutors.
+* `list c/student` shows all students.
+* `list c/parent` shows all parents.
 
 • [Back to Command Summary](#command-summary)
 
@@ -133,7 +142,7 @@ Finds persons whose names contain any of the given keywords.
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
+* The search is case-insensitive. e.g. `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
@@ -178,17 +187,17 @@ Examples:
 
 ### Creating a class time: `createClass`
 
-Creates a new class time in the system. Create this first before linking a tutor and students to it.
+Creates a new class in the system. Create this first before linking a tutor and students to it.
 
-Format: `createClass DAY TIME`
+Format: `createClass d/DAY ti/TIME`
 
-* `DAY` must be one of `MONDAY`, `TUESDAY`, `WEDNESDAY`, `THURSDAY`, `FRIDAY`, `SATURDAY`, `SUNDAY`.
-* `TIME` must be a supported timeslot (e.g. `0800`, `1000`, `1400`, `1600`).
-* The class is created without linked persons. Link a tutor/students using `linkClass`.
+* `DAY` must be one of `MONDAY`, `TUESDAY`, `WEDNESDAY`, `THURSDAY`, `FRIDAY`, `SATURDAY`, `SUNDAY` (case-insensitive).
+* `TIME` must be a supported timeslot `H12`, `H14`, `H16`, `H18`, `H20` (case-insensitive), which represents `12:00PM`, `2:00PM`, `4:00PM`, `6:00PM`, `8:00PM` respectively.
+* The class is created without linked persons. Link a tutor or student using `linkClass`.
 
 Examples:
-* `createClass MONDAY 1600` creates a class on Monday at 4:00 PM.
-* `createClass SATURDAY 1000` creates a class on Saturday at 10:00 AM.
+* `createClass d/MONDAY ti/H16` creates a class on Monday at 4:00 PM.
+* `createClass d/Tuesday ti/h12` creates a class on Tuesday at 12:00 PM.
 
 See also: [`linkClass`](#linking-a-person-to-a-class-time-linkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
 
