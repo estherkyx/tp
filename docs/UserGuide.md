@@ -94,13 +94,13 @@ Shows a list of all persons in the address book. If you add a category, it shows
 Format: `list [c/CATEGORY]`
 
 * Without `c/CATEGORY`: shows all persons in the system.
-* With `c/CATEGORY`: shows all persons belonging to the specified category (`tutor`, `student`, `parent`).
+* With `c/CATEGORY`: shows all persons belonging to the specified category `tutor`, `student`, `parent` (case-insensitive).
 
 Examples:
 * `list` shows all persons.
 * `list c/tutor` shows all tutors.
-* `list c/student` shows all students.
-* `list c/parent` shows all parents.
+* `list c/STUDENT` shows all students.
+* `list c/Parent` shows all parents.
 
 • [Back to Command Summary](#command-summary)
 
