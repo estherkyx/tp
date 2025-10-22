@@ -1,5 +1,9 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Name;
@@ -9,17 +13,14 @@ import seedu.address.model.person.Tutor;
 import seedu.address.model.tuitionclass.Time;
 import seedu.address.model.tuitionclass.TuitionClass;
 
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
-
 /**
  * Lists all tuition classes or those belonging to a specific tutor.
  */
 public class GetClassesCommand extends Command {
     public static final String COMMAND_WORD = "getClasses";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all tuition classes or those of a specific tutor.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Lists all tuition classes or those of a specific tutor.\n"
             + "Parameters: [n/TUTOR NAME]\n"
             + "Example 1: " + COMMAND_WORD + "\n"
             + "Example 2: " + COMMAND_WORD + " n/Roy Balakrishnan";
@@ -106,8 +107,19 @@ public class GetClassesCommand extends Command {
 
     @Override
     public boolean equals(Object other) {
-        return other == this
-                || (other instanceof GetClassesCommand
-                && ((GetClassesCommand) other).tutorName.equals(tutorName));
+        if (this == other) {
+            return true;
+        }
+        if (!(other instanceof GetClassesCommand)) {
+            return false;
+        }
+        GetClassesCommand o = (GetClassesCommand) other;
+        if (tutorName == null && o.tutorName == null) {
+            return true;
+        }
+        if (tutorName == null || o.tutorName == null) {
+            return false;
+        }
+        return tutorName.equals(o.tutorName);
     }
 }
