@@ -3,13 +3,13 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Optional;
-import java.util.Set;
+// import java.util.Set;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.PersonId;
-import seedu.address.model.person.Student;
+// import seedu.address.model.person.PersonId;
+// import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
 
 /**
@@ -47,6 +47,9 @@ public class GetStudentsCommand extends Command {
         Tutor tutor = findTutorByName(model, tutorName)
                 .orElseThrow(() -> new CommandException(String.format(MESSAGE_TUTOR_NOT_FOUND, tutorName)));
 
+        // To be updated with getClasses and getClassDetails
+
+        /*
         Set<PersonId> linkedStudentIds = tutor.getStudentsIds();
 
         // Tutor has no linked students
@@ -59,8 +62,9 @@ public class GetStudentsCommand extends Command {
         model.updateFilteredPersonList(p ->
                 p instanceof Student && linkedStudentIds.contains(p.getId()));
         int shown = model.getFilteredPersonList().size();
+        */
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, shown, tutor.getName()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, 0, tutor.getName()));
     }
 
     @Override
