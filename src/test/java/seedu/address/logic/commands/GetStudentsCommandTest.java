@@ -77,12 +77,12 @@ public class GetStudentsCommandTest {
     @Test
     public void execute_tutorExistsNoStudents_showsNoStudent() throws Exception {
         Tutor newFiona = (Tutor) new PersonBuilder(FIONA).build();
-        ((ModelManager) model).setPerson(FIONA, newFiona);
+        model.setPerson(FIONA, newFiona);
 
         TuitionClass fionaClass = new TuitionClassBuilder()
                 .withDay(Day.TUESDAY).withTime(Time.H14).withTutor(newFiona)
                 .build();
-        ((ModelManager) model).addTuitionClass(fionaClass);
+        model.addTuitionClass(fionaClass);
 
         GetStudentsCommand cmd = new GetStudentsCommand(FIONA.getName());
         CommandResult res = cmd.execute(model);
@@ -96,7 +96,7 @@ public class GetStudentsCommandTest {
     @Test
     public void execute_tutorExistsNoClasses_showsNoStudent() throws Exception {
         Tutor newFiona = (Tutor) new PersonBuilder(FIONA).build();
-        ((ModelManager) model).setPerson(FIONA, newFiona);
+        model.setPerson(FIONA, newFiona);
 
         GetStudentsCommand cmd = new GetStudentsCommand(FIONA.getName());
         CommandResult res = cmd.execute(model);

@@ -42,6 +42,8 @@ public class LinkClassCommand extends Command {
     public static final String MESSAGE_PERSON_NOT_STUDENT_OR_TUTOR = "The person provided is not a student or a tutor.";
     public static final String MESSAGE_STUDENT_ALREADY_LINKED = "The student is already linked to a class.";
     public static final String MESSAGE_TUTOR_ALREADY_TEACHING = "The tutor is already assigned to this class.";
+    public static final String MESSAGE_CLASS_ALREADY_HAS_TUTOR =
+            "This class is already assigned to Tutor %s. Unlink before reassigning.";
 
     private final Day day;
     private final Time time;
@@ -101,8 +103,9 @@ public class LinkClassCommand extends Command {
         tuitionClass.addStudentId(student.getId());
         model.setPerson(student, student);
 
+        String timeString = tuitionClass.getTime().toString().substring(1) + "00";
         return new CommandResult(String.format(MESSAGE_LINK_STUDENT_SUCCESS,
-                Messages.format(student), tuitionClass.getDay(), tuitionClass.getTime()));
+                student.getName(), tuitionClass.getDay(), timeString));
     }
 
     /**
@@ -113,14 +116,25 @@ public class LinkClassCommand extends Command {
         PersonId currentTutorId = tuitionClass.getTutorId();
 
         // Check if the current tutor is not null AND if its ID matches the new tutor's ID.
-        if (currentTutorId != null && currentTutorId.equals(tutor.getId())) {
-            throw new CommandException(MESSAGE_TUTOR_ALREADY_TEACHING);
+        if (currentTutorId != null) {
+            if (currentTutorId.equals(tutor.getId())) {
+                throw new CommandException(MESSAGE_TUTOR_ALREADY_TEACHING);
+            }
+
+            String currentTutorName = model.getAddressBook().getPersonList().stream()
+                    .filter(p -> p.getId().equals(currentTutorId) && p instanceof Tutor)
+                    .map(p -> ((Tutor) p).getName().toString())
+                    .findFirst()
+                    .orElse("another tutor");
+
+            throw new CommandException(String.format(MESSAGE_CLASS_ALREADY_HAS_TUTOR, currentTutorName));
         }
         // Perform the assignment
         tuitionClass.setTutorId(tutor.getId());
 
+        String timeString = tuitionClass.getTime().toString().substring(1) + "00";
         return new CommandResult(String.format(MESSAGE_ASSIGN_TUTOR_SUCCESS,
-                Messages.format(tutor), tuitionClass.getDay(), tuitionClass.getTime()));
+                tutor.getName(), tuitionClass.getDay(), timeString));
     }
 
     @Override

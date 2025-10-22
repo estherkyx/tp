@@ -5,6 +5,10 @@ import static seedu.address.logic.ClassQueries.findTutorByName;
 import static seedu.address.logic.ClassQueries.getClassesByTutor;
 import static seedu.address.logic.ClassQueries.getStudentsInClass;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Name;
@@ -12,10 +16,6 @@ import seedu.address.model.person.PersonId;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
 import seedu.address.model.tuitionclass.TuitionClass;
-
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Retrieves all students of a specified tutor in the address book.

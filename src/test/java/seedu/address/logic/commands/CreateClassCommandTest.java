@@ -29,7 +29,9 @@ public class CreateClassCommandTest {
         expectedModel.addTuitionClass(validClass);
 
         CreateClassCommand command = new CreateClassCommand(validClass.getDay(), validClass.getTime());
-        String expectedMessage = String.format(CreateClassCommand.MESSAGE_SUCCESS, validClass);
+
+        String timeString = validClass.getTime().toString().substring(1) + "00";
+        String expectedMessage = String.format(CreateClassCommand.MESSAGE_SUCCESS, validClass.getDay(), timeString);
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }

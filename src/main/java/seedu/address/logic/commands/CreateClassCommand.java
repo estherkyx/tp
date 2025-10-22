@@ -26,7 +26,7 @@ public class CreateClassCommand extends Command {
             + PREFIX_DAY + "monday "
             + PREFIX_TIME + "h14";
 
-    public static final String MESSAGE_SUCCESS = "New class created: %1$s";
+    public static final String MESSAGE_SUCCESS = "New class created: %1$s, %2$s";
     public static final String MESSAGE_DUPLICATE_CLASS = "This class time slot already exists";
 
     private final TuitionClass toAdd;
@@ -49,7 +49,8 @@ public class CreateClassCommand extends Command {
         }
 
         model.addTuitionClass(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        String timeString = toAdd.getTime().toString().substring(1) + "00";
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd.getDay(), timeString));
     }
 
 

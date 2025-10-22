@@ -212,6 +212,7 @@ Format: `linkClass d/DAY ti/TIME n/NAME`
 * `NAME` must exactly match a person in TutorFlow.
 * Students can join only one class time.
 * Tutors can teach multiple class times.
+* Each class time can only have one tutor.
 * The class identified by `DAY` and `TIME` (case-insensitive) must already exist (created using `createClass`).
 
 Examples:
@@ -361,10 +362,10 @@ Action | Format, Examples
 [Find](#locating-persons-by-name-find) | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 [Get Parent](#finding-a-students-parent-getparent) | `getParent n/STUDENT_NAME`<br> e.g., `getParent n/John Doe`
 [Get Students](#finding-all-students-of-a-tutor-getstudents) | `getStudents n/TUTOR_NAME`<br> e.g., `getStudents n/Roy Balakrishnan`
-[Create Class](#creating-a-class-time-createclass) | `createClass DAY TIME`<br> e.g., `createClass MONDAY 1600`
-[Link Class](#linking-a-person-to-a-class-time-linkclass) | `linkClass DAY TIME n/NAME`<br> e.g., `linkClass MONDAY 1600 n/Roy Balakrishnan`
-[Unlink Class](#removing-a-person-from-a-class-time-unlinkclass) | `unlinkClass DAY TIME n/NAME`<br> e.g., `unlinkClass MONDAY 1600 n/Alice Pauline`
-[Get Class Details](#viewing-class-details-getclassdetails) | `getClassDetails DAY TIME`<br> e.g., `getClassDetails MONDAY 1600`
+[Create Class](#creating-a-class-createclass) | `createClass d/DAY ti/TIME`<br> e.g., `createClass d/MONDAY ti/H16`
+[Link Class](#linking-a-person-to-a-class-linkclass) | `linkClass d/DAY ti/TIME n/NAME`<br> e.g., `linkClass d/MONDAY ti/H16 n/Roy Balakrishnan`
+[Unlink Class](#removing-a-person-from-a-class-unlinkclass) | `unlinkClass d/DAY ti/TIME n/NAME`<br> e.g., `unlinkClass d/MONDAY ti/H16 n/Alice Pauline`
+[Get Class Details](#viewing-class-details-getclassdetails) | `getClassDetails d/DAY ti/TIME`<br> e.g., `getClassDetails d/MONDAY ti/H16`
 [Get Classes](#listing-classes-getclasses) | `getClasses [n/TUTOR_NAME]`<br> e.g., `getClasses n/Roy Balakrishnan`
 [List](#listing-all-persons--list) | `list`
 [Help](#viewing-help--help) | `help`
