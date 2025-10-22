@@ -73,4 +73,11 @@ public class Student extends Person {
         this.tuitionTime = time;
     }
 
+    /**
+     * Clears the tuition class info from a student.
+     */
+    public void clearTuitionClass() {
+        this.tuitionDay = null;
+        this.tuitionTime = null;
+    }
 }

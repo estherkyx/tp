@@ -75,6 +75,10 @@ public class TuitionClass {
         this.studentIds.add(studentId);
     }
 
+    public void removeStudentId(PersonId studentId) {
+        this.studentIds.remove(studentId);
+    }
+
     /**
      * Sets the tutor for this class.
      * @param tutorId The PersonId of the new tutor.
@@ -82,6 +86,10 @@ public class TuitionClass {
     public void setTutorId(PersonId tutorId) {
         requireNonNull(tutorId);
         this.tutorId = tutorId;
+    }
+
+    public void removeTutorId() {
+        this.tutorId = null;
     }
 
     /**
