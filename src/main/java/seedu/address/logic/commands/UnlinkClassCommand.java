@@ -38,11 +38,11 @@ public class UnlinkClassCommand extends Command {
 
     public static final String MESSAGE_CLASS_NOT_FOUND = "The class at the specified timeslot does not exist.";
     public static final String MESSAGE_PERSON_NOT_STUDENT_OR_TUTOR = "The person provided is not a student or a tutor.";
-    private static final String MESSAGE_STUDENT_NOT_IN_CLASS = "The student is not linked to this class";
-    private static final String MESSAGE_UNLINK_STUDENT_SUCCESS = "Unlinked Student %1$s from Class on %2$s, %3$s";
-    private static final String MESSAGE_TUTOR_NOT_TEACHING_THIS_CLASS = "The tutor is not assigned to this class";
-    private static final String MESSAGE_UNASSIGN_TUTOR_SUCCESS = "Unassigned Tutor %1$s from Class on %2$s, %3$s";
-    private static final String MESSAGE_CLASS_HAS_NO_TUTOR = "This class has no tutor assigned";
+    public static final String MESSAGE_STUDENT_NOT_IN_CLASS = "The student is not linked to this class";
+    public static final String MESSAGE_UNLINK_STUDENT_SUCCESS = "Unlinked Student %1$s from Class on %2$s, %3$s";
+    public static final String MESSAGE_TUTOR_NOT_TEACHING_THIS_CLASS = "The tutor is not assigned to this class";
+    public static final String MESSAGE_UNASSIGN_TUTOR_SUCCESS = "Unassigned Tutor %1$s from Class on %2$s, %3$s";
+    public static final String MESSAGE_CLASS_HAS_NO_TUTOR = "This class has no tutor assigned";
 
     private final Day day;
     private final Time time;
