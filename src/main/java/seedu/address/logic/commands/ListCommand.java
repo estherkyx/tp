@@ -27,6 +27,8 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_SUCCESS_ALL = "Listed all people in the address book.";
 
+    public static final String MESSAGE_MISSING_CATEGORY = "Category is not stated.";
+
     public static final String MESSAGE_EMPTY_CATEGORY = "Category '%s' has no one.";
 
     public static final String MESSAGE_INVALID_CATEGORY = "Category '%s' does not exist.";

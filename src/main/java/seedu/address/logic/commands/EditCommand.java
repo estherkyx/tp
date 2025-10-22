@@ -169,18 +169,6 @@ public class EditCommand extends Command {
                 }
             }
 
-            // Remove from tutor's students list
-            if (student.getTutorId() != null) {
-                Optional<Person> tutorOpt = allPersons.stream()
-                    .filter(p -> p.getId().equals(student.getTutorId()))
-                    .findFirst();
-                if (tutorOpt.isPresent() && tutorOpt.get() instanceof Tutor) {
-                    Tutor tutor = (Tutor) tutorOpt.get();
-                    tutor.removeStudentId(student.getId());
-                    model.setPerson(tutorOpt.get(), tutor);
-                }
-            }
-
         } else if (personToEdit instanceof Parent) {
             Parent parent = (Parent) personToEdit;
 

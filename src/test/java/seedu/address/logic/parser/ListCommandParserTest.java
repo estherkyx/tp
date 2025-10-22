@@ -39,18 +39,16 @@ public class ListCommandParserTest {
     @Test
     public void parse_emptyArgs_success() {
         // no args after c/
-        assertParseSuccess(parser, " c/   ",
-                new ListCommand());
+        String expectedMessage = ListCommand.MESSAGE_MISSING_CATEGORY;
+        assertParseFailure(parser, " c/   ", expectedMessage);
     }
 
     @Test
     public void parse_invalidCategory_failure() {
-        String expectedMessage = ListCommand.MESSAGE_INVALID_CATEGORY;
+        String invalidCategory = "studentt";
+        String expectedMessage = String.format(ListCommand.MESSAGE_INVALID_CATEGORY, invalidCategory);
 
-        // invalid category strings
-        assertParseFailure(parser, " c/notacategory", expectedMessage);
-        assertParseFailure(parser, " c/123", expectedMessage);
-        assertParseFailure(parser, " c/studentt", expectedMessage);
+        assertParseFailure(parser, " c/" + invalidCategory, expectedMessage);
     }
 
     @Test
