@@ -46,13 +46,13 @@ TutorFlow is a desktop app for tuition centre managers. It helps you keep track 
 
 **:information_source: How to read command formats**<br>
 
-* Words in `UPPER_CASE` are things you need to type in. <br>
+*  `UPPER_CASE`: These are placeholders that you replace with your own information. <br>
   For example, in `n/NAME`, you replace `NAME` with the actual name: `n/John Doe`.
 
-* Square brackets mean optional parts. <br>
+* `[square_brackets]`: These indicate optional parts of a command. You can leave them out if you don't need them.<br>
   Example: `n/NAME [t/TAG]` can be `n/John Doe t/friend` or just `n/John Doe`.
 
-* `…` means you can repeat that part multiple times (including zero). <br>
+* `…`(ellipsis): This means you can provide multiple of the preceding item (including zero). <br>
   Example: `[t/TAG]…` can be left out, or used like `t/friend`, or `t/friend t/family`.
 
 * Extra text for commands that don't take inputs (like `help`, `list`, `exit`, `clear`) will be ignored. <br>
@@ -101,12 +101,9 @@ Edits an existing person in the address book.
 
 Format: `edit INDEX [c/CATEGORY] [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
+* Edits the person at the specified `INDEX` from the currently displayed contact list. The index **must be a positive integer** 1, 2, 3, …​
+* You must provide at least one field to change (e.g., n/, p/, etc.).
+* Editing tags will **replace all old tags** with the new ones you provide. To clear all tags, simply type t/ with nothing after it.
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
@@ -317,7 +314,20 @@ Furthermore, certain edits can cause TutorFlow to behave in unexpected ways (e.g
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous TutorFlow home folder.
+**A**: Moving your TutorFlow data is simple! All your contacts are stored in a single file. Just follow these steps:<br>
+
+**On your OLD computer:**
+1. Go to the folder where you run TutorFlow.
+2. You will see a sub-folder named ``data``.
+3. Inside the ``data`` folder, find the file named ``addressbook.json``. This file contains all your contacts.
+4. Copy this ``addressbook.json`` file to a USB drive or a cloud storage service (like Google Drive or Dropbox).<br>
+
+**On your NEW computer:**
+1. Download ``tutorflow.jar`` and place it in a new folder where you want to keep the application.
+2. Run TutorFlow **once** to let it create its necessary folders, then close it.
+3. You will now see a ``data`` folder in the same location as ``tutorflow.jar``.
+4. Copy your saved ``addressbook.json`` file from your USB drive into this new ``data`` folder.
+5. Your computer will ask if you want to replace the existing file. Choose **"Replace" or "Yes"**.
 
 --------------------------------------------------------------------------------------------------------------------
 
