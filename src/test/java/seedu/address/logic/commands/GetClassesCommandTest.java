@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static seedu.address.model.person.Category.TUTOR;
@@ -68,6 +69,9 @@ public class GetClassesCommandTest {
         CommandResult result = command.execute(model);
 
         assertTrue(result.getFeedbackToUser().contains("All Tuition Classes"));
+        assertTrue(result.getFeedbackToUser().contains("1. Monday 1200"));
+        assertTrue(result.getFeedbackToUser().contains("2. Wednesday 1400"));
+        assertTrue(result.getFeedbackToUser().contains("3. Friday 1600"));
     }
 
     @Test
@@ -77,6 +81,9 @@ public class GetClassesCommandTest {
         CommandResult result = command.execute(model);
 
         assertTrue(result.getFeedbackToUser().contains("Classes taught by Reyna Bong"));
+        assertTrue(result.getFeedbackToUser().contains("1. Monday 1200"));
+        assertTrue(result.getFeedbackToUser().contains("2. Wednesday 1400"));
+        assertFalse(result.getFeedbackToUser().contains("3. Friday 1600"));
     }
 
     @Test
@@ -105,5 +112,26 @@ public class GetClassesCommandTest {
 
         assertEquals(String.format(GetClassesCommand.MESSAGE_NO_CLASSES_FOUND, tutorNoClass.getName()),
                 exception.getMessage());
+    }
+
+    @Test
+    public void equals() {
+        GetClassesCommand a = new GetClassesCommand(new Name("Reyna Bong"));
+        GetClassesCommand b = new GetClassesCommand(new Name("Carol Lim"));
+
+        // same values -> returns true
+        assertTrue(a.equals(new GetClassesCommand(new Name("Reyna Bong"))));
+
+        // same object -> returns true
+        assertTrue(a.equals(a));
+
+        // null -> returns false
+        assertFalse(a.equals(null));
+
+        // different types -> returns false
+        assertFalse(a.equals(new ClearCommand()));
+
+        // different name -> returns false
+        assertFalse(a.equals(b));
     }
 }
