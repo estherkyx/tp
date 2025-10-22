@@ -185,7 +185,7 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
-### Creating a class time: `createClass`
+### Creating a class: `createClass`
 
 Creates a new class in the system. Create this first before linking a tutor and students to it.
 
@@ -197,43 +197,43 @@ Format: `createClass d/DAY ti/TIME`
 
 Examples:
 * `createClass d/MONDAY ti/H16` creates a class on Monday at 4:00 PM.
-* `createClass d/Tuesday ti/h12` creates a class on Tuesday at 12:00 PM.
+* `createClass d/TUESDAY ti/H12` creates a class on Tuesday at 12:00 PM.
 
 See also: [`linkClass`](#linking-a-person-to-a-class-time-linkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
 
 • [Back to Command Summary](#command-summary)
 
-### Linking a person to a class time: `linkClass`
+### Linking a person to a class: `linkClass`
 
-Links an existing student or tutor to an existing class time.
+Links an existing student or tutor to an existing class.
 
-Format: `linkClass DAY TIME n/NAME`
+Format: `linkClass d/DAY ti/TIME n/NAME`
 
 * `NAME` must exactly match a person in TutorFlow.
 * Students can join only one class time.
 * Tutors can teach multiple class times.
-* The class identified by `DAY` and `TIME` must already exist (created using `createClass`).
+* The class identified by `DAY` and `TIME` (case-insensitive) must already exist (created using `createClass`).
 
 Examples:
-* `linkClass MONDAY 1600 n/Roy Balakrishnan` links tutor Roy Balakrishnan to the Monday 4:00 PM class.
-* `linkClass SATURDAY 1000 n/Alice Pauline` links student Alice Pauline to the Saturday 10:00 AM class.
+* `linkClass d/MONDAY ti/H16 n/Roy Balakrishnan` links tutor Roy Balakrishnan to the Monday 4:00 PM class.
+* `linkClass d/SATURDAY ti/H12 n/Alice Pauline` links student Alice Pauline to the Saturday 12:00 PM class.
 
 See also: [`createClass`](#creating-a-class-time-createclass), [`unlinkClass`](#removing-a-person-from-a-class-time-unlinkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
 
 • [Back to Command Summary](#command-summary)
 
-### Removing a person from a class time: `unlinkClass`
+### Removing a person from a class: `unlinkClass`
 
-Removes the person from the class time.
+Removes the person from an existing class.
 
-Format: `unlinkClass DAY TIME n/NAME`
+Format: `unlinkClass d/DAY ti/TIME n/NAME`
 
 * `NAME` must exactly match a person currently linked to the class.
-* The class identified by `DAY` and `TIME` must already exist.
+* The class identified by `DAY` and `TIME` (case-insensitive) must already exist.
 
 Examples:
-* `unlinkClass MONDAY 1600 n/Roy Balakrishnan` removes tutor Roy Balakrishnan from the Monday 4:00 PM class.
-* `unlinkClass SATURDAY 1000 n/Alice Pauline` removes student Alice Pauline from the Saturday 10:00 AM class.
+* `unlinkClass d/MONDAY ti/H16 n/Roy Balakrishnan` removes tutor Roy Balakrishnan from the Monday 4:00 PM class.
+* `unlinkClass d/SATURDAY ti/H12 n/Alice Pauline` removes student Alice Pauline from the Saturday 12:00 PM class.
 
 See also: [`linkClass`](#linking-a-person-to-a-class-time-linkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
 
@@ -241,16 +241,16 @@ See also: [`linkClass`](#linking-a-person-to-a-class-time-linkclass), [`getClass
 
 ### Viewing class details: `getClassDetails`
 
-Shows the tutor (if any) and students (if any) linked to the class time you specify.
+Shows the tutor (if any) and students (if any) linked to the class time specified.
 
-Format: `getClassDetails DAY TIME`
+Format: `getClassDetails d/DAY ti/TIME`
 
 * `DAY` must be one of `MONDAY` to `SUNDAY`.
-* `TIME` must be a supported timeslot.
+* `TIME` must be a supported timeslot (refer to [`createClass`](#creating-a-class-time-createclass) for the timeslots).
 
 Examples:
-* `getClassDetails MONDAY 1600`
-* `getClassDetails SATURDAY 1000`
+* `getClassDetails d/MONDAY ti/H16` displays the tutor and students in the Monday 4:00 PM class.
+* `getClassDetails d/SATURDAY ti/H12` displays the tutor and students in the Saturday 12:00 PM class.
 
 See also: [`linkClass`](#linking-a-person-to-a-class-time-linkclass), [`getClasses`](#listing-classes-getclasses)
 
@@ -258,7 +258,7 @@ See also: [`linkClass`](#linking-a-person-to-a-class-time-linkclass), [`getClass
 
 ### Listing classes: `getClasses`
 
-Shows classes. If you add a tutor name, it shows only that tutor’s classes.
+Shows existing classes. If you add a tutor's name, it shows only that tutor’s classes.
 
 Format: `getClasses [n/TUTOR_NAME]`
 
