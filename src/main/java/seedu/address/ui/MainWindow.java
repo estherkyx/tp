@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.util.Optional;
+import java.util.function.Function;
 import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
@@ -16,6 +18,8 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonId;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -110,7 +114,12 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        // Create a person lookup function that searches through all persons
+        Function<PersonId, Optional<Person>> personLookup = personId ->
+            logic.getAddressBook().getPersonList().stream()
+                .filter(person -> person.getId().equals(personId))
+                .findFirst();
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList(), personLookup);
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
