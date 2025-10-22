@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-// import static seedu.address.testutil.TypicalPersons.ALICE;
-// import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.FIONA;
 import static seedu.address.testutil.TypicalPersons.GEORGE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -20,9 +20,13 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
-// import seedu.address.model.person.Student;
+import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
+import seedu.address.model.tuitionclass.Day;
+import seedu.address.model.tuitionclass.Time;
+import seedu.address.model.tuitionclass.TuitionClass;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.TuitionClassBuilder;
 
 /**
  * Contains integration tests and unit tests for GetStudentsCommand.
@@ -34,13 +38,25 @@ public class GetStudentsCommandTest {
     @BeforeEach
     public void setUp() {
         AddressBook typical = new AddressBook(getTypicalAddressBook());
-        Tutor newGeorge = (Tutor) new PersonBuilder(GEORGE).build();
-        /*
-        newGeorge.addStudent((Student) ALICE);
-        newGeorge.addStudent((Student) BENSON);
-        */
 
+        Tutor newGeorge = (Tutor) new PersonBuilder(GEORGE).build();
         typical.setPerson(GEORGE, newGeorge);
+
+        Student newAlice = (Student) new PersonBuilder(ALICE).build();
+        Student newBenson = (Student) new PersonBuilder(BENSON).build();
+        typical.setPerson(ALICE, newAlice);
+        typical.setPerson(BENSON, newBenson);
+
+        TuitionClass c1 = new TuitionClassBuilder().withDay(Day.MONDAY).withTime(Time.H14).withTutor(newGeorge).build();
+        TuitionClass c2 = new TuitionClassBuilder().withDay(Day.MONDAY).withTime(Time.H16).withTutor(newGeorge).build();
+        typical.addTuitionClass(c1);
+        typical.addTuitionClass(c2);
+
+        newAlice.setTuitionClass(Day.MONDAY, Time.H14);
+        c1.addStudentId(newAlice.getId());
+
+        newBenson.setTuitionClass(Day.MONDAY, Time.H16);
+        c2.addStudentId(newBenson.getId());
 
         model = new ModelManager(typical, new UserPrefs());
     }
@@ -51,23 +67,44 @@ public class GetStudentsCommandTest {
         CommandResult res = cmd.execute(model);
 
         ObservableList<Person> shown = model.getFilteredPersonList();
-        /*
-        assertEquals(2, shown.size(), "Expected exactly 2 linked students");
+        assertEquals(2, shown.size(), "Expected exactly 2 students");
         assertTrue(shown.stream().allMatch(p ->
                 p instanceof Student), "Filtered list must contain only Students");
-        */
-        assertEquals(String.format(GetStudentsCommand.MESSAGE_SUCCESS, 0, GEORGE.getName()),
-                res.getFeedbackToUser()); // to change
+        assertEquals(String.format(GetStudentsCommand.MESSAGE_SUCCESS, shown.size(), GEORGE.getName()),
+                res.getFeedbackToUser());
     }
 
     @Test
-    public void execute_tutorExistsNoStudents_showsEmptyMessage() throws Exception {
+    public void execute_tutorExistsNoStudents_showsNoStudent() throws Exception {
+        Tutor newFiona = (Tutor) new PersonBuilder(FIONA).build();
+        ((ModelManager) model).setPerson(FIONA, newFiona);
+
+        TuitionClass fionaClass = new TuitionClassBuilder()
+                .withDay(Day.TUESDAY).withTime(Time.H14).withTutor(newFiona)
+                .build();
+        ((ModelManager) model).addTuitionClass(fionaClass);
+
         GetStudentsCommand cmd = new GetStudentsCommand(FIONA.getName());
         CommandResult res = cmd.execute(model);
 
-        // assertEquals(0, model.getFilteredPersonList().size());
-        assertEquals(String.format(GetStudentsCommand.MESSAGE_SUCCESS, 0, FIONA.getName()),
-                res.getFeedbackToUser()); // to change
+        ObservableList<Person> shown = model.getFilteredPersonList();
+        assertEquals(0, shown.size(), "Expected exactly 0 students");
+        assertEquals(String.format(GetStudentsCommand.MESSAGE_NO_STUDENT_LINKED, FIONA.getName()),
+                res.getFeedbackToUser());
+    }
+
+    @Test
+    public void execute_tutorExistsNoClasses_showsNoStudent() throws Exception {
+        Tutor newFiona = (Tutor) new PersonBuilder(FIONA).build();
+        ((ModelManager) model).setPerson(FIONA, newFiona);
+
+        GetStudentsCommand cmd = new GetStudentsCommand(FIONA.getName());
+        CommandResult res = cmd.execute(model);
+
+        ObservableList<Person> shown = model.getFilteredPersonList();
+        assertEquals(0, shown.size(), "Expected exactly 0 students");
+        assertEquals(String.format(GetStudentsCommand.MESSAGE_NO_STUDENT_LINKED, FIONA.getName()),
+                res.getFeedbackToUser());
     }
 
     @Test

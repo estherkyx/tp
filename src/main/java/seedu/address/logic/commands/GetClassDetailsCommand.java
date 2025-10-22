@@ -1,15 +1,18 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.ClassQueries.getStudentsInClass;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.PersonId;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
 import seedu.address.model.tuitionclass.Day;
@@ -55,29 +58,32 @@ public class GetClassDetailsCommand extends Command {
             throw new CommandException(MESSAGE_CLASS_NOT_FOUND);
         }
         TuitionClass tuitionClass = classOpt.get();
-        Tutor tutor = (Tutor) model.getAddressBook().getPersonList().stream()
+        Optional<Tutor> tutorOptional = model.getAddressBook().getPersonList().stream()
                     .filter(t -> t.getId().equals(tuitionClass.getTutorId()))
-                    .findFirst().orElse(null);
-        List<Student> students = model.getAddressBook().getPersonList().stream()
-                .filter(t -> tuitionClass.getStudentIds().contains(t.getId()))
-                .map(t -> (Student) t)
-                .toList();
+                    .filter(p -> p instanceof Tutor)
+                    .map(p -> (Tutor) p)
+                    .findFirst();
+        List<Student> students = getStudentsInClass(model, tuitionClass);
+        Set<PersonId> studentIds = students.stream()
+                .map(Student::getId)
+                .collect(Collectors.toSet());
 
-        StringBuilder sb = new StringBuilder("Class on ").append(day).append(", ").append(time).append("\n");
-        sb.append("Tutor: ");
-        if (isNull(tutor)) {
-            sb.append("None");
-        } else {
-            sb.append(tutor.getName());
-        }
+        String timeString = time.toString().substring(1) + "00";
+        StringBuilder sb = new StringBuilder("Class on ").append(day).append(", ").append(timeString).append("\n");
+        sb.append("Tutor: ").append(tutorOptional.map(t -> t.getName().toString()).orElse("None"));
         sb.append("\nStudents:");
         if (students.isEmpty()) {
-            sb.append(" None ");
+            sb.append(" None");
+        } else {
+            String list = students.stream()
+                    .map(s -> s.getName().toString())
+                    .collect(Collectors.joining(", "));
+            sb.append(" ").append(list);
         }
-        for (Student s : students) {
-            sb.append(" ").append(s.getName()).append(",");
-        }
-        sb.deleteCharAt(sb.length() - 1);
+
+        model.updateFilteredPersonList(p -> studentIds.contains(p.getId())
+                || tutorOptional.map(t -> t.getId().equals(p.getId())).orElse(false));
+
 
         return new CommandResult(sb.toString());
     }

@@ -1,16 +1,21 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-
-import java.util.Optional;
-// import java.util.Set;
+import static seedu.address.logic.ClassQueries.findTutorByName;
+import static seedu.address.logic.ClassQueries.getClassesByTutor;
+import static seedu.address.logic.ClassQueries.getStudentsInClass;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Name;
-// import seedu.address.model.person.PersonId;
-// import seedu.address.model.person.Student;
+import seedu.address.model.person.PersonId;
+import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
+import seedu.address.model.tuitionclass.TuitionClass;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Retrieves all students of a specified tutor in the address book.
@@ -19,15 +24,15 @@ public class GetStudentsCommand extends Command {
 
     public static final String COMMAND_WORD = "getStudents";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all students linked to a tutor.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all students taught by a tutor.\n"
             + "Parameters: n/TUTOR_NAME\n"
             + "Example: " + COMMAND_WORD + " n/Aaron Tan";
 
-    public static final String MESSAGE_SUCCESS = "Listed %d student(s) linked to %s.";
+    public static final String MESSAGE_SUCCESS = "Listed %d student(s) taught by '%s'.";
 
     public static final String MESSAGE_TUTOR_NOT_FOUND = "Tutor with name '%s' not found.";
 
-    public static final String MESSAGE_NO_STUDENT_LINKED = "Tutor '%s' has no linked student.";
+    public static final String MESSAGE_NO_STUDENT_LINKED = "Tutor '%s' has no students.";
 
     private final Name tutorName;
 
@@ -47,24 +52,31 @@ public class GetStudentsCommand extends Command {
         Tutor tutor = findTutorByName(model, tutorName)
                 .orElseThrow(() -> new CommandException(String.format(MESSAGE_TUTOR_NOT_FOUND, tutorName)));
 
-        // To be updated with getClasses and getClassDetails
+        List<TuitionClass> tutorClasses = getClassesByTutor(model, tutor);
 
-        /*
-        Set<PersonId> linkedStudentIds = tutor.getStudentsIds();
-
-        // Tutor has no linked students
-        if (linkedStudentIds.isEmpty()) {
+        // Tutor has no classes, hence no students
+        if (tutorClasses.isEmpty()) {
             model.updateFilteredPersonList(p -> false);
-            return new CommandResult(String.format(MESSAGE_NO_STUDENT_LINKED, tutor.getName()));
+            return new CommandResult(String.format(MESSAGE_NO_STUDENT_LINKED, tutorName));
+        }
+
+        Set<PersonId> allStudentIds = tutorClasses.stream()
+                .flatMap(c -> getStudentsInClass(model, c).stream())
+                .map(p -> p.getId())
+                .collect(Collectors.toSet());
+
+        // Tutor's classes have no students
+        if (allStudentIds.isEmpty()) {
+            model.updateFilteredPersonList(p -> false);
+            return new CommandResult(String.format(MESSAGE_NO_STUDENT_LINKED, tutorName));
         }
 
         // Update UI to show filtered list of students
         model.updateFilteredPersonList(p ->
-                p instanceof Student && linkedStudentIds.contains(p.getId()));
+                p instanceof Student && allStudentIds.contains(p.getId()));
         int shown = model.getFilteredPersonList().size();
-        */
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, 0, tutor.getName()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, shown, tutor.getName()));
     }
 
     @Override
@@ -82,13 +94,5 @@ public class GetStudentsCommand extends Command {
         // state check
         GetStudentsCommand e = (GetStudentsCommand) other;
         return tutorName.equals(e.tutorName);
-    }
-
-    private Optional<Tutor> findTutorByName(Model model, Name name) {
-        return model.getAddressBook().getPersonList().stream()
-                .filter(p -> p instanceof Tutor)
-                .map(p -> (Tutor) p)
-                .filter(t -> t.getName().equals(name))
-                .findFirst();
     }
 }
