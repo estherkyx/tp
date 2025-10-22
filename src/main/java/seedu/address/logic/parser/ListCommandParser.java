@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.ListCommand.MESSAGE_MISSING_CATEGORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CATEGORY;
 
 import seedu.address.logic.commands.ListCommand;
@@ -30,16 +31,23 @@ public class ListCommandParser implements Parser<ListCommand> {
                     MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
         }
 
-        String rawName = argMultimap.getValue(PREFIX_CATEGORY).orElse("").trim();
-        if (rawName.isEmpty()) {
+        // user input is "list"
+        var opt = argMultimap.getValue(PREFIX_CATEGORY);
+        if (opt.isEmpty()) {
             return new ListCommand();
+        }
+
+        // user input is "list c/" without a specified category
+        String rawName = opt.get().trim();
+        if (rawName.isEmpty()) {
+            throw new ParseException(MESSAGE_MISSING_CATEGORY);
         }
 
         try {
             Category category = Category.fromString(rawName);
             return new ListCommand(category);
         } catch (IllegalArgumentException e) {
-            throw new ParseException(ListCommand.MESSAGE_INVALID_CATEGORY);
+            throw new ParseException(String.format(ListCommand.MESSAGE_INVALID_CATEGORY, rawName));
         }
     }
 }
