@@ -50,12 +50,12 @@ TutorFlow is a desktop app for tuition centre managers. It helps you keep track 
   For example, in `n/NAME`, you replace `NAME` with the actual name: `n/John Doe`.
 
 * `[square_brackets]`: These indicate optional parts of a command. You can leave them out if you don't need them.<br>
-  Example: `n/NAME [t/TAG]` can be `n/John Doe t/friend` or just `n/John Doe`.
+  Example: `n/NAME [t/TAG]` can be `n/John Doe t/J1` or just `n/John Doe`.
 
 * `…`(ellipsis): This means you can provide multiple of the preceding item (including zero). <br>
-  Example: `[t/TAG]…` can be left out, or used like `t/friend`, or `t/friend t/family`.
+  Example: `[t/TAG]…` can be left out, or used like `t/J1`, or `t/J2 t/Trial lesson `.
 
-* Extra text for commands that don't take inputs (like `help`, `list`, `exit`, `clear`) will be ignored. <br>
+* Extra text for commands that don't take inputs (like `help`, `exit`, `clear`) will be ignored. <br>
   Example: `help 123` is treated as `help`.
 </div>
 
@@ -83,7 +83,7 @@ A person can have any number of tags (including 0)
 
 Examples:
 * `add c/student n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add c/tutor n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/GP`
+* `add c/tutor n/Betsy Crowe t/GP Paper 1 e/betsycrowe@example.com a/Newgate Prison p/1234567 t/New hire`
 
 • [Back to Command Summary](#command-summary)
 
@@ -275,8 +275,10 @@ Format: `delete INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+* `list` followed by `delete 2` deletes the 2nd person in the address book.
+
+![result for 'delete 2'](images/delete2Result.png)
 
 • [Back to Command Summary](#command-summary)
 
@@ -342,7 +344,7 @@ Furthermore, certain edits can cause TutorFlow to behave in unexpected ways (e.g
 
 Action | Format, Examples
 --------|------------------
-[Add](#adding-a-person-add) | `add c/CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add c/parent n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+[Add](#adding-a-person-add) | `add c/CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add c/parent n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/J2 t/Trial lesson`
 [Clear](#clearing-all-entries--clear) | `clear`
 [Delete](#deleting-a-person--delete) | `delete INDEX`<br> e.g., `delete 3`
 [Edit](#editing-a-person--edit) | `edit INDEX [c/CATEGORY] [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
