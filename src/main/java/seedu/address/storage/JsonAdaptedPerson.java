@@ -41,8 +41,6 @@ class JsonAdaptedPerson {
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final String linkedParentId;
     private final List<String> childrenIds;
-    private final String linkedTutorId;
-    private final List<String> studentIds;
     private final String tuitionDay;
     private final String tuitionTime;
 
@@ -56,8 +54,6 @@ class JsonAdaptedPerson {
             @JsonProperty("tags") List<JsonAdaptedTag> tags,
             @JsonProperty("linkedParentId") String linkedParentId,
             @JsonProperty("childrenIds") List<String> childrenIds,
-            @JsonProperty("linkedTutorId") String linkedTutorId,
-            @JsonProperty("studentIds") List<String> studentIds,
             @JsonProperty("tuitionDay") String tuitionDay,
             @JsonProperty("tuitionTime") String tuitionTime) {
         this.id = id;
@@ -74,12 +70,6 @@ class JsonAdaptedPerson {
             this.childrenIds = new ArrayList<>(childrenIds);
         } else {
             this.childrenIds = new ArrayList<>();
-        }
-        this.linkedTutorId = linkedTutorId;
-        if (studentIds != null) {
-            this.studentIds = new ArrayList<>(studentIds);
-        } else {
-            this.studentIds = new ArrayList<>();
         }
         this.tuitionDay = tuitionDay;
         this.tuitionTime = tuitionTime;
@@ -99,13 +89,11 @@ class JsonAdaptedPerson {
                 .map(JsonAdaptedTag::new)
                 .toList());
 
-        // Handle Student, Parent and Tutor specific fields
+        // Handle Student, Parent and TuitionClass specific fields
         if (source instanceof Student) {
             Student student = (Student) source;
             this.linkedParentId = student.getParentId() != null ? student.getParentId().getValue() : null;
             this.childrenIds = new ArrayList<>(); // Student has no children
-            this.linkedTutorId = student.getTutorId() != null ? student.getTutorId().getValue() : null;
-            this.studentIds = new ArrayList<>(); //Student has no tutor
             this.tuitionDay = student.getTuitionDay().map(Enum::toString).orElse(null);
             this.tuitionTime = student.getTuitionTime().map(Enum::toString).orElse(null);
         } else if (source instanceof Parent) {
@@ -114,27 +102,18 @@ class JsonAdaptedPerson {
             this.childrenIds = parent.getChildrenIds().stream()
                     .map(PersonId::getValue)
                     .collect(Collectors.toList());
-            this.linkedTutorId = null; // Parent has no linked tutor
-            this.studentIds = new ArrayList<>();
             this.tuitionDay = null;
             this.tuitionTime = null;
-
         } else if (source instanceof Tutor) {
             Tutor tutor = (Tutor) source;
             this.linkedParentId = null; // Tutor has no linked parent
             this.childrenIds = new ArrayList<>();
-            this.linkedTutorId = null; // Tutor has no linked tutor
-            this.studentIds = tutor.getStudentsIds().stream()
-                    .map(PersonId::getValue)
-                    .collect(Collectors.toList());
             this.tuitionDay = null;
             this.tuitionTime = null;
         } else {
             // Default case for other Person types
             this.linkedParentId = null;
             this.childrenIds = new ArrayList<>();
-            this.linkedTutorId = null;
-            this.studentIds = new ArrayList<>();
             this.tuitionDay = null;
             this.tuitionTime = null;
         }
@@ -218,20 +197,11 @@ class JsonAdaptedPerson {
             if (linkedParentId != null) {
                 student.setParentId(PersonId.of(linkedParentId));
             }
-            if (linkedTutorId != null) {
-                student.setTutorId(PersonId.of(linkedTutorId));
-            }
         }
         if (person instanceof Parent && childrenIds != null) {
             Parent parent = (Parent) person;
             for (String childId : childrenIds) {
                 parent.addChildId(PersonId.of(childId));
-            }
-        }
-        if (person instanceof Tutor && studentIds != null) {
-            Tutor tutor = (Tutor) person;
-            for (String studentId : studentIds) {
-                tutor.addStudentId(PersonId.of(studentId));
             }
         }
         return person;
