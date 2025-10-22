@@ -20,7 +20,7 @@ import seedu.address.model.tuitionclass.Time;
 import seedu.address.model.tuitionclass.TuitionClass;
 
 /**
- * Links a student to an existing tuition class in the address book.
+ * Links a student or tutor to an existing tuition class in the address book.
  */
 public class LinkClassCommand extends Command {
 
@@ -48,7 +48,7 @@ public class LinkClassCommand extends Command {
     private final Name personName;
 
     /**
-     * Creates a LinkClassCommand to link the specified student to a class.
+     * Creates a LinkClassCommand to link the specified student/tutor to a class.
      */
     public LinkClassCommand(Day day, Time time, Name personName) {
         requireNonNull(day);
