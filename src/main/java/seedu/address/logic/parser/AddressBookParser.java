@@ -24,6 +24,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.LinkClassCommand;
 import seedu.address.logic.commands.LinkParentCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.UnlinkClassCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -98,6 +99,9 @@ public class AddressBookParser {
 
         case LinkClassCommand.COMMAND_WORD:
             return new LinkClassCommandParser().parse(arguments);
+
+        case UnlinkClassCommand.COMMAND_WORD:
+            return new UnlinkClassCommandParser().parse(arguments);
 
         case GetClassesCommand.COMMAND_WORD:
             return new GetClassesCommandParser().parse(arguments);
