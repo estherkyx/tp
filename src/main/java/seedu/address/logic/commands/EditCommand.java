@@ -26,8 +26,13 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Category;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonFactory;
+import seedu.address.model.person.PersonId;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Student;
+import seedu.address.model.person.Tutor;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -81,7 +86,7 @@ public class EditCommand extends Command {
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor, model);
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
@@ -96,7 +101,8 @@ public class EditCommand extends Command {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
+    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor,
+                                            Model model) {
         assert personToEdit != null;
 
         Category updatedCategory = editPersonDescriptor.getCategory().orElse(personToEdit.getCategory());
@@ -106,7 +112,97 @@ public class EditCommand extends Command {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedCategory, updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        // Preserve the Person subclass and relationship data by using PersonFactory with the existing ID
+        Person editedPerson = PersonFactory.createPerson(personToEdit.getId(), updatedCategory, updatedName,
+                updatedPhone, updatedEmail, updatedAddress, updatedTags);
+
+        // Preserve relationship data for specific subclasses
+        if (personToEdit instanceof Student && editedPerson instanceof Student) {
+            Student originalStudent = (Student) personToEdit;
+            Student editedStudent = (Student) editedPerson;
+
+            // Preserve parent and tutor relationships
+            if (originalStudent.getParentId() != null) {
+                editedStudent.setParentId(originalStudent.getParentId());
+            }
+
+        } else if (personToEdit instanceof Parent && editedPerson instanceof Parent) {
+            Parent originalParent = (Parent) personToEdit;
+            Parent editedParent = (Parent) editedPerson;
+
+            // Preserve children relationships
+            for (PersonId childId : originalParent.getChildrenIds()) {
+                editedParent.addChildId(childId);
+            }
+        } else if (personToEdit instanceof Tutor && editedPerson instanceof Tutor) {
+            Tutor originalTutor = (Tutor) personToEdit;
+            Tutor editedTutor = (Tutor) editedPerson;
+
+            // TODO: Preserve class relationships
+        } else { // when personToEdit and editedPerson are not the same type
+            // Category changed - need to clean up old relationships
+            cleanupOldRelationships(personToEdit, model);
+        }
+
+        return editedPerson;
+    }
+
+    /**
+     * Cleans up old relationships when a person's category changes.
+     * Removes the person from their old relationships and updates related persons.
+     */
+    private static void cleanupOldRelationships(Person personToEdit, Model model) {
+        List<Person> allPersons = model.getAddressBook().getPersonList();
+
+        if (personToEdit instanceof Student) {
+            Student student = (Student) personToEdit;
+
+            // Remove from parent's children list
+            if (student.getParentId() != null) {
+                Optional<Person> parentOpt = allPersons.stream()
+                    .filter(p -> p.getId().equals(student.getParentId()))
+                    .findFirst();
+                if (parentOpt.isPresent() && parentOpt.get() instanceof Parent) {
+                    Parent parent = (Parent) parentOpt.get();
+                    parent.removeChildId(student.getId());
+                    model.setPerson(parentOpt.get(), parent);
+                }
+            }
+
+            // Remove from tutor's students list
+            if (student.getTutorId() != null) {
+                Optional<Person> tutorOpt = allPersons.stream()
+                    .filter(p -> p.getId().equals(student.getTutorId()))
+                    .findFirst();
+                if (tutorOpt.isPresent() && tutorOpt.get() instanceof Tutor) {
+                    Tutor tutor = (Tutor) tutorOpt.get();
+                    tutor.removeStudentId(student.getId());
+                    model.setPerson(tutorOpt.get(), tutor);
+                }
+            }
+
+        } else if (personToEdit instanceof Parent) {
+            Parent parent = (Parent) personToEdit;
+
+            // Remove from all children's parent references
+            for (PersonId childId : parent.getChildrenIds()) {
+                Optional<Person> childOpt = allPersons.stream()
+                    .filter(p -> p.getId().equals(childId))
+                    .findFirst();
+                if (childOpt.isPresent() && childOpt.get() instanceof Student) {
+                    Student child = (Student) childOpt.get();
+                    if (child.getParentId() != null && child.getParentId().equals(parent.getId())) {
+                        child.clearParent();
+                        model.setPerson(childOpt.get(), child);
+                    }
+                }
+            }
+
+        } else if (personToEdit instanceof Tutor) {
+            Tutor tutor = (Tutor) personToEdit;
+
+            // TODO: Remove class relationships
+        }
     }
 
     @Override

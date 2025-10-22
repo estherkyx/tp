@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-TutorFlow is a **lightweight desktop address-book application** for **managing contacts at small-to-medium GP tuition centres**. It is optimized for use through a **Command Line Interface (CLI)** while also providing a simple a **Graphical User Interface (GUI)** for visual tasks. This guide explains how to install, run and use TutorFlow to manage students, parents and tutors. For the tech-savvy GP tuition centre receptionists **comfortable with a command line and basic file operations**, TutorFlow can get your contact management tasks done faster than traditional GUI apps.
+TutorFlow is a desktop app for tuition centre managers. It helps you keep track of students, parents, tutors, and classes using simple type-and-press-Enter commands.
 
 * Table of Contents
 {:toc}
@@ -44,24 +44,19 @@ TutorFlow is a **lightweight desktop address-book application** for **managing c
 
 <div markdown="block" class="alert alert-info">
 
-**:information_source: Notes about the command format:**<br>
+**:information_source: How to read command formats**<br>
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `n/NAME`, `NAME` is a parameter which can be used as `n/John Doe`.
+*  `UPPER_CASE`: These are placeholders that you replace with your own information. <br>
+  For example, in `n/NAME`, you replace `NAME` with the actual name: `n/John Doe`.
 
-* Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+* `[square_brackets]`: These indicate optional parts of a command. You can leave them out if you don't need them.<br>
+  Example: `n/NAME [t/TAG]` can be `n/John Doe t/J1` or just `n/John Doe`.
 
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* `…`(ellipsis): This means you can provide multiple of the preceding item (including zero). <br>
+  Example: `[t/TAG]…` can be left out, or used like `t/J1`, or `t/J2 t/Trial lesson `.
 
-* Parameters can be in any order.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
-
-* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+* Extra text for commands that don't take inputs (like `help`, `exit`, `clear`) will be ignored. <br>
+  Example: `help 123` is treated as `help`.
 </div>
 
 ### Viewing help : `help`
@@ -71,6 +66,9 @@ Shows a message explaining how to access the help page.
 ![help message](images/helpMessage.png)
 
 Format: `help`
+
+• [Back to Command Summary](#command-summary)
+
 
 
 ### Adding a person: `add`
@@ -85,7 +83,9 @@ A person can have any number of tags (including 0)
 
 Examples:
 * `add c/student n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add c/tutor n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/GP`
+* `add c/tutor n/Betsy Crowe t/GP Paper 1 e/betsycrowe@example.com a/Newgate Prison p/1234567 t/New hire`
+
+• [Back to Command Summary](#command-summary)
 
 ### Listing all persons : `list`
 
@@ -93,22 +93,23 @@ Shows a list of all persons in the address book.
 
 Format: `list`
 
+• [Back to Command Summary](#command-summary)
+
 ### Editing a person : `edit`
 
 Edits an existing person in the address book.
 
 Format: `edit INDEX [c/CATEGORY] [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
+* Edits the person at the specified `INDEX` from the currently displayed contact list. The index **must be a positive integer** 1, 2, 3, …​
+* You must provide at least one field to change (e.g., n/, p/, etc.).
+* Editing tags will **replace all old tags** with the new ones you provide. To clear all tags, simply type t/ with nothing after it.
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+• [Back to Command Summary](#command-summary)
 
 ### Linking a student to a parent : `linkParent`
 
@@ -122,7 +123,9 @@ Format: `linkParent n/STUDENT_NAME n/PARENT_NAME`
 * The person identified as the student must have the 'student' category, and the person identified as the parent must have the 'parent' category.
 
 Example:
-* `linkParent n/Alice Pauline n/Fiona Kunz` Links the student 'Alice Pauline' to the parent 'Fiona Kunz', assuming both exist in the address book with the correct categories.
+* `linkParent n/Alice Pauline n/Daniel Meier` Links the student 'Alice Pauline' to the parent 'Daniel Meier', assuming both exist in the address book with the correct categories.
+
+• [Back to Command Summary](#command-summary)
 
 ### Locating persons by name: `find`
 
@@ -140,7 +143,10 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
+
   ![result for 'find alex david'](images/findAlexDavidResult.png)
+
+• [Back to Command Summary](#command-summary)
 
 ### Finding a student's parent: `getParent`
 
@@ -154,6 +160,8 @@ Format: `getParent n/STUDENT_NAME`
 Examples:
 * `getParent n/John Doe` shows the parent of student John Doe.
 
+• [Back to Command Summary](#command-summary)
+
 ### Finding all students of a tutor: `getStudents`
 
 Displays all students of a specified tutor.
@@ -166,6 +174,96 @@ Format: `getStudents n/TUTOR_NAME`
 Examples:
 * `getStudents n/Roy Balakrishnan` shows all students of  tutor Roy Balakrishnan.
 
+• [Back to Command Summary](#command-summary)
+
+### Creating a class time: `createClass`
+
+Creates a new class time in the system. Create this first before linking a tutor and students to it.
+
+Format: `createClass DAY TIME`
+
+* `DAY` must be one of `MONDAY`, `TUESDAY`, `WEDNESDAY`, `THURSDAY`, `FRIDAY`, `SATURDAY`, `SUNDAY`.
+* `TIME` must be a supported timeslot (e.g. `0800`, `1000`, `1400`, `1600`).
+* The class is created without linked persons. Link a tutor/students using `linkClass`.
+
+Examples:
+* `createClass MONDAY 1600` creates a class on Monday at 4:00 PM.
+* `createClass SATURDAY 1000` creates a class on Saturday at 10:00 AM.
+
+See also: [`linkClass`](#linking-a-person-to-a-class-time-linkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
+
+• [Back to Command Summary](#command-summary)
+
+### Linking a person to a class time: `linkClass`
+
+Links an existing student or tutor to an existing class time.
+
+Format: `linkClass DAY TIME n/NAME`
+
+* `NAME` must exactly match a person in TutorFlow.
+* Students can join only one class time.
+* Tutors can teach multiple class times.
+* The class identified by `DAY` and `TIME` must already exist (created using `createClass`).
+
+Examples:
+* `linkClass MONDAY 1600 n/Roy Balakrishnan` links tutor Roy Balakrishnan to the Monday 4:00 PM class.
+* `linkClass SATURDAY 1000 n/Alice Pauline` links student Alice Pauline to the Saturday 10:00 AM class.
+
+See also: [`createClass`](#creating-a-class-time-createclass), [`unlinkClass`](#removing-a-person-from-a-class-time-unlinkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
+
+• [Back to Command Summary](#command-summary)
+
+### Removing a person from a class time: `unlinkClass`
+
+Removes the person from the class time.
+
+Format: `unlinkClass DAY TIME n/NAME`
+
+* `NAME` must exactly match a person currently linked to the class.
+* The class identified by `DAY` and `TIME` must already exist.
+
+Examples:
+* `unlinkClass MONDAY 1600 n/Roy Balakrishnan` removes tutor Roy Balakrishnan from the Monday 4:00 PM class.
+* `unlinkClass SATURDAY 1000 n/Alice Pauline` removes student Alice Pauline from the Saturday 10:00 AM class.
+
+See also: [`linkClass`](#linking-a-person-to-a-class-time-linkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
+
+• [Back to Command Summary](#command-summary)
+
+### Viewing class details: `getClassDetails`
+
+Shows the tutor (if any) and students (if any) linked to the class time you specify.
+
+Format: `getClassDetails DAY TIME`
+
+* `DAY` must be one of `MONDAY` to `SUNDAY`.
+* `TIME` must be a supported timeslot.
+
+Examples:
+* `getClassDetails MONDAY 1600`
+* `getClassDetails SATURDAY 1000`
+
+See also: [`linkClass`](#linking-a-person-to-a-class-time-linkclass), [`getClasses`](#listing-classes-getclasses)
+
+• [Back to Command Summary](#command-summary)
+
+### Listing classes: `getClasses`
+
+Shows classes. If you add a tutor name, it shows only that tutor’s classes.
+
+Format: `getClasses [n/TUTOR_NAME]`
+
+* Without `n/TUTOR_NAME`: shows all classes in the system.
+* With `n/TUTOR_NAME`: shows only classes linked to the specified tutor.
+
+Examples:
+* `getClasses` shows all classes.
+* `getClasses n/Roy Balakrishnan` shows classes linked to tutor Roy Balakrishnan.
+
+See also: [`getClassDetails`](#viewing-class-details-getclassdetails), [`linkClass`](#linking-a-person-to-a-class-time-linkclass)
+
+• [Back to Command Summary](#command-summary)
+
 ### Deleting a person : `delete`
 
 Deletes the specified person from the address book.
@@ -177,8 +275,12 @@ Format: `delete INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+* `list` followed by `delete 2` deletes the 2nd person in the address book.
+
+![result for 'delete 2'](images/delete2Result.png)
+
+• [Back to Command Summary](#command-summary)
 
 ### Clearing all entries : `clear`
 
@@ -186,11 +288,15 @@ Clears all entries from the address book.
 
 Format: `clear`
 
+• [Back to Command Summary](#command-summary)
+
 ### Exiting the program : `exit`
 
 Exits the program.
 
 Format: `exit`
+
+• [Back to Command Summary](#command-summary)
 
 ### Saving the data
 
@@ -210,7 +316,20 @@ Furthermore, certain edits can cause TutorFlow to behave in unexpected ways (e.g
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous TutorFlow home folder.
+**A**: Moving your TutorFlow data is simple! All your contacts are stored in a single file. Just follow these steps:<br>
+
+**On your OLD computer:**
+1. Go to the folder where you run TutorFlow.
+2. You will see a sub-folder named ``data``.
+3. Inside the ``data`` folder, find the file named ``addressbook.json``. This file contains all your contacts.
+4. Copy this ``addressbook.json`` file to a USB drive or a cloud storage service (like Google Drive or Dropbox).<br>
+
+**On your NEW computer:**
+1. Download ``tutorflow.jar`` and place it in a new folder where you want to keep the application.
+2. Run TutorFlow **once** to let it create its necessary folders, then close it.
+3. You will now see a ``data`` folder in the same location as ``tutorflow.jar``.
+4. Copy your saved ``addressbook.json`` file from your USB drive into this new ``data`` folder.
+5. Your computer will ask if you want to replace the existing file. Choose **"Replace" or "Yes"**.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -221,17 +340,22 @@ Furthermore, certain edits can cause TutorFlow to behave in unexpected ways (e.g
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Command summary
+## Command Summary
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add c/CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add c/parent n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Clear** | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [c/CATEGORY] [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Link Parent** | `linkParent n/STUDENT_NAME n/PARENT_NAME`<br> e.g., `linkParent n/Alice Pauline n/Fiona Kunz`
-**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**Get Parent** | `getParent n/STUDENT_NAME`<br> e.g., `getParent n/John Doe`
-**Get Students** | `getStudents n/TUTOR_NAME`<br> e.g., `getStudents n/Roy Balakrishnan`
-**List** | `list`
-**Help** | `help`
+[Add](#adding-a-person-add) | `add c/CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add c/parent n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/J2 t/Trial lesson`
+[Clear](#clearing-all-entries--clear) | `clear`
+[Delete](#deleting-a-person--delete) | `delete INDEX`<br> e.g., `delete 3`
+[Edit](#editing-a-person--edit) | `edit INDEX [c/CATEGORY] [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+[Link Parent](#linking-a-student-to-a-parent--linkparent) | `linkParent n/STUDENT_NAME n/PARENT_NAME`<br> e.g., `linkParent n/Alice Pauline n/Fiona Kunz`
+[Find](#locating-persons-by-name-find) | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+[Get Parent](#finding-a-students-parent-getparent) | `getParent n/STUDENT_NAME`<br> e.g., `getParent n/John Doe`
+[Get Students](#finding-all-students-of-a-tutor-getstudents) | `getStudents n/TUTOR_NAME`<br> e.g., `getStudents n/Roy Balakrishnan`
+[Create Class](#creating-a-class-time-createclass) | `createClass DAY TIME`<br> e.g., `createClass MONDAY 1600`
+[Link Class](#linking-a-person-to-a-class-time-linkclass) | `linkClass DAY TIME n/NAME`<br> e.g., `linkClass MONDAY 1600 n/Roy Balakrishnan`
+[Unlink Class](#removing-a-person-from-a-class-time-unlinkclass) | `unlinkClass DAY TIME n/NAME`<br> e.g., `unlinkClass MONDAY 1600 n/Alice Pauline`
+[Get Class Details](#viewing-class-details-getclassdetails) | `getClassDetails DAY TIME`<br> e.g., `getClassDetails MONDAY 1600`
+[Get Classes](#listing-classes-getclasses) | `getClasses [n/TUTOR_NAME]`<br> e.g., `getClasses n/Roy Balakrishnan`
+[List](#listing-all-persons--list) | `list`
+[Help](#viewing-help--help) | `help`
