@@ -88,7 +88,7 @@ public class TuitionClass {
         this.tutorId = tutorId;
     }
 
-    public void removeTutorId(PersonId tutorId) {
+    public void removeTutorId() {
         this.tutorId = null;
     }
 

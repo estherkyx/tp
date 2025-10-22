@@ -87,7 +87,7 @@ public class UnlinkClassCommand extends Command {
         if (personToUnlink instanceof Student) {
             return unlinkStudent(model, (Student) personToUnlink, classToUnlink);
         } else if (personToUnlink instanceof Tutor) {
-            return unassignTutor(model, (Tutor) personToUnlink, classToUnlink);
+            return unassignTutor((Tutor) personToUnlink, classToUnlink);
         } else {
             throw new CommandException(MESSAGE_PERSON_NOT_STUDENT_OR_TUTOR);
         }
@@ -112,13 +112,13 @@ public class UnlinkClassCommand extends Command {
     /**
      * Handles the logic for unassigning a tutor.
      */
-    private CommandResult unassignTutor(Model model, Tutor tutor, TuitionClass tuitionClass) throws CommandException {
+    private CommandResult unassignTutor(Tutor tutor, TuitionClass tuitionClass) throws CommandException {
         if (isNull(tuitionClass.getTutorId())) {
             throw new CommandException(MESSAGE_CLASS_HAS_NO_TUTOR);
         } else if (!tuitionClass.getTutorId().equals(tutor.getId())) {
             throw new CommandException(MESSAGE_TUTOR_NOT_TEACHING_THIS_CLASS);
         }
-        tuitionClass.removeTutorId(tutor.getId());
+        tuitionClass.removeTutorId();
 
         return new CommandResult(String.format(MESSAGE_UNASSIGN_TUTOR_SUCCESS,
                 tutor.getName(), tuitionClass.getDay(), tuitionClass.getTime()));
