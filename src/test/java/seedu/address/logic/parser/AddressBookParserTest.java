@@ -22,6 +22,7 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.GetClassesCommand;
 import seedu.address.logic.commands.GetParentCommand;
 import seedu.address.logic.commands.GetStudentsCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -112,6 +113,18 @@ public class AddressBookParserTest {
         GetParentCommand command = (GetParentCommand) parser.parseCommand(
                 GetParentCommand.COMMAND_WORD + " " + PREFIX_NAME + student);
         assertEquals(new GetParentCommand(new Name(student)), command);
+    }
+
+    @Test
+    public void parseCommand_getClasses() throws Exception {
+        // No tutor parameter
+        assertEquals(new GetClassesCommand(), parser.parseCommand("getClasses"));
+
+        // With tutor parameter
+        String tutor = "John Doe";
+        GetClassesCommand command = (GetClassesCommand) parser.parseCommand(
+                GetClassesCommand.COMMAND_WORD + " " + PREFIX_NAME + tutor);
+        assertEquals(new GetClassesCommand(new Name(tutor)), command);
     }
 
     @Test

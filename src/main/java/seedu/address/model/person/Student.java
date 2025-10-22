@@ -16,7 +16,6 @@ public class Student extends Person {
 
     // each student can have one parent
     private PersonId linkedParentId;
-    private PersonId linkedTutorId;
     private Day tuitionDay;
     private Time tuitionTime;
 
@@ -26,7 +25,6 @@ public class Student extends Person {
     public Student(Category category, Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         super(category, name, phone, email, address, tags);
         this.linkedParentId = null;
-        this.linkedTutorId = null;
         this.tuitionDay = null;
         this.tuitionTime = null;
     }
@@ -38,7 +36,6 @@ public class Student extends Person {
                     Address address, Set<Tag> tags) {
         super(id, category, name, phone, email, address, tags);
         this.linkedParentId = null;
-        this.linkedTutorId = null;
     }
 
     @Override
@@ -59,29 +56,8 @@ public class Student extends Person {
         this.linkedParentId = parentId;
     }
 
-    public PersonId getTutorId() {
-        return linkedTutorId;
-    }
-
-    public void setTutor(Tutor tutor) {
-        requireNonNull(tutor);
-        setTutorId(tutor.getId());
-    }
-
-    public void setTutorId(PersonId tutorId) {
-        requireNonNull(tutorId);
-        if (tutorId.equals(this.linkedTutorId)) {
-            return;
-        }
-        this.linkedTutorId = tutorId;
-    }
-
     public void clearParent() {
         this.linkedParentId = null;
-    }
-
-    public void clearTutor() {
-        this.linkedTutorId = null;
     }
 
     public Optional<Day> getTuitionDay() {

@@ -8,9 +8,7 @@
     "address": "123, Jurong West Ave 6, #08-111",
     "tags": [ "friends" ],
     "linkedParentId": null,
-    "childrenIds": [],
-    "linkedTutorId": null,
-    "studentIds": []
+    "childrenIds": []
 
   }, {
     "id": "1a1a1a1a-1111-1111-1111-111111111111",
@@ -21,9 +19,7 @@
     "address": "123, Jurong West Ave 6, #08-111",
     "tags": [ "friends" ],
     "linkedParentId": null,
-    "childrenIds": [],
-    "linkedTutorId": null,
-    "studentIds": []
+    "childrenIds": []
   } ],
   "tuitionClasses": []
 }
