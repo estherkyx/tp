@@ -70,6 +70,7 @@ public class GetClassesCommand extends Command {
 
         // Case 2: List classes for a specific tutor
         // Find the tutor in the system
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
         List<Person> personList = model.getFilteredPersonList();
         Person tutor = personList.stream()
                 .filter(p -> p.getName().equals(tutorName))
@@ -90,6 +91,8 @@ public class GetClassesCommand extends Command {
         if (tutorClasses.isEmpty()) {
             throw new CommandException(String.format(MESSAGE_NO_CLASSES_FOUND, tutorName));
         }
+
+        model.updateFilteredPersonList(person -> person.getId().equals(tutorId));
 
         StringBuilder result = new StringBuilder(String.format("Classes taught by %s:\n", tutorName));
         int index = 1;
