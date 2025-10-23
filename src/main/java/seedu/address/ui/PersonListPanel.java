@@ -40,6 +40,17 @@ public class PersonListPanel extends UiPart<Region> {
         this.personLookup = personLookup;
         personListView.setItems(personList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
+
+        // Add listener to refresh all cells when any person in the list changes
+        // This ensures that relationship displays are updated in real-time
+        personList.addListener((javafx.collections.ListChangeListener<Person>) change -> {
+            while (change.next()) {
+                if (change.wasUpdated()) {
+                    // When a person is updated, refresh all visible cells to update relationship displays
+                    personListView.refresh();
+                }
+            }
+        });
     }
 
     /**
