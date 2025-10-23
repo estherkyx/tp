@@ -52,6 +52,11 @@ Person *--> "1" Email
 Person *--> "1" Address
 Person *--> "*" Tag
 
+TuitionClass *--> Day
+TuitionClass *--> Time
+TuitionClass --> "0..1" PersonId : tutorId
+TuitionClass --> "*" PersonId : studentIds
+
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I
 
@@ -60,4 +65,5 @@ Phone -[hidden]right-> Address
 Address -[hidden]right-> Email
 
 ModelManager --> "~* filtered" Person
+ModelManager --> "~* filtered" TuitionClass
 @enduml
