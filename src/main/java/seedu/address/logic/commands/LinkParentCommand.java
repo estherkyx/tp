@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import java.util.List;
 import java.util.Optional;
 
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Name;
@@ -82,7 +81,7 @@ public class LinkParentCommand extends Command {
         model.setPerson(parentOpt.get(), parentToLink);
 
         return new CommandResult(String.format(MESSAGE_LINK_SUCCESS,
-                Messages.format(studentToLink), Messages.format(parentToLink)));
+                studentToLink.getName(), parentToLink.getName()));
     }
 
     @Override

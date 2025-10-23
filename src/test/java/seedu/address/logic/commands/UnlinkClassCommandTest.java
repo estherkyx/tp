@@ -84,7 +84,7 @@ public class UnlinkClassCommandTest {
         expectedModel.setPerson(linkedStudent, unlinkedStudent);
 
         String expectedMessage = String.format(UnlinkClassCommand.MESSAGE_UNLINK_STUDENT_SUCCESS,
-                unlinkedStudent.getName(), classToUnlink.getDay(), classToUnlink.getTime());
+                unlinkedStudent.getName(), classToUnlink.getDay(), classToUnlink.getTimeString());
 
         UnlinkClassCommand command = new UnlinkClassCommand(classToUnlink.getDay(), classToUnlink.getTime(),
                 linkedStudent.getName());

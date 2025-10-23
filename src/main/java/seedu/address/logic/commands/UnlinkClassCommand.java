@@ -106,7 +106,7 @@ public class UnlinkClassCommand extends Command {
         model.setPerson(student, student);
 
         return new CommandResult(String.format(MESSAGE_UNLINK_STUDENT_SUCCESS,
-                student.getName(), tuitionClass.getDay(), tuitionClass.getTime()));
+                student.getName(), tuitionClass.getDay(), tuitionClass.getTimeString()));
     }
 
     /**
@@ -121,7 +121,7 @@ public class UnlinkClassCommand extends Command {
         tuitionClass.removeTutorId();
 
         return new CommandResult(String.format(MESSAGE_UNASSIGN_TUTOR_SUCCESS,
-                tutor.getName(), tuitionClass.getDay(), tuitionClass.getTime()));
+                tutor.getName(), tuitionClass.getDay(), tuitionClass.getTimeString()));
     }
 
     @Override

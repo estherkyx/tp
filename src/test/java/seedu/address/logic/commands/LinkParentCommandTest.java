@@ -12,7 +12,6 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -35,7 +34,7 @@ public class LinkParentCommandTest {
         LinkParentCommand linkParentCommand = new LinkParentCommand(studentToLink.getName(), parentToLink.getName());
 
         String expectedMessage = String.format(LinkParentCommand.MESSAGE_LINK_SUCCESS,
-                Messages.format(studentToLink), Messages.format(parentToLink));
+                studentToLink.getName(), parentToLink.getName());
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 

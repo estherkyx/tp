@@ -1,16 +1,15 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.ClassQueries.findTutorByName;
+import static seedu.address.logic.ClassQueries.getClassesByTutor;
 
 import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.PersonId;
 import seedu.address.model.person.Tutor;
-import seedu.address.model.tuitionclass.Time;
 import seedu.address.model.tuitionclass.TuitionClass;
 
 /**
@@ -29,7 +28,6 @@ public class GetClassesCommand extends Command {
     public static final String MESSAGE_NO_CLASSES_FOUND = "No classes found for tutor '%1$s'.";
 
     private final Name tutorName;
-    private PersonId tutorId;
 
     /**
      * Constructor for no-argument version to list all tuition classes
@@ -62,50 +60,31 @@ public class GetClassesCommand extends Command {
             StringBuilder classListBuilder = new StringBuilder("All Tuition Classes:\n");
             int index = 1;
             for (TuitionClass tc : allClasses) {
-                String time = timeEnumToTimeString(tc.getTime());
-                classListBuilder.append(String.format("%d. %s %s\n", index++, tc.getDay(), time));
+                classListBuilder.append(String.format("%d. %s %s\n", index++, tc.getDay(), tc.getTimeString()));
             }
             return new CommandResult(classListBuilder.toString().trim());
         }
 
         // Case 2: List classes for a specific tutor
         // Find the tutor in the system
-        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
-        List<Person> personList = model.getFilteredPersonList();
-        Person tutor = personList.stream()
-                .filter(p -> p.getName().equals(tutorName))
-                .findFirst()
-                .orElse(null);
+        Tutor tutor = findTutorByName(model, tutorName)
+                .orElseThrow(() -> new CommandException(String.format(MESSAGE_TUTOR_NOT_FOUND, tutorName)));
 
-        if (!(tutor instanceof Tutor)) {
-            throw new CommandException(String.format(MESSAGE_TUTOR_NOT_FOUND, tutorName));
-        }
-
-        tutorId = tutor.getId();
-
-        // Filter classes by tutor ID
-        List<TuitionClass> tutorClasses = allClasses.stream()
-                .filter(tuitionClass -> tutorId.equals(tuitionClass.getTutorId()))
-                .toList();
+        // Filter classes by tutor
+        List<TuitionClass> tutorClasses = getClassesByTutor(model, tutor);
 
         if (tutorClasses.isEmpty()) {
             throw new CommandException(String.format(MESSAGE_NO_CLASSES_FOUND, tutorName));
         }
 
-        model.updateFilteredPersonList(person -> person.getId().equals(tutorId));
+        model.updateFilteredPersonList(person -> person.getId().equals(tutor.getId()));
 
         StringBuilder result = new StringBuilder(String.format("Classes taught by %s:\n", tutorName));
         int index = 1;
         for (TuitionClass tc : tutorClasses) {
-            String time = timeEnumToTimeString(tc.getTime());
-            result.append(String.format("%d. %s %s\n", index++, tc.getDay(), time));
+            result.append(String.format("%d. %s %s\n", index++, tc.getDay(), tc.getTimeString()));
         }
         return new CommandResult(result.toString().trim());
-    }
-
-    private String timeEnumToTimeString(Time time) {
-        String timeString = time.toString();
-        return timeString.substring(1) + "00";
     }
 
     @Override
