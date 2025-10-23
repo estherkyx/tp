@@ -213,6 +213,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void setTuitionClass(TuitionClass target, TuitionClass editedTuitionClass) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<TuitionClass> getTuitionClassList() {
             throw new AssertionError("This method should not be called.");
         }

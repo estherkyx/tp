@@ -14,6 +14,8 @@ import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonId;
 import seedu.address.model.person.Student;
+import seedu.address.model.person.Tutor;
+import seedu.address.model.tuitionclass.TuitionClass;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -52,18 +54,21 @@ public class PersonCard extends UiPart<Region> {
     private Label parent;
     @FXML
     private Label children;
+    @FXML
+    private Label tuitionClass;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
      */
     public PersonCard(Person person, int displayedIndex) {
-        this(person, displayedIndex, null);
+        this(person, displayedIndex, null, null);
     }
 
     /**
-     * Creates a {@code PersonCode} with the given {@code Person}, index to display, and person lookup function.
+     * Creates a {@code PersonCode} with the given {@code Person}, index to display, and lookup functions.
      */
-    public PersonCard(Person person, int displayedIndex, Function<PersonId, Optional<Person>> personLookup) {
+    public PersonCard(Person person, int displayedIndex, Function<PersonId, Optional<Person>> personLookup,
+                      Function<Person, List<TuitionClass>> tuitionClassLookup) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
@@ -97,9 +102,14 @@ public class PersonCard extends UiPart<Region> {
         parent.setManaged(false);
         children.setVisible(false);
         children.setManaged(false);
+        tuitionClass.setVisible(false);
+        tuitionClass.setManaged(false);
 
         // Set up parent/children information
         setupParentChildrenInfo(personLookup);
+
+        // Set up tuition class information
+        setupTuitionClassInfo(tuitionClassLookup);
     }
 
     /**
@@ -163,6 +173,55 @@ public class PersonCard extends UiPart<Region> {
             parent.setManaged(false);
             children.setVisible(false);
             children.setManaged(false);
+        }
+    }
+
+    /**
+     * Sets up the tuition class information display.
+     */
+    private void setupTuitionClassInfo(Function<Person, List<TuitionClass>> tuitionClassLookup) {
+        if (tuitionClassLookup == null) {
+            tuitionClass.setVisible(false);
+            tuitionClass.setManaged(false);
+            return;
+        }
+
+        if (person instanceof Student) {
+            Student student = (Student) person;
+            if (student.getTuitionDay().isPresent() && student.getTuitionTime().isPresent()) {
+                String classInfo = String.format("Class: %s %s",
+                    student.getTuitionDay().get(),
+                    student.getTuitionTime().get().toString().substring(1) + "00");
+                tuitionClass.setText(classInfo);
+                tuitionClass.setVisible(true);
+                tuitionClass.setManaged(true);
+            } else {
+                tuitionClass.setVisible(false);
+                tuitionClass.setManaged(false);
+            }
+        } else if (person instanceof Tutor) {
+            Tutor tutor = (Tutor) person;
+            List<TuitionClass> classes = tuitionClassLookup.apply(tutor);
+            if (!classes.isEmpty()) {
+                StringBuilder classText = new StringBuilder("Classes: ");
+                for (int i = 0; i < classes.size(); i++) {
+                    if (i > 0) {
+                        classText.append(", ");
+                    }
+                    TuitionClass tc = classes.get(i);
+                    classText.append(String.format("%s %s", tc.getDay(), tc.getTimeString()));
+                }
+                tuitionClass.setText(classText.toString());
+                tuitionClass.setVisible(true);
+                tuitionClass.setManaged(true);
+            } else {
+                tuitionClass.setVisible(false);
+                tuitionClass.setManaged(false);
+            }
+        } else {
+            // For parents or other types
+            tuitionClass.setVisible(false);
+            tuitionClass.setManaged(false);
         }
     }
 }

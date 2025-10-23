@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.logging.Logger;
@@ -20,6 +21,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonId;
+import seedu.address.model.tuitionclass.TuitionClass;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -119,7 +121,19 @@ public class MainWindow extends UiPart<Stage> {
             logic.getAddressBook().getPersonList().stream()
                 .filter(person -> person.getId().equals(personId))
                 .findFirst();
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList(), personLookup);
+
+        // Create a tuition class lookup function for tutors that always gets current data
+        Function<Person, List<TuitionClass>> tuitionClassLookup = person -> {
+            if (person instanceof seedu.address.model.person.Tutor) {
+                // Always get the current tuition class list to ensure real-time updates
+                return logic.getAddressBook().getTuitionClassList().stream()
+                    .filter(tc -> person.getId().equals(tc.getTutorId()))
+                    .toList();
+            }
+            return List.of();
+        };
+
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList(), personLookup, tuitionClassLookup);
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
