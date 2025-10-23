@@ -199,7 +199,7 @@ Examples:
 * `createClass d/MONDAY ti/H16` creates a class on Monday at 4:00 PM.
 * `createClass d/TUESDAY ti/H12` creates a class on Tuesday at 12:00 PM.
 
-See also: [`linkClass`](#linking-a-person-to-a-class-time-linkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
+See also: [`linkClass`](#linking-a-person-to-a-class-linkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
 
 • [Back to Command Summary](#command-summary)
 
@@ -219,7 +219,7 @@ Examples:
 * `linkClass d/MONDAY ti/H16 n/Roy Balakrishnan` links tutor Roy Balakrishnan to the Monday 4:00 PM class.
 * `linkClass d/SATURDAY ti/H12 n/Alice Pauline` links student Alice Pauline to the Saturday 12:00 PM class.
 
-See also: [`createClass`](#creating-a-class-time-createclass), [`unlinkClass`](#removing-a-person-from-a-class-time-unlinkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
+See also: [`createClass`](#creating-a-class-createclass), [`unlinkClass`](#removing-a-person-from-a-class-unlinkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
 
 • [Back to Command Summary](#command-summary)
 
@@ -236,7 +236,7 @@ Examples:
 * `unlinkClass d/MONDAY ti/H16 n/Roy Balakrishnan` removes tutor Roy Balakrishnan from the Monday 4:00 PM class.
 * `unlinkClass d/SATURDAY ti/H12 n/Alice Pauline` removes student Alice Pauline from the Saturday 12:00 PM class.
 
-See also: [`linkClass`](#linking-a-person-to-a-class-time-linkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
+See also: [`linkClass`](#linking-a-person-to-a-class-linkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
 
 • [Back to Command Summary](#command-summary)
 
@@ -247,13 +247,13 @@ Shows the tutor (if any) and students (if any) linked to the class time specifie
 Format: `getClassDetails d/DAY ti/TIME`
 
 * `DAY` must be one of `MONDAY` to `SUNDAY`.
-* `TIME` must be a supported timeslot (refer to [`createClass`](#creating-a-class-time-createclass) for the timeslots).
+* `TIME` must be a supported timeslot (refer to [`createClass`](#creating-a-class-createclass) for the timeslots).
 
 Examples:
 * `getClassDetails d/MONDAY ti/H16` displays the tutor and students in the Monday 4:00 PM class.
 * `getClassDetails d/SATURDAY ti/H12` displays the tutor and students in the Saturday 12:00 PM class.
 
-See also: [`linkClass`](#linking-a-person-to-a-class-time-linkclass), [`getClasses`](#listing-classes-getclasses)
+See also: [`linkClass`](#linking-a-person-to-a-class-linkclass), [`getClasses`](#listing-classes-getclasses)
 
 • [Back to Command Summary](#command-summary)
 
@@ -270,7 +270,7 @@ Examples:
 * `getClasses` shows all classes.
 * `getClasses n/Roy Balakrishnan` shows classes linked to tutor Roy Balakrishnan.
 
-See also: [`getClassDetails`](#viewing-class-details-getclassdetails), [`linkClass`](#linking-a-person-to-a-class-time-linkclass)
+See also: [`getClassDetails`](#viewing-class-details-getclassdetails), [`linkClass`](#linking-a-person-to-a-class-linkclass)
 
 • [Back to Command Summary](#command-summary)
 
