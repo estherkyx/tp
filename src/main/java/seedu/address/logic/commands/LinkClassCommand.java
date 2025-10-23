@@ -101,6 +101,8 @@ public class LinkClassCommand extends Command {
         // Perform the link
         student.setTuitionClass(tuitionClass.getDay(), tuitionClass.getTime());
         tuitionClass.addStudentId(student.getId());
+        // Update the tuition class in the model to trigger UI refresh
+        model.setTuitionClass(tuitionClass, tuitionClass);
         model.setPerson(student, student);
 
         return new CommandResult(String.format(MESSAGE_LINK_STUDENT_SUCCESS,
@@ -130,6 +132,10 @@ public class LinkClassCommand extends Command {
         }
         // Perform the assignment
         tuitionClass.setTutorId(tutor.getId());
+        // Update the tuition class in the model to trigger UI refresh
+        model.setTuitionClass(tuitionClass, tuitionClass);
+        // Update the tutor in the model to trigger UI refresh
+        model.setPerson(tutor, tutor);
 
         return new CommandResult(String.format(MESSAGE_ASSIGN_TUTOR_SUCCESS,
                 tutor.getName(), tuitionClass.getDay(), tuitionClass.getTimeString()));

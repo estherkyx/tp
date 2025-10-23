@@ -158,6 +158,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void setTuitionClass(TuitionClass target, TuitionClass editedTuitionClass) {
+        requireNonNull(editedTuitionClass);
+        addressBook.setTuitionClass(target, editedTuitionClass);
+    }
+
+    @Override
     public Optional<TuitionClass> findTuitionClass(Day day, Time time) {
         requireNonNull(day);
         requireNonNull(time);

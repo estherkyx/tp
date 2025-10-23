@@ -73,6 +73,14 @@ public interface Model {
      */
     void addTuitionClass(TuitionClass tuitionClass);
 
+    /**
+     * Replaces the given tuition class {@code target} with {@code editedTuitionClass}.
+     * {@code target} must exist in the address book.
+     * The tuition class identity of {@code editedTuitionClass} must not be the same as another existing
+     * tuition class in the address book.
+     */
+    void setTuitionClass(TuitionClass target, TuitionClass editedTuitionClass);
+
     /** Returns an unmodifiable view of the filtered tuition class list */
     ObservableList<TuitionClass> getFilteredTuitionClassList();
 

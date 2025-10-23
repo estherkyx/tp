@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.logging.Logger;
@@ -12,6 +13,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonId;
+import seedu.address.model.tuitionclass.TuitionClass;
 
 /**
  * Panel containing the list of persons.
@@ -24,20 +26,23 @@ public class PersonListPanel extends UiPart<Region> {
     private ListView<Person> personListView;
 
     private Function<PersonId, Optional<Person>> personLookup;
+    private Function<Person, List<TuitionClass>> tuitionClassLookup;
 
     /**
      * Creates a {@code PersonListPanel} with the given {@code ObservableList}.
      */
     public PersonListPanel(ObservableList<Person> personList) {
-        this(personList, null);
+        this(personList, null, null);
     }
 
     /**
-     * Creates a {@code PersonListPanel} with the given {@code ObservableList} and person lookup function.
+     * Creates a {@code PersonListPanel} with the given {@code ObservableList} and lookup functions.
      */
-    public PersonListPanel(ObservableList<Person> personList, Function<PersonId, Optional<Person>> personLookup) {
+    public PersonListPanel(ObservableList<Person> personList, Function<PersonId, Optional<Person>> personLookup,
+                          Function<Person, List<TuitionClass>> tuitionClassLookup) {
         super(FXML);
         this.personLookup = personLookup;
+        this.tuitionClassLookup = tuitionClassLookup;
         personListView.setItems(personList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
 
@@ -65,7 +70,7 @@ public class PersonListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new PersonCard(person, getIndex() + 1, personLookup).getRoot());
+                setGraphic(new PersonCard(person, getIndex() + 1, personLookup, tuitionClassLookup).getRoot());
             }
         }
     }

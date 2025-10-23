@@ -144,6 +144,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         tuitionClasses.add(t);
     }
 
+    /**
+     * Replaces the given tuition class {@code target} with {@code editedTuitionClass}.
+     * {@code target} must exist in the address book.
+     * The tuition class identity of {@code editedTuitionClass} must not be the same as another existing
+     * tuition class in the address book.
+     */
+    public void setTuitionClass(TuitionClass target, TuitionClass editedTuitionClass) {
+        requireNonNull(editedTuitionClass);
+        tuitionClasses.setTuitionClass(target, editedTuitionClass);
+    }
+
     public void setTuitionClasses(List<TuitionClass> tuitionClasses) {
         this.tuitionClasses.setTuitionClasses(tuitionClasses);
     }

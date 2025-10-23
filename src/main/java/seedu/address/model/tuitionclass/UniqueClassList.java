@@ -47,6 +47,34 @@ public class UniqueClassList implements Iterable<TuitionClass> {
     }
 
     /**
+     * Replaces the tuition class {@code target} in the list with {@code editedTuitionClass}.
+     * {@code target} must exist in the list.
+     * The tuition class identity of {@code editedTuitionClass} must not be the same as another existing
+     * tuition class in the list.
+     *
+     * @param target The tuition class to replace. Must not be null.
+     * @param editedTuitionClass The replacement tuition class. Must not be null.
+     * @throws DuplicateTuitionClassException If {@code editedTuitionClass} is a duplicate of an existing
+     *         tuition class.
+     */
+    public void setTuitionClass(TuitionClass target, TuitionClass editedTuitionClass) {
+        requireNonNull(editedTuitionClass);
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new RuntimeException("Target tuition class not found in list");
+        }
+
+        // Check if the edited tuition class would create a duplicate (excluding the target itself)
+        for (int i = 0; i < internalList.size(); i++) {
+            if (i != index && internalList.get(i).equals(editedTuitionClass)) {
+                throw new DuplicateTuitionClassException();
+            }
+        }
+
+        internalList.set(index, editedTuitionClass);
+    }
+
+    /**
      * Replaces the tuition classes in the list with {@code tuitionClasses}.
      * {@code tuitionClasses} must not contain duplicate tuition classes.
      *
