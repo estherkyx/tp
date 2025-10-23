@@ -49,8 +49,7 @@ public class CreateClassCommand extends Command {
         }
 
         model.addTuitionClass(toAdd);
-        String timeString = toAdd.getTime().toString().substring(1) + "00";
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd.getDay(), timeString));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd.getDay(), toAdd.getTimeString()));
     }
 
 

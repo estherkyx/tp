@@ -30,8 +30,8 @@ public class CreateClassCommandTest {
 
         CreateClassCommand command = new CreateClassCommand(validClass.getDay(), validClass.getTime());
 
-        String timeString = validClass.getTime().toString().substring(1) + "00";
-        String expectedMessage = String.format(CreateClassCommand.MESSAGE_SUCCESS, validClass.getDay(), timeString);
+        String expectedMessage = String.format(
+                CreateClassCommand.MESSAGE_SUCCESS, validClass.getDay(), validClass.getTimeString());
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }

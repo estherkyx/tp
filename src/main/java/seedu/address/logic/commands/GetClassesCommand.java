@@ -10,7 +10,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Tutor;
-import seedu.address.model.tuitionclass.Time;
 import seedu.address.model.tuitionclass.TuitionClass;
 
 /**
@@ -61,8 +60,7 @@ public class GetClassesCommand extends Command {
             StringBuilder classListBuilder = new StringBuilder("All Tuition Classes:\n");
             int index = 1;
             for (TuitionClass tc : allClasses) {
-                String time = timeEnumToTimeString(tc.getTime());
-                classListBuilder.append(String.format("%d. %s %s\n", index++, tc.getDay(), time));
+                classListBuilder.append(String.format("%d. %s %s\n", index++, tc.getDay(), tc.getTimeString()));
             }
             return new CommandResult(classListBuilder.toString().trim());
         }
@@ -84,15 +82,9 @@ public class GetClassesCommand extends Command {
         StringBuilder result = new StringBuilder(String.format("Classes taught by %s:\n", tutorName));
         int index = 1;
         for (TuitionClass tc : tutorClasses) {
-            String time = timeEnumToTimeString(tc.getTime());
-            result.append(String.format("%d. %s %s\n", index++, tc.getDay(), time));
+            result.append(String.format("%d. %s %s\n", index++, tc.getDay(), tc.getTimeString()));
         }
         return new CommandResult(result.toString().trim());
-    }
-
-    private String timeEnumToTimeString(Time time) {
-        String timeString = time.toString();
-        return timeString.substring(1) + "00";
     }
 
     @Override

@@ -68,8 +68,8 @@ public class GetClassDetailsCommand extends Command {
                 .map(Student::getId)
                 .collect(Collectors.toSet());
 
-        String timeString = time.toString().substring(1) + "00";
-        StringBuilder sb = new StringBuilder("Class on ").append(day).append(", ").append(timeString).append("\n");
+        StringBuilder sb = new StringBuilder("Class on ").append(day).append(", ")
+                .append(tuitionClass.getTimeString()).append("\n");
         sb.append("Tutor: ").append(tutorOptional.map(t -> t.getName().toString()).orElse("None"));
         sb.append("\nStudents:");
         if (students.isEmpty()) {

@@ -103,9 +103,8 @@ public class LinkClassCommand extends Command {
         tuitionClass.addStudentId(student.getId());
         model.setPerson(student, student);
 
-        String timeString = tuitionClass.getTime().toString().substring(1) + "00";
         return new CommandResult(String.format(MESSAGE_LINK_STUDENT_SUCCESS,
-                student.getName(), tuitionClass.getDay(), timeString));
+                student.getName(), tuitionClass.getDay(), tuitionClass.getTimeString()));
     }
 
     /**
@@ -132,9 +131,8 @@ public class LinkClassCommand extends Command {
         // Perform the assignment
         tuitionClass.setTutorId(tutor.getId());
 
-        String timeString = tuitionClass.getTime().toString().substring(1) + "00";
         return new CommandResult(String.format(MESSAGE_ASSIGN_TUTOR_SUCCESS,
-                tutor.getName(), tuitionClass.getDay(), timeString));
+                tutor.getName(), tuitionClass.getDay(), tuitionClass.getTimeString()));
     }
 
     @Override

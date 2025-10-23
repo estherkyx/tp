@@ -63,6 +63,10 @@ public class TuitionClass {
         return time;
     }
 
+    public String getTimeString() {
+        return this.getTime().toString().substring(1) + "00";
+    }
+
     public PersonId getTutorId() {
         return tutorId;
     }
