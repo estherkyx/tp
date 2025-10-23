@@ -16,9 +16,18 @@ Class UniquePersonList
 Class Person
 Class Address
 Class Email
+Class Student
+Class Tutor
+Class Parent
+Class PersonId
+Class Category
 Class Name
 Class Phone
 Class Tag
+Class UniqueClassList
+Class TuitionClass
+Class Day
+Class Time
 
 Class I #FFFFFF
 }
