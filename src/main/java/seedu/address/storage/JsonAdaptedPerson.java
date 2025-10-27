@@ -22,8 +22,6 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.tuitionclass.Day;
-import seedu.address.model.tuitionclass.Time;
 
 /**
  * Jackson-friendly version of {@link Person}.
