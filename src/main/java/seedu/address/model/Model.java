@@ -9,8 +9,10 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonId;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
+import seedu.address.model.tuitionclass.ClassId;
 import seedu.address.model.tuitionclass.Day;
 import seedu.address.model.tuitionclass.Time;
 import seedu.address.model.tuitionclass.TuitionClass;
@@ -92,11 +94,10 @@ public interface Model {
 
     /**
      * Finds and returns a tuition class by its exact timeslot.
-     * @param day The day of the class.
-     * @param time The time of the class.
+     * @param classId The Class Id of the class.
      * @return An Optional containing the TuitionClass if found, or an empty Optional otherwise.
      */
-    Optional<TuitionClass> findTuitionClass(Day day, Time time);
+    Optional<TuitionClass> findTuitionClass(ClassId classId);
 
     /**
      * Returns an unmodifiable view of the tuition class list.
@@ -148,6 +149,13 @@ public interface Model {
      * @return An Optional containing the Person if found, or an empty Optional otherwise.
      */
     Optional<Person> findPersonByName(Name name);
+
+    /**
+     * Finds and returns a person by their unique ID.
+     * @return An Optional containing the Person if found, or an empty Optional otherwise.
+     */
+    Optional<Person> findPersonById(PersonId id);
+
 
 
 }

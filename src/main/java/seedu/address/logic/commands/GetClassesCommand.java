@@ -60,7 +60,8 @@ public class GetClassesCommand extends Command {
             StringBuilder classListBuilder = new StringBuilder("All Tuition Classes:\n");
             int index = 1;
             for (TuitionClass tc : allClasses) {
-                classListBuilder.append(String.format("%d. %s %s\n", index++, tc.getDay(), tc.getTimeString()));
+                classListBuilder.append(String.format("%d. %s %s\n", index++, tc.getDay(),
+                        tc.getTime().toDisplayString()));
             }
             return new CommandResult(classListBuilder.toString().trim());
         }
@@ -82,7 +83,7 @@ public class GetClassesCommand extends Command {
         StringBuilder result = new StringBuilder(String.format("Classes taught by %s:\n", tutorName));
         int index = 1;
         for (TuitionClass tc : tutorClasses) {
-            result.append(String.format("%d. %s %s\n", index++, tc.getDay(), tc.getTimeString()));
+            result.append(String.format("%d. %s %s\n", index++, tc.getDay(), tc.getTime().toDisplayString()));
         }
         return new CommandResult(result.toString().trim());
     }

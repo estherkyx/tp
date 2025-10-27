@@ -25,6 +25,13 @@ public enum Time {
         throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
     }
 
+    /**
+     * Returns a user-friendly string representation of the time (e.g., "1200").
+     */
+    public String toDisplayString() {
+        return this.name().substring(1) + "00";
+    }
+
     @Override
     public String toString() {
         return name(); // e.g., "H12"

@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 
 import java.util.Optional;
 
+import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -15,6 +16,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonId;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
+import seedu.address.model.tuitionclass.ClassId;
 import seedu.address.model.tuitionclass.Day;
 import seedu.address.model.tuitionclass.Time;
 import seedu.address.model.tuitionclass.TuitionClass;
@@ -45,8 +47,7 @@ public class LinkClassCommand extends Command {
     public static final String MESSAGE_CLASS_ALREADY_HAS_TUTOR =
             "This class is already assigned to Tutor %s. Unlink before reassigning.";
 
-    private final Day day;
-    private final Time time;
+    private final ClassId classId;
     private final Name personName;
 
     /**
@@ -56,8 +57,7 @@ public class LinkClassCommand extends Command {
         requireNonNull(day);
         requireNonNull(time);
         requireNonNull(personName);
-        this.day = day;
-        this.time = time;
+        this.classId = new ClassId(day, time);
         this.personName = personName;
     }
 
@@ -66,7 +66,7 @@ public class LinkClassCommand extends Command {
         requireNonNull(model);
 
         // 1. Find the Tuition Class
-        Optional<TuitionClass> classToLinkOpt = model.findTuitionClass(day, time);
+        Optional<TuitionClass> classToLinkOpt = model.findTuitionClass(classId);
         if (classToLinkOpt.isEmpty()) {
             throw new CommandException(MESSAGE_CLASS_NOT_FOUND);
         }
@@ -94,19 +94,19 @@ public class LinkClassCommand extends Command {
      */
     private CommandResult linkStudent(Model model, Student student, TuitionClass tuitionClass) throws CommandException {
         // Student must not be in another class
-        if (student.getTuitionDay().isPresent()) {
+        if (student.getClassId().isPresent()) {
             throw new CommandException(MESSAGE_STUDENT_ALREADY_LINKED);
         }
 
         // Perform the link
-        student.setTuitionClass(tuitionClass.getDay(), tuitionClass.getTime());
+        student.setTuitionClass(tuitionClass);
         tuitionClass.addStudentId(student.getId());
         // Update the tuition class in the model to trigger UI refresh
         model.setTuitionClass(tuitionClass, tuitionClass);
         model.setPerson(student, student);
 
         return new CommandResult(String.format(MESSAGE_LINK_STUDENT_SUCCESS,
-                student.getName(), tuitionClass.getDay(), tuitionClass.getTimeString()));
+                student.getName(), tuitionClass.getDay(), tuitionClass.getTime().toDisplayString()));
     }
 
     /**
@@ -122,11 +122,9 @@ public class LinkClassCommand extends Command {
                 throw new CommandException(MESSAGE_TUTOR_ALREADY_TEACHING);
             }
 
-            String currentTutorName = model.getAddressBook().getPersonList().stream()
-                    .filter(p -> p.getId().equals(currentTutorId) && p instanceof Tutor)
-                    .map(p -> ((Tutor) p).getName().toString())
-                    .findFirst()
-                    .orElse("another tutor");
+            String currentTutorName = model.findPersonById(currentTutorId)
+                    .map(person -> person.getName().toString())
+                    .orElse("an unknown tutor");
 
             throw new CommandException(String.format(MESSAGE_CLASS_ALREADY_HAS_TUTOR, currentTutorName));
         }
@@ -138,7 +136,7 @@ public class LinkClassCommand extends Command {
         model.setPerson(tutor, tutor);
 
         return new CommandResult(String.format(MESSAGE_ASSIGN_TUTOR_SUCCESS,
-                tutor.getName(), tuitionClass.getDay(), tuitionClass.getTimeString()));
+                tutor.getName(), tuitionClass.getDay(), tuitionClass.getTime().toDisplayString()));
     }
 
     @Override
@@ -150,22 +148,15 @@ public class LinkClassCommand extends Command {
             return false;
         }
         LinkClassCommand otherCommand = (LinkClassCommand) other;
-        return day.equals(otherCommand.day)
-                && time.equals(otherCommand.time)
+        return classId.equals(otherCommand.classId)
                 && personName.equals(otherCommand.personName);
     }
 
     @Override
     public String toString() {
-        return new StringBuilder()
-                .append(getClass().getSimpleName())
-                .append("{day=")
-                .append(day)
-                .append(", time=")
-                .append(time)
-                .append(", personName=")
-                .append(personName)
-                .append("}")
+        return new ToStringBuilder(this)
+                .add("classId", classId)
+                .add("personName", personName)
                 .toString();
     }
 }

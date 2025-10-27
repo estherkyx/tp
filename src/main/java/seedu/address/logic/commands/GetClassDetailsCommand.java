@@ -15,6 +15,7 @@ import seedu.address.model.Model;
 import seedu.address.model.person.PersonId;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
+import seedu.address.model.tuitionclass.ClassId;
 import seedu.address.model.tuitionclass.Day;
 import seedu.address.model.tuitionclass.Time;
 import seedu.address.model.tuitionclass.TuitionClass;
@@ -37,8 +38,7 @@ public class GetClassDetailsCommand extends Command {
 
     public static final String MESSAGE_CLASS_NOT_FOUND = "There is no class at the specified day and time";
 
-    private final Day day;
-    private final Time time;
+    private final ClassId classId;
 
     /**
      * Creates a LinkClassCommand to link the specified student to a class.
@@ -46,14 +46,13 @@ public class GetClassDetailsCommand extends Command {
     public GetClassDetailsCommand(Day day, Time time) {
         requireNonNull(day);
         requireNonNull(time);
-        this.day = day;
-        this.time = time;
+        this.classId = new ClassId(day, time);
     }
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        Optional<TuitionClass> classOpt = model.findTuitionClass(day, time);
+        Optional<TuitionClass> classOpt = model.findTuitionClass(classId);
         if (classOpt.isEmpty()) {
             throw new CommandException(MESSAGE_CLASS_NOT_FOUND);
         }
@@ -68,8 +67,8 @@ public class GetClassDetailsCommand extends Command {
                 .map(Student::getId)
                 .collect(Collectors.toSet());
 
-        StringBuilder sb = new StringBuilder("Class on ").append(day).append(", ")
-                .append(tuitionClass.getTimeString()).append("\n");
+        StringBuilder sb = new StringBuilder("Class on ").append(tuitionClass.getDay()).append(", ")
+                .append(tuitionClass.getTime().toDisplayString()).append("\n");
         sb.append("Tutor: ").append(tutorOptional.map(t -> t.getName().toString()).orElse("None"));
         sb.append("\nStudents:");
         if (students.isEmpty()) {

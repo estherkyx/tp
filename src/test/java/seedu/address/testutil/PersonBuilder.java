@@ -141,7 +141,7 @@ public class PersonBuilder {
 
         if (person instanceof Student && this.tuitionClass != null) {
             Student student = (Student) person;
-            student.setTuitionClass(this.tuitionClass.getDay(), this.tuitionClass.getTime());
+            student.setTuitionClass(tuitionClass);
         }
 
         return person;

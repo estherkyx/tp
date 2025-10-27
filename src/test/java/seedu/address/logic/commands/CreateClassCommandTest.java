@@ -31,7 +31,7 @@ public class CreateClassCommandTest {
         CreateClassCommand command = new CreateClassCommand(validClass.getDay(), validClass.getTime());
 
         String expectedMessage = String.format(
-                CreateClassCommand.MESSAGE_SUCCESS, validClass.getDay(), validClass.getTimeString());
+                CreateClassCommand.MESSAGE_SUCCESS, validClass.getDay(), validClass.getTime().toDisplayString());
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
