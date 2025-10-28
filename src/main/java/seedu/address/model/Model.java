@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -23,6 +24,8 @@ public interface Model {
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
     Predicate<TuitionClass> PREDICATE_SHOW_ALL_CLASSES = unused -> true;
+
+    //=========== UserPrefs ==================================================================================
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -54,6 +57,8 @@ public interface Model {
      */
     void setAddressBookFilePath(Path addressBookFilePath);
 
+    //=========== AddressBook ================================================================================
+
     /**
      * Replaces address book data with the data in {@code addressBook}.
      */
@@ -61,6 +66,63 @@ public interface Model {
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
+
+    /**
+     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     */
+    boolean hasPerson(Person person);
+
+    /**
+     * Deletes the given person.
+     * The person must exist in the address book.
+     */
+    void deletePerson(Person target);
+
+    /**
+     * Adds the given person.
+     * {@code person} must not already exist in the address book.
+     */
+    void addPerson(Person person);
+
+    /**
+     * Adds the given parent.
+     * {@code parent} must not already exist in the address book.
+     */
+    void addParent(Parent parent);
+
+    /**
+     * Adds the given tutor.
+     * {@code tutor} must not already exist in the address book.
+     */
+    void addTutor(Tutor tutor);
+
+    /**
+     * Adds the given student.
+     * {@code student} must not already exist in the address book.
+     */
+    void addStudent(Student student);
+
+    /**
+     * Replaces the given person {@code target} with {@code editedPerson}.
+     * {@code target} must exist in the address book.
+     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     */
+    void setPerson(Person target, Person editedPerson);
+
+    /**
+     * Finds and returns a person by their exact name.
+     * @param name The name of the person to find.
+     * @return An Optional containing the Person if found, or an empty Optional otherwise.
+     */
+    Optional<Person> findPersonByName(Name name);
+
+    /**
+     * Finds and returns a person by their unique ID.
+     * @return An Optional containing the Person if found, or an empty Optional otherwise.
+     */
+    Optional<Person> findPersonById(PersonId id);
+
+    //=========== TuitionClass =====================================================================
 
     /**
      * Returns true if a tuition class with the same identity as {@code tuitionClass} exists in the address book.
@@ -81,18 +143,9 @@ public interface Model {
      */
     void setTuitionClass(TuitionClass target, TuitionClass editedTuitionClass);
 
-    /** Returns an unmodifiable view of the filtered tuition class list */
-    ObservableList<TuitionClass> getFilteredTuitionClassList();
-
-    /**
-     * Updates the filter of the filtered tuition class list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
-     */
-    void updateFilteredTuitionClassList(Predicate<TuitionClass> predicate);
-
     /**
      * Finds and returns a tuition class by its exact timeslot.
-     * @param classId The Class Id of the class.
+     * @param classId The Class ID of the class.
      * @return An Optional containing the TuitionClass if found, or an empty Optional otherwise.
      */
     Optional<TuitionClass> findTuitionClass(ClassId classId);
@@ -103,34 +156,32 @@ public interface Model {
     ObservableList<TuitionClass> getTuitionClassList();
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns all tuition classes taught by a specific tutor.
+     * @param tutor The tutor whose classes are to be retrieved.
+     * @return A list of {@code TuitionClass} objects associated with the given tutor.
      */
-    boolean hasPerson(Person person);
+    List<TuitionClass> getClassesByTutor(Tutor tutor);
 
     /**
-     * Deletes the given person.
-     * The person must exist in the address book.
+     * Retrieves all students enrolled in a given tuition class, sorted alphabetically by name.
+     *
+     * @param tuitionClass The class which students are to be retrieved.
+     * @return A list of {@code Student} objects enrolled in the specified class.
      */
-    void deletePerson(Person target);
+    List<Student> getStudentsInClass(TuitionClass tuitionClass);
+
+    //=========== Filtered Tuition Class List Accessors ============================================
+
+    /** Returns an unmodifiable view of the filtered tuition class list */
+    ObservableList<TuitionClass> getFilteredTuitionClassList();
 
     /**
-     * Adds the given person.
-     * {@code person} must not already exist in the address book.
+     * Updates the filter of the filtered tuition class list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
      */
-    void addPerson(Person person);
+    void updateFilteredTuitionClassList(Predicate<TuitionClass> predicate);
 
-    void addParent(Parent parent);
-
-    void addTutor(Tutor tutor);
-
-    void addStudent(Student student);
-
-    /**
-     * Replaces the given person {@code target} with {@code editedPerson}.
-     * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
-     */
-    void setPerson(Person target, Person editedPerson);
+    //=========== Filtered Person List Accessors =============================================================
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
@@ -140,20 +191,5 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
-
-    /**
-     * Finds and returns a person by their exact name.
-     * @param name The name of the person to find.
-     * @return An Optional containing the Person if found, or an empty Optional otherwise.
-     */
-    Optional<Person> findPersonByName(Name name);
-
-    /**
-     * Finds and returns a person by their unique ID.
-     * @return An Optional containing the Person if found, or an empty Optional otherwise.
-     */
-    Optional<Person> findPersonById(PersonId id);
-
-
 
 }

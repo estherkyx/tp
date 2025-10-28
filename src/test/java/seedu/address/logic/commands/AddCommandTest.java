@@ -10,6 +10,7 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -224,6 +225,16 @@ public class AddCommandTest {
 
         @Override
         public ObservableList<TuitionClass> getTuitionClassList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public List<TuitionClass> getClassesByTutor(Tutor tutor) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public List<Student> getStudentsInClass(TuitionClass tuitionClass) {
             throw new AssertionError("This method should not be called.");
         }
     }

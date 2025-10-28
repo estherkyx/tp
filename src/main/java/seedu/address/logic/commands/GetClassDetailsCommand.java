@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.ClassQueries.getStudentsInClass;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 
@@ -62,7 +61,7 @@ public class GetClassDetailsCommand extends Command {
                     .filter(p -> p instanceof Tutor)
                     .map(p -> (Tutor) p)
                     .findFirst();
-        List<Student> students = getStudentsInClass(model, tuitionClass);
+        List<Student> students = model.getStudentsInClass(tuitionClass);
         Set<PersonId> studentIds = students.stream()
                 .map(Student::getId)
                 .collect(Collectors.toSet());

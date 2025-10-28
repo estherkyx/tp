@@ -1,9 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.ClassQueries.findTutorByName;
-import static seedu.address.logic.ClassQueries.getClassesByTutor;
-import static seedu.address.logic.ClassQueries.getStudentsInClass;
 
 import java.util.List;
 import java.util.Set;
@@ -49,10 +46,12 @@ public class GetStudentsCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        Tutor tutor = findTutorByName(model, tutorName)
+        Tutor tutor = model.findPersonByName(tutorName)
+                .filter(person -> person instanceof Tutor)
+                .map(person -> (Tutor) person)
                 .orElseThrow(() -> new CommandException(String.format(MESSAGE_TUTOR_NOT_FOUND, tutorName)));
 
-        List<TuitionClass> tutorClasses = getClassesByTutor(model, tutor);
+        List<TuitionClass> tutorClasses = model.getClassesByTutor(tutor);
 
         // Tutor has no classes, hence no students
         if (tutorClasses.isEmpty()) {
@@ -61,7 +60,7 @@ public class GetStudentsCommand extends Command {
         }
 
         Set<PersonId> allStudentIds = tutorClasses.stream()
-                .flatMap(c -> getStudentsInClass(model, c).stream())
+                .flatMap(c -> model.getStudentsInClass(c).stream())
                 .map(p -> p.getId())
                 .collect(Collectors.toSet());
 
