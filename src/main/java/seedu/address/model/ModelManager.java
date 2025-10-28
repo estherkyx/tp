@@ -4,6 +4,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -117,16 +119,19 @@ public class ModelManager implements Model {
     @Override
     public void addParent(Parent parent) {
         addressBook.addParent(parent);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     @Override
     public void addTutor(Tutor tutor) {
         addressBook.addTutor(tutor);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     @Override
     public void addStudent(Student student) {
         addressBook.addStudent(student);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     public void setPerson(Person target, Person editedPerson) {
@@ -182,6 +187,23 @@ public class ModelManager implements Model {
     @Override
     public ObservableList<TuitionClass> getTuitionClassList() {
         return addressBook.getTuitionClassList();
+    }
+
+    @Override
+    public List<TuitionClass> getClassesByTutor(Tutor tutor) {
+        return getTuitionClassList().stream()
+                .filter(tuitionClass -> tutor.getId().equals(tuitionClass.getTutorId()))
+                .toList();
+    }
+
+    @Override
+    public List<Student> getStudentsInClass(TuitionClass tuitionClass) {
+        return getAddressBook().getPersonList().stream()
+                .filter(t -> tuitionClass.getStudentIds().contains(t.getId()))
+                .filter(p -> p instanceof Student)
+                .map(t -> (Student) t)
+                .sorted(Comparator.comparing(a -> a.getName().toString()))
+                .toList();
     }
 
     //=========== Filtered Tuition Class List Accessors ============================================

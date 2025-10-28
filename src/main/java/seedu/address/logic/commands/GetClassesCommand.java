@@ -1,8 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.ClassQueries.findTutorByName;
-import static seedu.address.logic.ClassQueries.getClassesByTutor;
 
 import java.util.List;
 
@@ -68,11 +66,13 @@ public class GetClassesCommand extends Command {
 
         // Case 2: List classes for a specific tutor
         // Find the tutor in the system
-        Tutor tutor = findTutorByName(model, tutorName)
+        Tutor tutor = model.findPersonByName(tutorName)
+                .filter(person -> person instanceof Tutor)
+                .map(person -> (Tutor) person)
                 .orElseThrow(() -> new CommandException(String.format(MESSAGE_TUTOR_NOT_FOUND, tutorName)));
 
         // Filter classes by tutor
-        List<TuitionClass> tutorClasses = getClassesByTutor(model, tutor);
+        List<TuitionClass> tutorClasses = model.getClassesByTutor(tutor);
 
         if (tutorClasses.isEmpty()) {
             throw new CommandException(String.format(MESSAGE_NO_CLASSES_FOUND, tutorName));
