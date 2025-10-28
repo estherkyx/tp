@@ -70,6 +70,17 @@ public class LinkParentCommand extends Command {
         if (!(parentOpt.get() instanceof Parent)) {
             throw new CommandException(String.format(MESSAGE_WRONG_PERSON_TYPE, parentName, "Parent"));
         }
+        if (studentToLink.getParentId() != null) {
+            // Find old parent
+            Optional<Person> oldParentOpt = personList.stream()
+                    .filter(p -> p instanceof Parent && p.getId().equals(studentToLink.getParentId()))
+                    .findFirst();
+            if (oldParentOpt.isPresent()) {
+                Parent oldParent = (Parent) oldParentOpt.get();
+                oldParent.removeChildId(studentToLink.getId());
+                model.setPerson(oldParent, oldParent);
+            }
+        }
         Parent parentToLink = (Parent) parentOpt.get();
 
         // Link the student and parent
