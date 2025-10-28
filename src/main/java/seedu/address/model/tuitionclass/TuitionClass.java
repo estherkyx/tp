@@ -5,7 +5,6 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.person.PersonId;
@@ -16,8 +15,7 @@ import seedu.address.model.person.PersonId;
  */
 public class TuitionClass {
 
-    private final Day day;
-    private final Time time;
+    private final ClassId classId;
     private PersonId tutorId;
     private final Set<PersonId> studentIds = new HashSet<>();
 
@@ -32,8 +30,7 @@ public class TuitionClass {
      */
     public TuitionClass(Day day, Time time) {
         requireAllNonNull(day, time);
-        this.day = day;
-        this.time = time;
+        this.classId = new ClassId(day, time);
         this.tutorId = null; // No tutor assigned yet
     }
 
@@ -49,22 +46,21 @@ public class TuitionClass {
      */
     public TuitionClass(Day day, Time time, PersonId tutorId, Set<PersonId> studentIds) {
         requireAllNonNull(day, time, tutorId, studentIds);
-        this.day = day;
-        this.time = time;
+        this.classId = new ClassId(day, time);
         this.tutorId = tutorId;
         this.studentIds.addAll(studentIds);
     }
 
+    public ClassId getClassId() {
+        return classId;
+    }
+
     public Day getDay() {
-        return day;
+        return classId.getDay();
     }
 
     public Time getTime() {
-        return time;
-    }
-
-    public String getTimeString() {
-        return this.getTime().toString().substring(1) + "00";
+        return classId.getTime();
     }
 
     public PersonId getTutorId() {
@@ -97,9 +93,12 @@ public class TuitionClass {
     }
 
     /**
-     * Returns true if both tuition classes are at the same time on the same day.
-     * This defines the uniqueness of a class.
+     * Returns a simple string representation of the class timeslot (e.g., "Monday 1400").
      */
+    public String toSimpleString() {
+        return String.format("%s %s", getDay(), getTime().toDisplayString());
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -111,12 +110,11 @@ public class TuitionClass {
         }
 
         TuitionClass otherClass = (TuitionClass) other;
-        return day.equals(otherClass.day)
-                && time.equals(otherClass.time);
+        return classId.equals(otherClass.classId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(day, time);
+        return classId.hashCode();
     }
 }

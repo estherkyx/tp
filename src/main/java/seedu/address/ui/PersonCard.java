@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -188,11 +189,10 @@ public class PersonCard extends UiPart<Region> {
 
         if (person instanceof Student) {
             Student student = (Student) person;
-            if (student.getTuitionDay().isPresent() && student.getTuitionTime().isPresent()) {
-                String classInfo = String.format("Class: %s %s",
-                    student.getTuitionDay().get(),
-                    student.getTuitionTime().get().toString().substring(1) + "00");
-                tuitionClass.setText(classInfo);
+            Optional<TuitionClass> classOptional = student.findTuitionClass(tuitionClassLookup.apply(student));
+
+            if (classOptional.isPresent()) {
+                tuitionClass.setText("Class: " + classOptional.get().toSimpleString());
                 tuitionClass.setVisible(true);
                 tuitionClass.setManaged(true);
             } else {
@@ -203,15 +203,10 @@ public class PersonCard extends UiPart<Region> {
             Tutor tutor = (Tutor) person;
             List<TuitionClass> classes = tuitionClassLookup.apply(tutor);
             if (!classes.isEmpty()) {
-                StringBuilder classText = new StringBuilder("Classes: ");
-                for (int i = 0; i < classes.size(); i++) {
-                    if (i > 0) {
-                        classText.append(", ");
-                    }
-                    TuitionClass tc = classes.get(i);
-                    classText.append(String.format("%s %s", tc.getDay(), tc.getTimeString()));
-                }
-                tuitionClass.setText(classText.toString());
+                String classInfo = classes.stream()
+                        .map(TuitionClass::toSimpleString)
+                        .collect(Collectors.joining(", "));
+                tuitionClass.setText("Classes: " + classInfo);
                 tuitionClass.setVisible(true);
                 tuitionClass.setManaged(true);
             } else {

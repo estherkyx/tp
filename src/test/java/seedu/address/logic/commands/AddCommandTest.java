@@ -26,10 +26,10 @@ import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonId;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
-import seedu.address.model.tuitionclass.Day;
-import seedu.address.model.tuitionclass.Time;
+import seedu.address.model.tuitionclass.ClassId;
 import seedu.address.model.tuitionclass.TuitionClass;
 import seedu.address.testutil.PersonBuilder;
 
@@ -203,7 +203,12 @@ public class AddCommandTest {
         }
 
         @Override
-        public Optional<TuitionClass> findTuitionClass(Day day, Time time) {
+        public Optional<Person> findPersonById(PersonId id) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Optional<TuitionClass> findTuitionClass(ClassId classid) {
             throw new AssertionError("This method should not be called.");
         }
 

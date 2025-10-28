@@ -15,10 +15,10 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonId;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
-import seedu.address.model.tuitionclass.Day;
-import seedu.address.model.tuitionclass.Time;
+import seedu.address.model.tuitionclass.ClassId;
 import seedu.address.model.tuitionclass.TuitionClass;
 
 /**
@@ -143,6 +143,14 @@ public class ModelManager implements Model {
                 .findFirst();
     }
 
+    @Override
+    public Optional<Person> findPersonById(PersonId id) {
+        requireNonNull(id);
+        return addressBook.getPersonList().stream()
+                .filter(person -> person.getId().equals(id))
+                .findFirst();
+    }
+
     //=========== TuitionClass =====================================================================
 
     @Override
@@ -164,11 +172,10 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public Optional<TuitionClass> findTuitionClass(Day day, Time time) {
-        requireNonNull(day);
-        requireNonNull(time);
+    public Optional<TuitionClass> findTuitionClass(ClassId classId) {
+        requireNonNull(classId);
         return addressBook.getTuitionClassList().stream()
-                .filter(tuitionClass -> tuitionClass.getDay().equals(day) && tuitionClass.getTime().equals(time))
+                .filter(tuitionClass -> tuitionClass.getClassId().equals(classId))
                 .findFirst();
     }
 

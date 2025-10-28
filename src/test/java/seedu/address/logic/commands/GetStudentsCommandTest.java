@@ -52,10 +52,10 @@ public class GetStudentsCommandTest {
         typical.addTuitionClass(c1);
         typical.addTuitionClass(c2);
 
-        newAlice.setTuitionClass(Day.MONDAY, Time.H14);
+        newAlice.setTuitionClass(c1);
         c1.addStudentId(newAlice.getId());
 
-        newBenson.setTuitionClass(Day.MONDAY, Time.H16);
+        newBenson.setTuitionClass(c2);
         c2.addStudentId(newBenson.getId());
 
         model = new ModelManager(typical, new UserPrefs());

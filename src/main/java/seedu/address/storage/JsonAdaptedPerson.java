@@ -22,8 +22,6 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.tuitionclass.Day;
-import seedu.address.model.tuitionclass.Time;
 
 /**
  * Jackson-friendly version of {@link Person}.
@@ -41,21 +39,19 @@ class JsonAdaptedPerson {
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final String linkedParentId;
     private final List<String> childrenIds;
-    private final String tuitionDay;
-    private final String tuitionTime;
+    private final JsonAdaptedClassId classId;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("id") String id, @JsonProperty("category") String category,
-        @JsonProperty("name") String name, @JsonProperty("phone") String phone,
-            @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags,
-            @JsonProperty("linkedParentId") String linkedParentId,
-            @JsonProperty("childrenIds") List<String> childrenIds,
-            @JsonProperty("tuitionDay") String tuitionDay,
-            @JsonProperty("tuitionTime") String tuitionTime) {
+                             @JsonProperty("name") String name, @JsonProperty("phone") String phone,
+                             @JsonProperty("email") String email, @JsonProperty("address") String address,
+                             @JsonProperty("tags") List<JsonAdaptedTag> tags,
+                             @JsonProperty("linkedParentId") String linkedParentId,
+                             @JsonProperty("childrenIds") List<String> childrenIds,
+                             @JsonProperty("classId") JsonAdaptedClassId classId) {
         this.id = id;
         this.category = category;
         this.name = name;
@@ -71,8 +67,7 @@ class JsonAdaptedPerson {
         } else {
             this.childrenIds = new ArrayList<>();
         }
-        this.tuitionDay = tuitionDay;
-        this.tuitionTime = tuitionTime;
+        this.classId = classId;
     }
 
     /**
@@ -94,28 +89,24 @@ class JsonAdaptedPerson {
             Student student = (Student) source;
             this.linkedParentId = student.getParentId() != null ? student.getParentId().getValue() : null;
             this.childrenIds = new ArrayList<>(); // Student has no children
-            this.tuitionDay = student.getTuitionDay().map(Enum::toString).orElse(null);
-            this.tuitionTime = student.getTuitionTime().map(Enum::toString).orElse(null);
+            this.classId = student.getClassId().map(JsonAdaptedClassId::new).orElse(null);
         } else if (source instanceof Parent) {
             Parent parent = (Parent) source;
             this.linkedParentId = null; // Parent has no linked parent
             this.childrenIds = parent.getChildrenIds().stream()
                     .map(PersonId::getValue)
                     .collect(Collectors.toList());
-            this.tuitionDay = null;
-            this.tuitionTime = null;
+            this.classId = null;
         } else if (source instanceof Tutor) {
             Tutor tutor = (Tutor) source;
             this.linkedParentId = null; // Tutor has no linked parent
             this.childrenIds = new ArrayList<>();
-            this.tuitionDay = null;
-            this.tuitionTime = null;
+            this.classId = null;
         } else {
             // Default case for other Person types
             this.linkedParentId = null;
             this.childrenIds = new ArrayList<>();
-            this.tuitionDay = null;
-            this.tuitionTime = null;
+            this.classId = null;
         }
     }
 
@@ -185,14 +176,8 @@ class JsonAdaptedPerson {
 
         if (person instanceof Student) {
             Student student = (Student) person;
-            if (tuitionDay != null && tuitionTime != null) {
-                try {
-                    Day modelDay = Day.fromString(tuitionDay);
-                    Time modelTime = Time.fromString(tuitionTime);
-                    student.setTuitionClass(modelDay, modelTime);
-                } catch (IllegalArgumentException e) {
-                    throw new IllegalValueException("Invalid day or time found in storage for student.");
-                }
+            if (classId != null) {
+                student.setTuitionClass(classId.toModelType());
             }
             if (linkedParentId != null) {
                 student.setParentId(PersonId.of(linkedParentId));

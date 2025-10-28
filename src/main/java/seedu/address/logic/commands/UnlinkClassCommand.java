@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 
 import java.util.Optional;
 
+import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -15,6 +16,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
+import seedu.address.model.tuitionclass.ClassId;
 import seedu.address.model.tuitionclass.Day;
 import seedu.address.model.tuitionclass.Time;
 import seedu.address.model.tuitionclass.TuitionClass;
@@ -44,8 +46,7 @@ public class UnlinkClassCommand extends Command {
     public static final String MESSAGE_UNASSIGN_TUTOR_SUCCESS = "Unassigned Tutor %1$s from Class on %2$s, %3$s";
     public static final String MESSAGE_CLASS_HAS_NO_TUTOR = "This class has no tutor assigned";
 
-    private final Day day;
-    private final Time time;
+    private final ClassId classId;
     private final Name personName;
 
     /**
@@ -60,8 +61,7 @@ public class UnlinkClassCommand extends Command {
         requireNonNull(time);
         requireNonNull(personName);
 
-        this.day = day;
-        this.time = time;
+        this.classId = new ClassId(day, time);
         this.personName = personName;
     }
 
@@ -70,7 +70,7 @@ public class UnlinkClassCommand extends Command {
         requireNonNull(model);
 
         // 1. Find the Tuition Class
-        Optional<TuitionClass> classToUnlinkOpt = model.findTuitionClass(day, time);
+        Optional<TuitionClass> classToUnlinkOpt = model.findTuitionClass(classId);
         if (classToUnlinkOpt.isEmpty()) {
             throw new CommandException(MESSAGE_CLASS_NOT_FOUND);
         }
@@ -108,7 +108,7 @@ public class UnlinkClassCommand extends Command {
         model.setPerson(student, student);
 
         return new CommandResult(String.format(MESSAGE_UNLINK_STUDENT_SUCCESS,
-                student.getName(), tuitionClass.getDay(), tuitionClass.getTimeString()));
+                student.getName(), tuitionClass.getDay(), tuitionClass.getTime().toDisplayString()));
     }
 
     /**
@@ -127,7 +127,7 @@ public class UnlinkClassCommand extends Command {
         model.setPerson(tutor, tutor);
 
         return new CommandResult(String.format(MESSAGE_UNASSIGN_TUTOR_SUCCESS,
-                tutor.getName(), tuitionClass.getDay(), tuitionClass.getTimeString()));
+                tutor.getName(), tuitionClass.getDay(), tuitionClass.getTime().toDisplayString()));
     }
 
     @Override
@@ -138,20 +138,15 @@ public class UnlinkClassCommand extends Command {
         if (!(other instanceof UnlinkClassCommand otherCommand)) {
             return false;
         }
-        return day.equals(otherCommand.day)
-                && time.equals(otherCommand.time)
+        return classId.equals(otherCommand.classId)
                 && personName.equals(otherCommand.personName);
     }
 
     @Override
     public String toString() {
-        return getClass().getSimpleName()
-                + "{day="
-                + day
-                + ", time="
-                + time
-                + ", personName="
-                + personName
-                + "}";
+        return new ToStringBuilder(this)
+                .add("classId", classId)
+                .add("personName", personName)
+                .toString();
     }
 }
