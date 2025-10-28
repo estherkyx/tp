@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 
 import java.util.Optional;
 
+import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -143,11 +144,9 @@ public class UnlinkClassCommand extends Command {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName()
-                + "{classId="
-                + classId
-                + ", personName="
-                + personName
-                + "}";
+        return new ToStringBuilder(this)
+                .add("classId", classId)
+                .add("personName", personName)
+                .toString();
     }
 }
