@@ -61,17 +61,8 @@ public class LinkParentCommand extends Command {
         }
         Student studentToLink = (Student) studentOpt.get();
 
-        // Find the parent
-        Optional<Person> parentOpt = personList.stream()
-                .filter(p -> p.getName().equals(parentName)).findFirst();
-        if (parentOpt.isEmpty()) {
-            throw new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND, parentName));
-        }
-        if (!(parentOpt.get() instanceof Parent)) {
-            throw new CommandException(String.format(MESSAGE_WRONG_PERSON_TYPE, parentName, "Parent"));
-        }
         if (studentToLink.getParentId() != null) {
-            // Find old parent
+            // Find the old parent
             Optional<Person> oldParentOpt = personList.stream()
                     .filter(p -> p instanceof Parent && p.getId().equals(studentToLink.getParentId()))
                     .findFirst();
@@ -80,6 +71,16 @@ public class LinkParentCommand extends Command {
                 oldParent.removeChildId(studentToLink.getId());
                 model.setPerson(oldParent, oldParent);
             }
+        }
+
+        // Find the new parent
+        Optional<Person> parentOpt = personList.stream()
+                .filter(p -> p.getName().equals(parentName)).findFirst();
+        if (parentOpt.isEmpty()) {
+            throw new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND, parentName));
+        }
+        if (!(parentOpt.get() instanceof Parent)) {
+            throw new CommandException(String.format(MESSAGE_WRONG_PERSON_TYPE, parentName, "Parent"));
         }
         Parent parentToLink = (Parent) parentOpt.get();
 
