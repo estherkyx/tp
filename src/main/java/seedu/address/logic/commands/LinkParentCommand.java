@@ -61,8 +61,8 @@ public class LinkParentCommand extends Command {
         }
         Student studentToLink = (Student) studentOpt.get();
 
+        // Find the old parent, if any
         if (studentToLink.getParentId() != null) {
-            // Find the old parent
             Optional<Person> oldParentOpt = personList.stream()
                     .filter(p -> p instanceof Parent && p.getId().equals(studentToLink.getParentId()))
                     .findFirst();
