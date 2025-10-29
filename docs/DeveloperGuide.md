@@ -15,7 +15,7 @@ We would like to acknowledge the following sources that have been instrumental i
 
 #### **Code and Ideas**
 *   The overall architecture and a significant portion of the codebase were adapted from the original **AddressBook-Level3** project.
-*   The implementation pattern for creating new commands (such as `linkclass`, `createclass`, etc.) was heavily guided by the official [**AB3 Tutorial: Adding a Command**](https://se-education.org/addressbook-level3/DeveloperGuide.html#adding-a-new-command).
+*   The implementation pattern for creating new commands (such as `linkClass`, `createClass`, etc.) was heavily guided by the official [**AB3 Tutorial**](https://se-education.org/addressbook-level3/DeveloperGuide.html).
 *   The design of the GUI, including the layout and display of person cards, is an adaptation of the JavaFX structure provided by the AB3 project.
 
 #### **Third-Party Libraries**
