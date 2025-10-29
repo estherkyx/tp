@@ -83,7 +83,7 @@ public class UnlinkClassCommand extends Command {
             throw new CommandException(Messages.messagePersonNotFound(personName));
         }
 
-        // wrong logic from here on out
+        // wrong logic from here on out, takes first person from list of names with same name
         Person personToUnlink = personsNamed.get(0);
 
         // 3. Branch logic based on Person type
