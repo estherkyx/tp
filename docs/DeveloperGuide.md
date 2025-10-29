@@ -196,8 +196,6 @@ The `execute()` method in `CreateClassCommand` performs the following key operat
 
 Given below is an example usage scenario and how the `createClass` mechanism behaves at each step.
 
-Given below is an example usage scenario and how the `createClass` mechanism behaves at each step.
-
 **Step 1.** The user executes the command `createClass d/Monday ti/H14`.
 
 **Step 2.** The `LogicManager` passes the command string to the `AddressBookParser`. The parser identifies the `createClass` command word and delegates the parsing of the arguments (`d/Monday ti/H14`) to the `CreateClassCommandParser`.
