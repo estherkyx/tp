@@ -25,16 +25,21 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
-        <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
-        <Label fx:id="category" styleClass="category-label" text="(\$category)" />
+          <Label fx:id="name" text="\$first" styleClass="cell_big_label"
+                 wrapText="true" HBox.hgrow="ALWAYS" minWidth="0" />
+          <Label fx:id="category" styleClass="category-label" text="(\$category)">
+              <minWidth>
+                  <Region fx:constant="USE_PREF_SIZE" />
+              </minWidth>
+          </Label>
       </HBox>
       <FlowPane fx:id="tags" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-      <Label fx:id="parent" styleClass="cell_small_label" text="Parent: " />
-      <Label fx:id="children" styleClass="cell_small_label" text="Children: " />
-      <Label fx:id="tuitionClass" styleClass="cell_small_label" text="Class: " />
+      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" wrapText="true"/>
+      <Label fx:id="address" styleClass="cell_small_label" text="\$address" wrapText="true"/>
+      <Label fx:id="email" styleClass="cell_small_label" text="\$email" wrapText="true"/>
+      <Label fx:id="parent" styleClass="cell_small_label" text="Parent: " wrapText="true"/>
+      <Label fx:id="children" styleClass="cell_small_label" text="Children: " wrapText="true"/>
+      <Label fx:id="tuitionClass" styleClass="cell_small_label" text="Class: " wrapText="true"/>
     </VBox>
   </GridPane>
 </HBox>
