@@ -59,7 +59,10 @@ TutorFlow is a desktop app for tuition centre managers. It helps you keep track 
   Example: `help 123` is treated as `help`.
 </div>
 
-### Viewing help : `help`
+
+### App Basics
+
+#### Viewing help : `help`
 
 Shows a message explaining how to access the help page.
 
@@ -70,8 +73,27 @@ Format: `help`
 • [Back to Command Summary](#command-summary)
 
 
+#### Clearing all entries : `clear`
 
-### Adding a person: `add`
+Clears all entries from the address book.
+
+Format: `clear`
+
+• [Back to Command Summary](#command-summary)
+
+#### Exiting the program : `exit`
+
+Exits the program.
+
+Format: `exit`
+
+• [Back to Command Summary](#command-summary)
+
+
+
+### People Management
+
+#### Adding a person: `add`
 
 Adds a person to the address book.
 
@@ -87,7 +109,7 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
-### Listing all persons : `list`
+#### Listing all persons : `list`
 
 Shows a list of all persons in the address book. If you add a category, it shows all persons belonging to that category.
 
@@ -104,7 +126,7 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
-### Editing a person : `edit`
+#### Editing a person : `edit`
 
 Edits an existing person in the address book.
 
@@ -158,7 +180,43 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
-### Finding a student's parent: `getParent`
+#### Deleting a person : `delete`
+
+Deletes the specified person from the address book.
+
+Format: `delete INDEX`
+
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+* `list` followed by `delete 2` deletes the 2nd person in the address book.
+
+![result for 'delete 2'](images/delete2Result.png)
+
+• [Back to Command Summary](#command-summary)
+
+### Relationship Management
+
+#### Linking a student to a parent : `linkParent`
+
+Links an existing student to an existing parent in the address book.
+
+Format: `linkParent n/STUDENT_NAME n/PARENT_NAME`
+
+* Links the student identified by STUDENT_NAME to the parent identified by PARENT_NAME.
+* Both the student and the parent must already exist in the address book.
+* The names must be an exact match to the names stored in TutorFlow.
+* The person identified as the student must have the 'student' category, and the person identified as the parent must have the 'parent' category.
+
+Example:
+* `linkParent n/Alice Pauline n/Daniel Meier` Links the student 'Alice Pauline' to the parent 'Daniel Meier', assuming both exist in the address book with the correct categories.
+
+• [Back to Command Summary](#command-summary)
+
+#### Finding a student's parent: `getParent`
 
 Displays the parent of a specified student.
 
@@ -172,7 +230,7 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
-### Finding all students of a tutor: `getStudents`
+#### Finding all students of a tutor: `getStudents`
 
 Displays all students of a specified tutor.
 
@@ -186,7 +244,9 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
-### Creating a class: `createClass`
+### Class Management
+
+#### Creating a class: `createClass`
 
 Creates a new class in the system. Create this first before linking a tutor and students to it.
 
@@ -208,7 +268,7 @@ See also: [`linkClass`](#linking-a-person-to-a-class-linkclass), [`getClassDetai
 
 • [Back to Command Summary](#command-summary)
 
-### Linking a person to a class: `linkClass`
+#### Linking a person to a class: `linkClass`
 
 Links an existing student or tutor to an existing class.
 
@@ -247,7 +307,7 @@ See also: [`createClass`](#creating-a-class-createclass), [`unlinkClass`](#remov
 
 • [Back to Command Summary](#command-summary)
 
-### Removing a person from a class: `unlinkClass`
+#### Removing a person from a class: `unlinkClass`
 
 Removes the person from an existing class.
 
@@ -264,7 +324,7 @@ See also: [`linkClass`](#linking-a-person-to-a-class-linkclass), [`getClassDetai
 
 • [Back to Command Summary](#command-summary)
 
-### Viewing class details: `getClassDetails`
+#### Viewing class details: `getClassDetails`
 
 Shows the tutor (if any) and students (if any) linked to the class time specified.
 
@@ -281,7 +341,7 @@ See also: [`linkClass`](#linking-a-person-to-a-class-linkclass), [`getClasses`](
 
 • [Back to Command Summary](#command-summary)
 
-### Listing classes: `getClasses`
+#### Listing classes: `getClasses`
 
 Shows existing classes. If you add a tutor's name, it shows only that tutor’s classes.
 
@@ -298,45 +358,13 @@ See also: [`getClassDetails`](#viewing-class-details-getclassdetails), [`linkCla
 
 • [Back to Command Summary](#command-summary)
 
-### Deleting a person : `delete`
+### Data and Storage
 
-Deletes the specified person from the address book.
-
-Format: `delete INDEX`
-
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
-
-Examples:
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-
-![result for 'delete 2'](images/delete2Result.png)
-
-• [Back to Command Summary](#command-summary)
-
-### Clearing all entries : `clear`
-
-Clears all entries from the address book.
-
-Format: `clear`
-
-• [Back to Command Summary](#command-summary)
-
-### Exiting the program : `exit`
-
-Exits the program.
-
-Format: `exit`
-
-• [Back to Command Summary](#command-summary)
-
-### Saving the data
+#### Saving the data
 
 TutorFlow data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
-### Editing the data file
+#### Editing the data file
 
 TutorFlow data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
