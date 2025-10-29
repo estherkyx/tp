@@ -28,9 +28,11 @@ public class LinkParentCommand extends Command {
             + PREFIX_NAME + "John Doe "
             + PREFIX_NAME + "Amy Tan";
 
-    public static final String MESSAGE_LINK_SUCCESS = "Linked Student %1$s to Parent %2$s";
+    public static final String MESSAGE_LINK_SUCCESS = "Linked Student %1$s to Parent %2$s.";
+    public static final String MESSAGE_LINK_SAME_PARENT = "Parent %1$s is already linked to Student %2$s.";
     public static final String MESSAGE_PERSON_NOT_FOUND = "The person with name %s could not be found.";
     public static final String MESSAGE_WRONG_PERSON_TYPE = "The person %s is not a %s.";
+
 
     private final Name studentName;
     private final Name parentName;
@@ -61,21 +63,23 @@ public class LinkParentCommand extends Command {
         }
         Student studentToLink = (Student) studentOpt.get();
 
+        // Find the new parent
+        Optional<Person> parentOpt = personList.stream()
+                .filter(p -> p.getName().equals(parentName)).findFirst();
+
         // Find the old parent, if any
         if (studentToLink.getParentId() != null) {
             Optional<Person> oldParentOpt = personList.stream()
                     .filter(p -> p instanceof Parent && p.getId().equals(studentToLink.getParentId()))
                     .findFirst();
-            if (oldParentOpt.isPresent()) {
-                Parent oldParent = (Parent) oldParentOpt.get();
-                oldParent.removeChildId(studentToLink.getId());
-                model.setPerson(oldParent, oldParent);
+            if (oldParentOpt.isPresent() && parentOpt.isPresent() && oldParentOpt.get().equals(parentOpt.get())) {
+                throw new CommandException(String.format(MESSAGE_LINK_SAME_PARENT, parentName, studentName));
             }
+            Parent oldParent = (Parent) oldParentOpt.get();
+            oldParent.removeChildId(studentToLink.getId());
+            model.setPerson(oldParent, oldParent);
         }
 
-        // Find the new parent
-        Optional<Person> parentOpt = personList.stream()
-                .filter(p -> p.getName().equals(parentName)).findFirst();
         if (parentOpt.isEmpty()) {
             throw new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND, parentName));
         }
