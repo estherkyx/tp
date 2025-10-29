@@ -169,7 +169,9 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### \[Proposed\] Undo/redo feature
+### Create New Class Timeslot: `createClass` feature
+
+The `createClass` feature is responsible for creating new, empty tuition class timeslots in the system. It enforces the core business rule that there can only be one class per unique day and time combination.
 
 #### Implementation
 
