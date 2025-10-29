@@ -142,7 +142,7 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
-### Locating persons by name: `find`
+#### Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords.
 
@@ -260,10 +260,9 @@ Format: `linkClass d/DAY ti/TIME n/NAME`
 * `NAME` must **exactly match** a person in TutorFlow.
 * The class identified by `DAY` and `TIME` (case-insensitive) must already exist (created using `createClass`).
 
----
 The `linkClass` command works differently for students and tutors. Here’s what you need to know.
 
-##### Linking a Student to a Class
+**Linking a Student to a Class**
 
 Each student can be enrolled in only one class at a time.
 
@@ -272,7 +271,7 @@ Each student can be enrolled in only one class at a time.
 | The student is **not** in any class    | **Success!** The student is added to the class.                     |
 | The student is **already** in a class  | **Error.** The app will tell you the student is already linked. |
 
-##### Assigning a Tutor to a Class
+**Assigning a Tutor to a Class**
 
 Each class can only have one tutor, but a tutor can teach multiple classes.
 
