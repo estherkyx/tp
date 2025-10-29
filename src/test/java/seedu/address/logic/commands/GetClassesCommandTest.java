@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.model.person.Category.PARENT;
 import static seedu.address.model.person.Category.TUTOR;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -19,6 +20,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Parent;
 import seedu.address.model.person.PersonId;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Tutor;
@@ -111,6 +113,30 @@ public class GetClassesCommandTest {
         CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
 
         assertEquals(String.format(GetClassesCommand.MESSAGE_NO_CLASSES_FOUND, tutorNoClass.getName()),
+                exception.getMessage());
+    }
+
+    @Test
+    public void execute_parentSameNameAsTutor_findsTutorSuccessfully() throws CommandException {
+        Parent sameNameParent = new Parent(PARENT,
+                new Name("John Doe"),
+                new Phone("98765432"),
+                new Email("johnd@example.com"),
+                new Address("123 Street"),
+                new HashSet<>());
+        model.addPerson(sameNameParent);
+
+        Tutor sameNameTutor = new Tutor(TUTOR,
+                new Name("John Doe"),
+                new Phone("98765432"),
+                new Email("johnd@example.com"),
+                new Address("123 Street"),
+                new HashSet<>());
+        model.addPerson(sameNameTutor);
+
+        GetClassesCommand command = new GetClassesCommand(new Name("John Doe"));
+        CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
+        assertEquals(String.format(GetClassesCommand.MESSAGE_NO_CLASSES_FOUND, new Name("John Doe")),
                 exception.getMessage());
     }
 

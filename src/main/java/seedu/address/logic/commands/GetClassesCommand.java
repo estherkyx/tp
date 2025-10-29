@@ -1,12 +1,14 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.Tutor;
 import seedu.address.model.tuitionclass.TuitionClass;
 
@@ -48,6 +50,7 @@ public class GetClassesCommand extends Command {
 
         // Always start from all classes
         List<TuitionClass> allClasses = model.getTuitionClassList();
+        List<Person> allPersons = model.getAddressBook().getPersonList();
 
         if (tutorName == null) {
             // Case 1: List all classes
@@ -61,15 +64,19 @@ public class GetClassesCommand extends Command {
                 classListBuilder.append(String.format("%d. %s %s\n", index++, tc.getDay(),
                         tc.getTime().toDisplayString()));
             }
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             return new CommandResult(classListBuilder.toString().trim());
         }
 
         // Case 2: List classes for a specific tutor
         // Find the tutor in the system
-        Tutor tutor = model.findPersonByName(tutorName)
-                .filter(person -> person instanceof Tutor)
-                .map(person -> (Tutor) person)
-                .orElseThrow(() -> new CommandException(String.format(MESSAGE_TUTOR_NOT_FOUND, tutorName)));
+        Tutor tutor = (Tutor) allPersons.stream()
+                .filter(p -> p instanceof Tutor && p.getName().equals(tutorName))
+                .findFirst().orElse(null);
+
+        if (tutor == null) {
+            throw new CommandException(String.format(MESSAGE_TUTOR_NOT_FOUND, tutorName));
+        }
 
         // Filter classes by tutor
         List<TuitionClass> tutorClasses = model.getClassesByTutor(tutor);
