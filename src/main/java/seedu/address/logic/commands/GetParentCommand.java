@@ -62,6 +62,7 @@ public class GetParentCommand extends Command {
 
         // If student has no linked parent, throw exception
         if (parentId == null) {
+            model.updateFilteredPersonList(p -> false);
             throw new CommandException(String.format(MESSAGE_NO_PARENT_LINKED, studentName));
         }
 
