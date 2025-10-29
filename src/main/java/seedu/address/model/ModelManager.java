@@ -141,11 +141,11 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public Optional<Person> findPersonByName(Name name) {
+    public List<Person> findPersonByName(Name name) {
         requireNonNull(name);
         return addressBook.getPersonList().stream()
                 .filter(person -> person.getName().equals(name))
-                .findFirst();
+                .toList();
     }
 
     @Override

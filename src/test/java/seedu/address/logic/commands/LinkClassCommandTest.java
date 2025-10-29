@@ -42,7 +42,7 @@ public class LinkClassCommandTest {
                 student.getName(), classToLink.getDay(), classToLink.getTime().toDisplayString());
         assertEquals(expectedMessage, commandResult.getFeedbackToUser());
 
-        Student updatedStudent = (Student) model.findPersonByName(student.getName()).get();
+        Student updatedStudent = (Student) model.findPersonByName(student.getName()).get(0);
         assertTrue(updatedStudent.getClassId().isPresent());
         assertEquals(classToLink.getClassId(), updatedStudent.getClassId().get());
 

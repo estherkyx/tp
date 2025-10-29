@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 
+import java.util.List;
 import java.util.Optional;
 
 import seedu.address.commons.util.ToStringBuilder;
@@ -77,11 +78,13 @@ public class UnlinkClassCommand extends Command {
         TuitionClass classToUnlink = classToUnlinkOpt.get();
 
         // 2. Find the Person
-        Optional<Person> personToUnlinkOpt = model.findPersonByName(personName);
-        if (personToUnlinkOpt.isEmpty()) {
+        List<Person> personsNamed = model.findPersonByName(personName);
+        if (personsNamed.isEmpty()) {
             throw new CommandException(Messages.messagePersonNotFound(personName));
         }
-        Person personToUnlink = personToUnlinkOpt.get();
+
+        // wrong logic from here on out, takes first person from list of names with same name
+        Person personToUnlink = personsNamed.get(0);
 
         // 3. Branch logic based on Person type
         if (personToUnlink instanceof Student) {

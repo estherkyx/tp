@@ -114,7 +114,7 @@ public interface Model {
      * @param name The name of the person to find.
      * @return An Optional containing the Person if found, or an empty Optional otherwise.
      */
-    Optional<Person> findPersonByName(Name name);
+    List<Person> findPersonByName(Name name);
 
     /**
      * Finds and returns a person by their unique ID.
