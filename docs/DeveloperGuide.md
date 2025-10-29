@@ -255,6 +255,8 @@ _{more aspects and alternatives to be added}_
 
 ### Link classes to a tutee/tutor: `linkClass` feature
 
+Links an existing Student or Tutor to an existing TuitionClass identified by day and timeslot, enforcing one-class-per-student and one-tutor-per-class constraints while updating both the class roster and the person record.
+
 #### Implementation
 
 The `linkClass` mechanism is facilitated by the `LinkClassCommand`, its parser, and model helper methods. It integrates with the `Model` via the following operations:
@@ -266,21 +268,25 @@ The `linkClass` mechanism is facilitated by the `LinkClassCommand`, its parser, 
 - `Student#setTuitionClass(TuitionClass)` — Records the student’s enrolled class.
 - `Model#setTuitionClass(TuitionClass, TuitionClass)` and `Model#setPerson(Person, Person)` — Persist changes and trigger UI refresh.
 
+---
+
+#### Usage Scenario
+
 Given below is an example usage scenario and how the `linkClass` mechanism behaves at each step.
 
-Step 1. The user launches the application. The `Model` is initialized with persons and classes.
+**Step 1.** The user launches the application. The `Model` is initialized with persons and classes.
 
-Step 2. The user executes `linkClass d/Monday ti/H14 n/John Doe`. The parser validates required prefixes and constructs a `LinkClassCommand` with the timeslot and name.
+**Step 2.** The user executes `linkClass d/Monday ti/H14 n/John Doe`. The parser validates required prefixes and constructs a `LinkClassCommand` with the timeslot (ClassId) and name.
 
-Step 3. The command calls `Model#findTuitionClass(classId)`. If no class exists at that timeslot, an error is returned and the state is unchanged.
+**Step 3.** The command calls `Model#findTuitionClass(classId)`. If no class exists at that timeslot (no class has the ClassId), an error is returned and the state is unchanged.
 
-Step 4. The command calls `Model#findPersonByName(name)`. If no matching person exists, an error is returned and the state is unchanged.
+**Step 4.** The command calls `Model#findPersonByName(name)`. If no matching person exists, an error is returned and the state is unchanged.
 
-Step 5. If the person is a `Student`:
-- If the student is already linked to some class, an error is returned and the state is unchanged.
+**Step 5.** If the person is a `Student`:
+- If the student is already linked to a class, an error is returned and the state is unchanged.
 - Otherwise, the student’s `classId` is set and the class’s `studentIds` is updated. The command then calls `Model#setTuitionClass(...)` and `Model#setPerson(...)` to persist and refresh the UI.
 
-Step 6. If the person is a `Tutor`:
+**Step 6.** If the person is a `Tutor`:
 - If the class already has the same tutor, an error is returned. If it has a different tutor, an error instructs to unlink before reassigning.
 - Otherwise, the class’s `tutorId` is set. The command then calls `Model#setTuitionClass(...)` and `Model#setPerson(...)` to persist and refresh the UI.
 
