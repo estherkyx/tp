@@ -15,7 +15,7 @@ We would like to acknowledge the following sources that have been instrumental i
 
 #### **Code and Ideas**
 *   The overall architecture and a significant portion of the codebase were adapted from the original **AddressBook-Level3** project.
-*   The implementation pattern for creating new commands (such as `linkclass`, `createclass`, etc.) was heavily guided by the official [**AB3 Tutorial: Adding a Command**](https://se-education.org/addressbook-level3/DeveloperGuide.html#adding-a-new-command).
+*   The implementation pattern for creating new commands (such as `linkClass`, `createClass`, etc.) was heavily guided by the official [**AB3 Tutorial**](https://se-education.org/addressbook-level3/DeveloperGuide.html).
 *   The design of the GUI, including the layout and display of person cards, is an adaptation of the JavaFX structure provided by the AB3 project.
 
 #### **Third-Party Libraries**
@@ -192,7 +192,6 @@ The `execute()` method in `CreateClassCommand` performs the following key operat
 *   If no duplicate is found, it calls `model.addTuitionClass(newClass)` to add the new class to the `AddressBook`.
 
 
----
 #### Usage Scenario
 
 Given below is an example usage scenario and how the `createClass` mechanism behaves at each step.
@@ -215,17 +214,57 @@ Given below is an example usage scenario and how the `createClass` mechanism beh
 **Step 7.** A `CommandResult` with a success message (e.g., "New class created: Monday, 1400") is returned and displayed to the user.
 
 The following sequence diagram illustrates the process:
-
 ![CreateClassSequenceDiagram](images/CreateClassCommandDiagram.png)
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `CreateClassCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
+
+---
+
+### Link classes to a tutee/tutor: `linkClass` feature
+
+Links an existing Student or Tutor to an existing TuitionClass identified by day and timeslot, enforcing one-class-per-student and one-tutor-per-class constraints while updating both the class roster and the person record.
+
+#### Implementation
+
+The `linkClass` mechanism is facilitated by the `LinkClassCommand`, its parser, and model helper methods. It integrates with the `Model` via the following operations:
+
+- `Model#findTuitionClass(ClassId)` — Locates a class by `d/DAY` and `ti/TIME`.
+- `Model#findPersonByName(Name)` — Locates the target person by exact name.
+- `TuitionClass#setTutorId(PersonId)` / `removeTutorId()` — Assigns or clears the class tutor.
+- `TuitionClass#addStudentId(PersonId)` — Records a student in the class roster.
+- `Student#setTuitionClass(TuitionClass)` — Records the student’s enrolled class.
+- `Model#setTuitionClass(TuitionClass, TuitionClass)` and `Model#setPerson(Person, Person)` — Persist changes and trigger UI refresh.
+
+#### Usage Scenario
+
+Given below is an example usage scenario and how the `linkClass` mechanism behaves at each step.
+
+**Step 1.** The user launches the application. The `Model` is initialized with persons and classes.
+
+**Step 2.** The user executes `linkClass d/Monday ti/H14 n/John Doe`. The parser validates required prefixes and constructs a `LinkClassCommand` with the timeslot (ClassId) and name.
+
+**Step 3.** The command calls `Model#findTuitionClass(classId)`. If no class exists at that timeslot (no class has the ClassId), an error is returned and the state is unchanged.
+
+**Step 4.** The command calls `Model#findPersonByName(name)`. If no matching person exists, an error is returned and the state is unchanged.
+
+**Step 5.** If the person is a `Student`:
+- If the student is already linked to a class, an error is returned and the state is unchanged.
+- Otherwise, the student’s `classId` is set and the class’s `studentIds` is updated. The command then calls `Model#setTuitionClass(...)` and `Model#setPerson(...)` to persist and refresh the UI.
+
+**Step 6.** If the person is a `Tutor`:
+- If the class already has the same tutor, an error is returned. If it has a different tutor, an error instructs to unlink before reassigning.
+- Otherwise, the class’s `tutorId` is set. The command then calls `Model#setTuitionClass(...)` and `Model#setPerson(...)` to persist and refresh the UI.
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution (e.g. class/person not found, student already linked, tutor already teaching, class already has a different tutor), no call to `Model#setTuitionClass(...)` or `Model#setPerson(...)` is made, so no state is changed.
 
 </div>
 
-### \[Proposed\] Data archiving
+The following sequence diagram shows how `linkClass` flows through the `Logic` and `Model` components:
 
-_{Explain here how the data archiving feature will be implemented}_
+**Note**: For readability, the sequence diagram omits early-return error branches (e.g. class/person not found, student already linked, tutor already teaching, class already has a different tutor) and the lookup of the current tutor's name via `Model#findPersonById`.
 
+![LinkClassSequenceDiagram](images/LinkClassSequenceDiagram-Logic.png)
 
 --------------------------------------------------------------------------------------------------------------------
 
