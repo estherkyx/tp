@@ -253,9 +253,74 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
-### \[Proposed\] Data archiving
+### Link classes to a tutee/tutor: `linkClass` feature
 
-_{Explain here how the data archiving feature will be implemented}_
+#### Implementation
+
+The `linkClass` mechanism is facilitated by the `LinkClassCommand`, its parser, and model helper methods. It integrates with the `Model` via the following operations:
+
+- `Model#findTuitionClass(ClassId)` — Locates a class by `d/DAY` and `ti/TIME`.
+- `Model#findPersonByName(Name)` — Locates the target person by exact name.
+- `TuitionClass#setTutorId(PersonId)` / `removeTutorId()` — Assigns or clears the class tutor.
+- `TuitionClass#addStudentId(PersonId)` — Records a student in the class roster.
+- `Student#setTuitionClass(TuitionClass)` — Records the student’s enrolled class.
+- `Model#setTuitionClass(TuitionClass, TuitionClass)` and `Model#setPerson(Person, Person)` — Persist changes and trigger UI refresh.
+
+Given below is an example usage scenario and how the `linkClass` mechanism behaves at each step.
+
+Step 1. The user launches the application. The `Model` is initialized with persons and classes.
+
+Step 2. The user executes `linkClass d/Monday ti/H14 n/John Doe`. The parser validates required prefixes and constructs a `LinkClassCommand` with the timeslot and name.
+
+Step 3. The command calls `Model#findTuitionClass(classId)`. If no class exists at that timeslot, an error is returned and the state is unchanged.
+
+Step 4. The command calls `Model#findPersonByName(name)`. If no matching person exists, an error is returned and the state is unchanged.
+
+Step 5. If the person is a `Student`:
+- If the student is already linked to some class, an error is returned and the state is unchanged.
+- Otherwise, the student’s `classId` is set and the class’s `studentIds` is updated. The command then calls `Model#setTuitionClass(...)` and `Model#setPerson(...)` to persist and refresh the UI.
+
+Step 6. If the person is a `Tutor`:
+- If the class already has the same tutor, an error is returned. If it has a different tutor, an error instructs to unlink before reassigning.
+- Otherwise, the class’s `tutorId` is set. The command then calls `Model#setTuitionClass(...)` and `Model#setPerson(...)` to persist and refresh the UI.
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution (e.g. class/person not found, student already linked, tutor already teaching, class already has a different tutor), no call to `Model#setTuitionClass(...)` or `Model#setPerson(...)` is made, so no state is changed.
+
+</div>
+
+The following sequence diagram shows how `linkClass` flows through the `Logic` and `Model` components:
+
+**Note**: For readability, the sequence diagram omits early-return error branches (e.g. class/person not found, student already linked, tutor already teaching, class already has a different tutor) and the lookup of the current tutor's name via `Model#findPersonById`. These paths are covered in the Detailed Behaviour below.
+
+![LinkClassSequenceDiagram](images/LinkClassSequenceDiagram-Logic.png)
+
+#### Detailed Behaviour
+
+- **Input contract**
+  - Required prefixes: `d/`, `ti/`, `n/` with non-empty values and no duplicates.
+  - Preamble must be empty; otherwise a format error is returned.
+
+- **Lookup and validation**
+  - `Model#findTuitionClass(ClassId)` must return a class, else: "The class at the specified timeslot does not exist."
+  - `Model#findPersonByName(Name)` must return a person, else: a person-not-found message is shown.
+  - If the person is neither `Student` nor `Tutor`, the command fails with: "The person provided is not a student or a tutor."
+
+- **Student path**
+  - If `student.getClassId().isPresent()`, the command fails with: "The student is already linked to a class."
+  - Otherwise: `student.setTuitionClass(tuitionClass)` and `tuitionClass.addStudentId(student.getId())`.
+  - Persist and refresh UI with `Model#setTuitionClass(...)` and `Model#setPerson(...)`.
+  - Success message: "Linked Student <name> to Class on <day>, <time>".
+
+- **Tutor path**
+  - If `tuitionClass.getTutorId()` is present and equals `tutor.getId()`, fail with: "The tutor is already assigned to this class."
+  - If `tuitionClass.getTutorId()` is present but different, fail with: "This class is already assigned to Tutor <currentTutor>. Unlink before reassigning."
+  - Otherwise: `tuitionClass.setTutorId(tutor.getId())`.
+  - Persist and refresh UI with `Model#setTuitionClass(...)` and `Model#setPerson(...)`.
+  - Success message: "Assigned Tutor <name> to Class on <day>, <time>".
+
+- **State updates and UI**
+  - Calls to `Model#setTuitionClass` and `Model#setPerson` update observable lists, ensuring the UI reflects the new links immediately.
+
 
 
 --------------------------------------------------------------------------------------------------------------------
