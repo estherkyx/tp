@@ -258,9 +258,9 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ## **Appendix: Requirements**
 
-### Product scope
+### Product Scope
 
-**Target user profile**: The target user is a **Tech-savvy GP (General Paper) tuition receptionist**. More broadly,
+**Target user profile**: The target user is a **tech-savvy GP (General Paper) tuition receptionist**. More broadly,
 this includes tech-savvy tuition teachers and receptionists who need to manage a significant number of contacts
 across various groups and schedules. The ideal user:
 * Can type fast.
@@ -272,30 +272,29 @@ contacts), their classes, and schedules. The app allows for quick management of 
 number of JC-level tutees and their tutors, enabling users to manage contacts faster than with a typical
 mouse/GUI-driven app. It will not manage other details such as grades and tuition fees.
 
-### User stories
+### User Stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
 | Priority | As a …​        | I want to …​                                                   | So that I can…​                                                          |
 |----------|----------------|----------------------------------------------------------------|--------------------------------------------------------------------------|
-| `* * *`  | new user       | add a new student with their personal details                  | keep their records                                                       |
-| `* * *`  | new user       | add a parent with their personal details                       | link each student to a parent                                            |
-| `* * *`  | new user       | add a tutor with their details                                 | assign students to them                                                  |
-| `* * *`  | new user       | view the details of each student                               | access their data                                                        |
-| `* * *`  | new user       | view the details of each parent                                | access their data                                                        |
-| `* * *`  | new user       | view the details of each tutor                                 | access their data                                                        |
-| `* * *`  | regular user   | delete an existing student and their details                   | remove a student that leaves the tuition centre                          |
-| `* * *`  | regular user   | delete an existing parent and their details                    | remove a parent of a student that has left the tuition centre            |
-| `* * *`  | regular user   | delete an existing tutor and their details                     | remove a tutor that leaves the tuition centre                            |
-| `* *`    | new user       | create class timings                                           | schedule sessions for students                                           |
-| `* *`    | new user       | assign each student to a tutor, a class timing and a parent    | establish relationships                                                  |
+| `* * *`  | new user       | add a new student with their personal details                  | maintain accurate contact information for enrollment and communication     |
+| `* * *`  | new user       | add a parent with their personal details                       | contact parents about their child's progress and class updates            |
+| `* * *`  | new user       | add a tutor with their details                                 | assign tutors to appropriate classes based on their expertise             |
+| `* * *`  | new user       | view the details of each student                               | quickly find student contact info when parents call or students need help |
+| `* * *`  | new user       | view the details of each parent                                | reach parents immediately for urgent matters or schedule changes          |
+| `* * *`  | new user       | view the details of each tutor                                 | contact tutors about schedule changes or class assignments               |
+| `* * *`  | regular user   | delete an existing student and their details                   | remove a student that has left the tuition centre                          |
+| `* * *`  | regular user   | delete an existing parent and their details                    | remove the parent of a student that has left the tuition centre            |
+| `* * *`  | regular user   | delete an existing tutor and their details                     | remove a tutor that has left the tuition centre                            |
+| `* *`    | new user       | create class timings                                           | organize weekly schedules and avoid double-booking tutors                 |
+| `* *`    | regular user       | assign each student to a class timing and a parent    | track which students attend which classes and who to contact              |
 | `* *`    | regular user   | search for a student by name                                   | find their personal details quickly                                      |
 | `*`      | expert user    | move a student from one class to another                       | easily accommodate schedule changes for students                         |
 | `*`      | expert user    | view a tutor's weekly schedule                                 | know when they are teaching, and when they are free                      |
-| `*`      | expert user    | tag students (eg. "Different GP syllabus", "Needs extra help") | filter them                                                              |
-| `*`      | long-time user | export student, tutor or class lists                           | share them with other stakeholders and keep them for their own reference |
+| `*`      | expert user    | tag students (eg. "Different GP syllabus", "Needs extra help") | group students by learning needs and create targeted lesson plans         |
 
-### Use cases
+### Use Cases
 
 (For all use cases below, the **System** is `TutorFlow` and the **Actor** is the `user`, unless specified otherwise)
 
@@ -303,49 +302,50 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to add a person with a specific category (student, parent, or tutor), name, phone number, and email.
-2.  TutorFlow validates the inputs and adds the person to the contact list.
-3.  TutorFlow shows the newly added contact at the top of the list with a success message.
+1.  User requests to add a person with a specific category (student, parent, or tutor), name, phone number, address, and email.
+2.  TutorFlow shows the newly added contact at the top of the list with a success message.
 
     Use case ends.
 
 **Extensions**
 
-*   1a. The user enters an invalid command or format.
-    *   1a1. TutorFlow shows an error message indicating unrecognized input.
+*   1a. The user enters an invalid command.
+    *   1a1. TutorFlow shows an error message: _"Unknown command"._
 
         Use case ends.
 
-*   2a. The user enters an invalid category (not "student", "tutor", or "parent").
-    *   2a1. TutorFlow shows an error message: "Whoops! That role doesn't exist. Try again with "student", "tutor", or "parent"."
+*   1b. The user enters a command with an invalid format.
+    *   1b1. TutorFlow shows an error message: _"Invalid command format!"_
 
         Use case ends.
 
-*   2b. The user provides an empty name.
-    *   2b1. TutorFlow shows an error message: "Whoops! Please enter a valid name."
+
+*   1c. The user enters an invalid category (not "student", "tutor", or "parent").
+    *   1c1. TutorFlow shows an error message: _"Invalid category"._
 
         Use case ends.
 
-*   2c. The user provides an invalid phone number (e.g., not 8 digits).
-    *   2c1. TutorFlow shows an error message: "Whoops! Please enter a valid Singapore phone number."
+*   1d. The user provides an empty name.
+    *   1d1. TutorFlow shows an error message: _"Names should only contain alphanumeric characters and spaces, and it should not be blank"._
 
         Use case ends.
 
-*   2d. The user provides an invalid email format.
-    *   2d1. TutorFlow shows an error message: "Whoops! Please enter a valid email address."
+*   1e. The user provides an invalid phone number (e.g., not at least 3 digits/contains non-numbers).
+    *   1e1. TutorFlow shows an error message: _"Phone numbers should only contain numbers, and it should be at least 3 digits long"._
 
         Use case ends.
 
-*   2e. The provided phone number or email already exists in the contact list.
-    *   2e1. TutorFlow shows a warning message: "Whoops! That phone/email already belongs to [Existing Contact]. Do you still want to add [New Contact]? (Y/N)".
-    *   2e2. User enters "Y".
-    *   2e3. TutorFlow adds the new contact.
-
-        Use case resumes at step 3.
-
-    *   2e4. User enters "N".
+*   1f. The user provides an invalid email format.
+    *   1f1. TutorFlow shows an error message: _"Emails should be of the format local-part@domain"._
 
         Use case ends.
+
+*   1g. The provided name and category already exists in the contact list. (Person already exists)
+    *   1g1. TutorFlow shows an error message: _"This person already exists in the address book"._
+
+        Use case ends.
+
+--------------------------------------------------------------------------------------------------------------------
 
 **Use case: UC2 - Delete a person**
 
@@ -365,54 +365,302 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-*   3a. The given index is not a number.
-    *   3a1. TutorFlow shows an error message: "Whoops! Index must be a number."
+*   3a. The given index is not a positive integer.
+    *   3a1. TutorFlow shows an error message: _"Invalid command format!"_
 
         Use case ends.
 
-*   3b. The given index is out of range (e.g., ≤ 0 or greater than the list size).
-    *   3b1. TutorFlow shows an error message: "Whoops! Index is out of range. Please enter a valid index."
+*   3b. The given index is out of range (e.g., greater than the list size).
+    *   3b1. TutorFlow shows an error message: _"The person index provided is invalid"._
 
         Use case ends.
 
-**Use case: UC3 - View persons**
+--------------------------------------------------------------------------------------------------------------------
+
+**Use case: UC3 - Creating a class**
 
 **MSS**
 
-1.  User requests to list all persons.
-2.  TutorFlow displays the full numbered list of all persons.
-
-    Use case ends.
-
-**Alternative Scenario: View by category**
-
-1.  User requests to list persons belonging to a specific category (student, tutor, or parent).
-2.  TutorFlow displays a filtered, numbered list of persons in that category.
+1.  User requests to create a new class with specific timing and details.
+2.  TutorFlow shows a success message confirming the class creation.
 
     Use case ends.
 
 **Extensions**
 
-*   1a. The user provides an invalid category.
-    *   1a1. TutorFlow shows an error message: "Whoops! That role doesn't exist. Try again with "student", "tutor", or "parent"."
+*   1a. The user provides an invalid day format.
+    *   1a1. TutorFlow shows an error message: _"Day must be a valid day of the week (e.g., MONDAY, Tuesday)."_
 
         Use case ends.
 
-*   2a. There are no contacts to display.
-    *   2a1. TutorFlow shows an empty list.
+*   1b. The user provides an invalid time format.
+    *   1b1. TutorFlow shows an error message: _"Time must be one of the following: H12, H14, H16, H18, H20"._
 
         Use case ends.
 
-*   2b. The system encounters an error reading the contact list from storage.
-    *   2b1. TutorFlow shows an error message: "Whoops! I couldn't load your contacts. Please try again."
+*   1c. The user provides a day and timing that conflicts with an existing class.
+    *   1c1. TutorFlow shows an error message: _"This class time slot already exists"._
 
         Use case ends.
 
+--------------------------------------------------------------------------------------------------------------------
+
+**Use case: UC4 - View all classes**
+
+**MSS**
+
+1.  User requests to view all classes.
+2.  TutorFlow displays the full numbered list of all classes with their days and timings.
+
+    Use case ends.
+
+**Extensions**
+
+*   2a. There are no classes to display.
+    *   2a1. TutorFlow shows an empty list and displays the message: _"There are no tuition classes in the system."_
+
+        Use case ends.
+
+--------------------------------------------------------------------------------------------------------------------
+
+**Use case: UC5 - View classes taught by a specific tutor**
+
+**Preconditions**: At least 1 tutor exists in the system
+
+1.  User requests to view classes for a specific tutor.
+2.  TutorFlow displays a filtered list of classes taught by that tutor.
+
+    Use case ends.
+
+**Extensions**
+
+*   1a. The name given is not a tutor.
+    * 1a1. TutorFlow shows an error message: _"Tutor with name '[tutor_name]' not found."_
+
+        Use case ends.
+
+--------------------------------------------------------------------------------------------------------------------
+
+**Use case: UC6 - Link a parent to a student**
+
+**Preconditions**: At least 1 student and 1 parent exists in the system
+
+**MSS**
+
+1.  User requests to link a parent to a student by specifying both names.
+2.  TutorFlow links the parent to the student.
+3.  TutorFlow shows a success message confirming the link.
+
+    Use case ends.
+
+**Extensions**
+
+*   1a. Either the student or parent name is not found.
+    *   1a1. TutorFlow shows an error message: _"The person with name [student_name/parent_name] could not be found."_
+
+        Use case ends.
+
+*   1b. The specified parent is not categorized as `parent`.
+    *   1b1. TutorFlow shows an error message: _"The person [person_name] is not a Parent."_
+
+        Use case ends.
+
+*   1c. The specified student is not categorized as `student`.
+    *   1c1. TutorFlow shows an error message: _"The person [person_name] is not a Student."_
+
+        Use case ends.
+
+*   1d. The parent is already linked to the student.
+    *   1d1. TutorFlow shows an error message: _"Parent already linked to this student."_
+
+        Use case ends.
+
+--------------------------------------------------------------------------------------------------------------------
+
+**Use case: UC7 - Link a class to a student**
+
+**Preconditions**: At least 1 class and 1 student exists in the system
+
+**MSS**
+
+1.  User requests to link a student to a class by specifying the student name and class index (or identifier).
+2.  TutorFlow validates the student exists and the class exists.
+3.  TutorFlow links the student to the class.
+4.  TutorFlow shows a success message confirming the link.
+
+    Use case ends.
+
+**Extensions**
+
+*   1a. The student name is not found.
+    *   1a1. TutorFlow shows an error message: _"The person with the name '[person_name]' could not be found."_
+
+        Use case ends.
+
+*   1b. The class identifier is invalid.
+    *   1b1. TutorFlow shows an error message: _"The class at the specified timeslot does not exist."_
+
+        Use case ends.
+
+*   1c. The student is already linked to a class.
+    *   1c1. TutorFlow shows an error message: _"The student is already linked to a class."_
+
+        Use case ends.
+
+--------------------------------------------------------------------------------------------------------------------
+
+**Use case: UC8 - Unlink a class from a student**
+
+**Preconditions**: At least 1 class and 1 student exists in the system
+
+**MSS**
+
+1.  User requests to unlink a student from a class by specifying the student name and class index (or identifier).
+2.  TutorFlow validates the link exists.
+3.  TutorFlow removes the link.
+4.  TutorFlow shows a success message confirming the unlink.
+
+    Use case ends.
+
+**Extensions**
+
+*   1a. The student name is not found.
+    *   1a1. TutorFlow shows an error message: _"The person with the name '[person_name]' could not be found."_
+
+        Use case ends.
+
+*   1b. The class identifier is invalid.
+    *   1b1. TutorFlow shows an error message: _"The class at the specified timeslot does not exist."_
+
+        Use case ends.
+
+*   1c. The student is not linked to the class.
+    *   1c1. TutorFlow shows an error message: _"The student is not linked to this class"._
+
+        Use case ends.
+
+--------------------------------------------------------------------------------------------------------------------
+
+**Use case: UC9 - Get details of a class**
+
+**Preconditions**: At least 1 class exists in the system
+
+**MSS**
+
+1.  User requests details of a specific class by providing the class day and time.
+2.  TutorFlow retrieves the class information (day, time, assigned tutor, enrolled students).
+3.  TutorFlow displays the class details.
+
+    Use case ends.
+
+**Extensions**
+
+*   1a. The class day or time is invalid.
+    *   1a1. TutorFlow shows an error message: _"There is no class at the specified day and time"._
+
+        Use case ends.
+
+*   2a. The class has no enrolled students or no assigned tutor.
+    *   2a1. TutorFlow displays placeholders indicating missing information (e.g., _"Tutor: None"_).
+
+        Use case ends.
+
+--------------------------------------------------------------------------------------------------------------------
+
+**Use case: UC10 - Get all students in the system**
+
+**MSS**
+
+1.  User requests to view all students.
+2.  TutorFlow displays a filtered list containing only contacts categorized as `student`.
+
+    Use case ends.
+
+**Extensions**
+
+*   2a. There are no students to display.
+    *   2a1. TutorFlow shows an empty list and displays the message: _"There    are no students in the system."_
+
+        Use case ends.
+
+*   2a. The tutor has no linked classes.
+    *   2a1. TutorFlow shows an empty list and displays the message: _"No classes found for tutor [tutor_name]."_
+
+        Use case ends.
+
+--------------------------------------------------------------------------------------------------------------------
+
+ **Use case: UC11 - Edit a person**
+ 
+ **Preconditions**: At least 1 person exists in the system
+ 
+ **MSS**
+ 
+ 1.  User requests to list persons.
+ 2.  TutorFlow shows a list of persons.
+ 3.  User requests to edit a specific person in the list by their index, providing one or more updated fields (e.g., name, phone, email, address, category, tags).
+ 5.  TutorFlow updates the person, refreshes the contact list, and shows a success message.
+ 
+     Use case ends.
+ 
+ **Extensions**
+ 
+ *   2a. The list is empty.
+ 
+     Use case ends.
+ 
+ *   3a. The given index is not a positive integer.
+     *   3a1. TutorFlow shows an error message: _"Invalid command format!"_
+ 
+         Use case ends.
+ 
+ *   3b. The given index is out of range (e.g., greater than the list size).
+     *   3b1. TutorFlow shows an error message: _"The person index provided is invalid."_
+ 
+         Use case ends.
+ 
+ *   3c. No fields are provided to edit.
+     *   3c1. TutorFlow shows an error message: _"At least one field to edit must be provided."_
+ 
+         Use case ends.
+ 
+ *   3d. The user provides an invalid name.
+     *   3d1. TutorFlow shows an error message: _"Names should only contain alphanumeric characters and spaces, and it should not be blank"._
+ 
+         Use case ends.
+ 
+ *   3e. The user provides an invalid phone number (e.g., not at least 3 digits/contains non-numbers).
+     *   3e1. TutorFlow shows an error message: _"Phone numbers should only contain numbers, and it should be at least 3 digits long"._
+ 
+         Use case ends.
+ 
+ *   3f. The user provides an invalid email format.
+     *   3f1. TutorFlow shows an error message: _"Emails should be of the format local-part@domain"._
+ 
+         Use case ends.
+ 
+ *   3g. The user provides an invalid category.
+     *   3g1. TutorFlow shows an error message: _"Invalid category"._
+ 
+         Use case ends.
+ 
+ *   3h. The edited details would duplicate an existing person (same identifying fields).
+     *   3h1. TutorFlow shows an error message: _"This person already exists in the address book"._
+ 
+         Use case ends.
+
+---
+ 
 ### Non-Functional Requirements
 
 1. Should work on any mainstream OS as long as it has Java 17 or above installed.
 2. Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 3. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+4. Typical commands (e.g., list, add, delete) should complete within 200 ms on a dataset of 1000 persons on a standard laptop from the last 5 years.
+5. The system should work without internet access.
+6. A user should be able to learn how to use TutorFlow to a reasonable degree within an hour of usage.
+7. The application should not be larger than 50Mb.
+8. The application should never crash during execution, and should only show warning messages.
 
 ### Glossary
 
@@ -422,6 +670,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Index**: The 1-based number that identifies a contact's position in the displayed list.
 * **Mainstream OS**: Windows, Linux, Unix, MacOS.
 * **MSS** (Main Success Scenario): A term used in use cases to describe the ideal workflow where everything happens as expected without any errors.
+* **Class (tuition class)**: A scheduled GP tuition session identified by a day and time slot.
+* **Command**: A textual instruction entered in the CLI to perform an action (e.g., `add`, `delete`).
+* **Dataset**: The collection of all stored contacts and classes used by the application.
+* **JSON** (JavaScript Object Notation): The data format used by TutorFlow to persist information to disk.
+* **Tag**: A label attached to a contact to group or describe them (e.g., "Needs extra help").
 
 --------------------------------------------------------------------------------------------------------------------
 
