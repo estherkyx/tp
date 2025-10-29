@@ -180,9 +180,9 @@ The mechanism is facilitated by several key components working together:
 
 1.  **`ClassId` Value Object**: This is an immutable class that encapsulates the unique identity of a tuition class, which is defined by its `Day` and `Time`. This allows the system to treat a timeslot as a single, cohesive concept.
 
-Given below is an example usage scenario and how the `createClass` mechanism behaves at each step.
+2.  **`TuitionClass` Model**: This class represents a single tuition class. Upon creation via the `createclass` command, it is initialized with a `ClassId` but has its `tutorId` set to `null` and an empty list of `studentIds`.
 
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
+3.  **`UniqueClassList`**: This data structure, held within the `AddressBook`, stores all `TuitionClass` objects. Its primary responsibility is to enforce uniqueness. It uses the `TuitionClass#equals()` method (which in turn uses `ClassId#equals()`) to prevent any duplicate timeslots from being added.
 
 4.  **`CreateClassCommand` and `CreateClassCommandParser`**: These handle the parsing of user input and the orchestration of the creation logic.
 
@@ -192,70 +192,36 @@ The `execute()` method in `CreateClassCommand` performs the following key operat
 *   If no duplicate is found, it calls `model.addTuitionClass(newClass)` to add the new class to the `AddressBook`.
 
 
----
 #### Usage Scenario
 
 Given below is an example usage scenario and how the `createClass` mechanism behaves at each step.
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
+Given below is an example usage scenario and how the `createClass` mechanism behaves at each step.
+
+**Step 1.** The user executes the command `createClass d/Monday ti/H14`.
 
 **Step 2.** The `LogicManager` passes the command string to the `AddressBookParser`. The parser identifies the `createClass` command word and delegates the parsing of the arguments (`d/Monday ti/H14`) to the `CreateClassCommandParser`.
 
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+**Step 3.** The `CreateClassCommandParser` tokenizes the arguments, validates that both `d/` and `ti/` prefixes are present, and parses the values into `Day.MONDAY` and `Time.H14` enums. It then instantiates and returns a `new CreateClassCommand(Day.MONDAY, Time.H14)`.
 
 **Step 4.** The `LogicManager` calls the `execute()` method on the returned `CreateClassCommand`.
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `CreateClassCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+**Step 5.** Inside `execute()`, a new `TuitionClass` object is created. The command then calls `model.hasTuitionClass()` to check for duplicates. This method leverages the `UniqueClassList`, which iterates through its existing classes and uses `TuitionClass#equals()` to compare them. Since no class exists for Monday at H14, this check returns `false`.
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The uniqueness of a `TuitionClass` is strictly defined by its `ClassId` (which is composed of its `Day` and `Time`). The `equals()` method in `TuitionClass` compares only the `ClassId`, ensuring that two classes are considered duplicates if and only if they occupy the same timeslot, regardless of their tutor or student list.
 </div>
 
-The following sequence diagram shows how an undo operation goes through the `Logic` component:
+**Step 6.** Since no duplicate was found, the command proceeds to call `model.addTuitionClass()`, which adds the new, empty `TuitionClass` object to the `AddressBook`'s internal `UniqueClassList`.
 
-![UndoSequenceDiagram](images/UndoSequenceDiagram-Logic.png)
+**Step 7.** A `CommandResult` with a success message (e.g., "New class created: Monday, 1400") is returned and displayed to the user.
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</div>
-
-Similarly, how an undo operation goes through the `Model` component is shown below:
-
-![UndoSequenceDiagram](images/UndoSequenceDiagram-Model.png)
-
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
+The following sequence diagram illustrates the process:
+![CreateClassSequenceDiagram](images/CreateClassCommandDiagram.png)
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `CreateClassCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
 </div>
 
-The following sequence diagram shows how `linkClass` flows through the `Logic` and `Model` components:
-
-**Note**: For readability, the sequence diagram omits early-return error branches (e.g. class/person not found, student already linked, tutor already teaching, class already has a different tutor) and the lookup of the current tutor's name via `Model#findPersonById`. These paths are covered in the Detailed Behaviour below.
-
-![UndoRedoState4](images/UndoRedoState4.png)
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
-
-![UndoRedoState5](images/UndoRedoState5.png)
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<img src="images/CommitActivityDiagram.png" width="250" />
-
-#### Design considerations:
-
-**Aspect: How undo & redo executes:**
-
-* **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
-
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
+---
 
 ### Link classes to a tutee/tutor: `linkClass` feature
 
@@ -271,8 +237,6 @@ The `linkClass` mechanism is facilitated by the `LinkClassCommand`, its parser, 
 - `TuitionClass#addStudentId(PersonId)` — Records a student in the class roster.
 - `Student#setTuitionClass(TuitionClass)` — Records the student’s enrolled class.
 - `Model#setTuitionClass(TuitionClass, TuitionClass)` and `Model#setPerson(Person, Person)` — Persist changes and trigger UI refresh.
-
----
 
 #### Usage Scenario
 
@@ -303,35 +267,6 @@ The following sequence diagram shows how `linkClass` flows through the `Logic` a
 **Note**: For readability, the sequence diagram omits early-return error branches (e.g. class/person not found, student already linked, tutor already teaching, class already has a different tutor) and the lookup of the current tutor's name via `Model#findPersonById`. These paths are covered in the Detailed Behaviour below.
 
 ![LinkClassSequenceDiagram](images/LinkClassSequenceDiagram-Logic.png)
-
-#### Detailed Behaviour
-
-- **Input contract**
-  - Required prefixes: `d/`, `ti/`, `n/` with non-empty values and no duplicates.
-  - Preamble must be empty; otherwise a format error is returned.
-
-- **Lookup and validation**
-  - `Model#findTuitionClass(ClassId)` must return a class, else: "The class at the specified timeslot does not exist."
-  - `Model#findPersonByName(Name)` must return a person, else: a person-not-found message is shown.
-  - If the person is neither `Student` nor `Tutor`, the command fails with: "The person provided is not a student or a tutor."
-
-- **Student path**
-  - If `student.getClassId().isPresent()`, the command fails with: "The student is already linked to a class."
-  - Otherwise: `student.setTuitionClass(tuitionClass)` and `tuitionClass.addStudentId(student.getId())`.
-  - Persist and refresh UI with `Model#setTuitionClass(...)` and `Model#setPerson(...)`.
-  - Success message: "Linked Student <name> to Class on <day>, <time>".
-
-- **Tutor path**
-  - If `tuitionClass.getTutorId()` is present and equals `tutor.getId()`, fail with: "The tutor is already assigned to this class."
-  - If `tuitionClass.getTutorId()` is present but different, fail with: "This class is already assigned to Tutor <currentTutor>. Unlink before reassigning."
-  - Otherwise: `tuitionClass.setTutorId(tutor.getId())`.
-  - Persist and refresh UI with `Model#setTuitionClass(...)` and `Model#setPerson(...)`.
-  - Success message: "Assigned Tutor <name> to Class on <day>, <time>".
-
-- **State updates and UI**
-  - Calls to `Model#setTuitionClass` and `Model#setPerson` update observable lists, ensuring the UI reflects the new links immediately.
-
-
 
 --------------------------------------------------------------------------------------------------------------------
 
