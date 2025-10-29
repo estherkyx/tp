@@ -208,41 +208,6 @@ The following sequence diagram illustrates the process:
 
 </div>
 
-#### Design considerations:
-
-**Aspect: How is a class's identity defined?**
-
-* **Alternative 1 (current choice):** A composite key of Day and Time, encapsulated in a ClassId value object.
-  * Pros: 
-    * Directly and robustly models the business rule that "only one class can exist at any given timeslot".
-    * Uniqueness is enforced by the data structure (`UniqueClassList` using the equals method) rather than relying on manual checks inside every command.
-    * Provides a clean, object-oriented way to pass a class's identity between components.
-  * Cons: 
-    * Tightly couples the identity of a class to its schedule. If the feature were to change to allow multiple classes at the same time, this would require a major refactoring. 
-
-* **Alternative 2:** A randomly generated UUID, similar to `PersonId`.
-  * Pros: 
-    * Guarantees every class object is unique, even if they have the same timeslot.
-  * Cons: 
-    * Significantly more complex. The "one class per timeslot" rule would no longer be enforced by the model's structure.
-    * Every command (`createClass`, `linkClass`, etc.) would need to manually perform a check: "does a class with this day and time already exist?" before proceeding. This is repetitive and error-prone.
-
-**Aspect: How is a new class initialized?**
-
-* **Alternative 1 (current choice):** The `createClass` command creates a class with no assigned tutor. A separate `linkClass` command is used to assign a tutor.
-    * Pros:
-        * Follows the Single Responsibility Principle. `createClass` is only responsible for creating the timeslot, and `linkClass` is responsible for managing relationships.
-        * Supports the real-world use case of reserving a timeslot before a tutor has been finalized.
-    * Cons:
-        * Requires two separate commands to create and fully populate a class.
-
-* **Alternative 2:** Require a tutor's name (`n/TUTOR_NAME`) as a mandatory parameter in the `createClass` command.
-    * Pros:
-        * A class is created and assigned a tutor in a single, atomic step.
-    * Cons:
-      * Makes the `createClass` command much more complex. It would need to handle finding the tutor and throwing errors if the tutor doesn't exist or is not a `Tutor`.
-      * Loses the flexibility of creating an empty, unassigned timeslot.
-
 ### \[Proposed\] Data archiving
 
 _{Explain here how the data archiving feature will be implemented}_
