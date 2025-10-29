@@ -38,6 +38,16 @@ public class Student extends Person {
         this.classId = null;
     }
 
+    /**
+     * Constructs a {@code Student} with a given ID and class.
+     */
+    public Student(PersonId id, Category category, Name name, Phone phone, Email email,
+                   Address address, Set<Tag> tags, ClassId classId) {
+        super(id, category, name, phone, email, address, tags);
+        this.linkedParentId = null;
+        this.classId = classId;
+    }
+
     @Override
     public PersonId getParentId() {
         return linkedParentId;

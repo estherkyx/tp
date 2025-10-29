@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -107,7 +108,20 @@ public class ModelManager implements Model {
 
     @Override
     public void deletePerson(Person target) {
+        requireNonNull(target);
+
+        // Unlink parent from students if target is a parent
+        if (target instanceof Parent) {
+            unlinkParentFromStudent(target.getId());
+        }
+
+        // Unlink student from parent if target is a student
+        if (target instanceof Student) {
+            unlinkStudentFromParent(target.getId());
+        }
+
         addressBook.removePerson(target);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     @Override
@@ -154,6 +168,38 @@ public class ModelManager implements Model {
         return addressBook.getPersonList().stream()
                 .filter(person -> person.getId().equals(id))
                 .findFirst();
+    }
+
+    @Override
+    public void unlinkParentFromStudent(PersonId parentId) {
+        requireNonNull(parentId);
+
+        List<Person> allPersons = addressBook.getPersonList();
+        for (Person person : allPersons) {
+            if (person instanceof Student) {
+                Student student = (Student) person;
+                if (parentId.equals(student.getParentId())) {
+                    student.clearParent();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void unlinkStudentFromParent(PersonId studentId) {
+        requireNonNull(studentId);
+        List<Person> allPersons = addressBook.getPersonList();
+
+        for (Person person : allPersons) {
+            if (person instanceof Parent) {
+                Parent parent = (Parent) person;
+                Set<PersonId> children = parent.getChildrenIds();
+                if (children.contains(studentId)) {
+                    parent.removeChildId(studentId);
+                    addressBook.setPerson(parent, parent);
+                }
+            }
+        }
     }
 
     //=========== TuitionClass =====================================================================
