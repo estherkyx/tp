@@ -1,0 +1,72 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant "lc:LinkClassCommand" as LinkClassCommand LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute(linkClass d/DAY t/TIME n/NAME)
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand(linkClass ...)
+activate AddressBookParser
+
+create LinkClassCommand
+AddressBookParser -> LinkClassCommand
+activate LinkClassCommand
+
+LinkClassCommand --> AddressBookParser
+deactivate LinkClassCommand
+
+AddressBookParser --> LogicManager : lc
+deactivate AddressBookParser
+
+LogicManager -> LinkClassCommand : execute()
+activate LinkClassCommand
+
+LinkClassCommand -> Model : findTuitionClass(classId)
+activate Model
+Model --> LinkClassCommand : Optional<TuitionClass>
+deactivate Model
+
+LinkClassCommand -> Model : findPersonByName(name)
+activate Model
+Model --> LinkClassCommand : Optional<Person>
+deactivate Model
+
+alt Person is Student
+  LinkClassCommand -> Model : setTuitionClass(tuitionClass, tuitionClass)
+  activate Model
+  Model --> LinkClassCommand
+  deactivate Model
+  LinkClassCommand -> Model : setPerson(student, student)
+  activate Model
+  Model --> LinkClassCommand
+  deactivate Model
+else Person is Tutor
+  LinkClassCommand -> Model : setTuitionClass(tuitionClass, tuitionClass)
+  activate Model
+  Model --> LinkClassCommand
+  deactivate Model
+  LinkClassCommand -> Model : setPerson(tutor, tutor)
+  activate Model
+  Model --> LinkClassCommand
+  deactivate Model
+end
+
+LinkClassCommand --> LogicManager : result
+deactivate LinkClassCommand
+LinkClassCommand -[hidden]-> LogicManager : result
+destroy LinkClassCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml
+
