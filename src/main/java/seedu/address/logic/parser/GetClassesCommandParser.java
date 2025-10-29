@@ -19,14 +19,14 @@ public class GetClassesCommandParser implements Parser<GetClassesCommand> {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME);
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME);
 
-        if (argMultimap.getValue(PREFIX_NAME).isEmpty()) {
-            // No name specified, list all classes
-            return new GetClassesCommand();
-        }
-
         if (!argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(
                     MESSAGE_INVALID_COMMAND_FORMAT, GetClassesCommand.MESSAGE_USAGE));
+        }
+
+        if (argMultimap.getValue(PREFIX_NAME).isEmpty()) {
+            // No name specified, list all classes
+            return new GetClassesCommand();
         }
 
         String rawName = argMultimap.getValue(PREFIX_NAME).orElse("").trim();

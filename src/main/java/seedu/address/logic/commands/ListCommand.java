@@ -19,19 +19,20 @@ public class ListCommand extends Command {
     public static final String COMMAND_WORD = "list";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Lists all people, or only those in a particular category if specified.\n"
+            + ": Lists all people, or only those in a particular category if specified. \n"
             + "Parameters: [c/CATEGORY]\n"
-            + "Example: " + COMMAND_WORD + " c/student";
+            + "Example 1: " + COMMAND_WORD + "\n"
+            + "Example 2: " + COMMAND_WORD + " c/student";
 
     public static final String MESSAGE_SUCCESS = "Listed all people in the '%s' category.";
 
     public static final String MESSAGE_SUCCESS_ALL = "Listed all people in the address book.";
 
-    public static final String MESSAGE_MISSING_CATEGORY = "Category is not stated.";
+    public static final String MESSAGE_MISSING_CATEGORY = "Category is not stated. Use student, tutor or parent.";
 
-    public static final String MESSAGE_EMPTY_CATEGORY = "Category '%s' has no one.";
+    public static final String MESSAGE_EMPTY_CATEGORY = "There is no one belonging to the category '%s'";
 
-    public static final String MESSAGE_INVALID_CATEGORY = "Category '%s' does not exist.";
+    public static final String MESSAGE_INVALID_CATEGORY = "Invalid category. Use student, tutor or parent.";
 
     public final Optional<Category> category;
 

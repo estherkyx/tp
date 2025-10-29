@@ -27,7 +27,7 @@ public class GetClassDetailsCommand extends Command {
     public static final String COMMAND_WORD = "getClassDetails";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": given the day and time of a class, displays the tutor and students of that class. "
+            + ": Given the day and time of a class, displays the tutor and students of that class. \n"
             + "Parameters: "
             + PREFIX_DAY + "DAY "
             + PREFIX_TIME + "TIME\n"

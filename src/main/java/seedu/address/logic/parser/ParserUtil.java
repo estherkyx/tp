@@ -48,7 +48,7 @@ public class ParserUtil {
         try {
             return Category.fromString(category);
         } catch (IllegalArgumentException ex) {
-            throw new ParseException("Invalid category");
+            throw new ParseException("Invalid category. Use student, tutor or parent.");
         }
     }
 
