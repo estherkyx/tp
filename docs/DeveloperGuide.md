@@ -171,41 +171,41 @@ This section describes some noteworthy details on how certain features are imple
 
 ### \[Proposed\] Undo/redo feature
 
-#### Proposed Implementation
+#### Implementation
 
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
 
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
+The mechanism is facilitated by several key components working together:
 
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
+1.  **`ClassId` Value Object**: This is an immutable class that encapsulates the unique identity of a tuition class, which is defined by its `Day` and `Time`. This allows the system to treat a timeslot as a single, cohesive concept.
 
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
+Given below is an example usage scenario and how the `createClass` mechanism behaves at each step.
 
 Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
 
-![UndoRedoState0](images/UndoRedoState0.png)
+4.  **`CreateClassCommand` and `CreateClassCommandParser`**: These handle the parsing of user input and the orchestration of the creation logic.
 
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+The `execute()` method in `CreateClassCommand` performs the following key operations:
+*   It first creates a new `TuitionClass` object using the `Day` and `Time` provided by the user.
+*   It then calls `model.hasTuitionClass(newClass)` to check if a class at that timeslot already exists. This check is the core of the duplicate prevention mechanism.
+*   If no duplicate is found, it calls `model.addTuitionClass(newClass)` to add the new class to the `AddressBook`.
 
-![UndoRedoState1](images/UndoRedoState1.png)
 
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+---
+#### Usage Scenario
 
-![UndoRedoState2](images/UndoRedoState2.png)
+Given below is an example usage scenario and how the `createClass` mechanism behaves at each step.
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
 
-</div>
+**Step 2.** The `LogicManager` passes the command string to the `AddressBookParser`. The parser identifies the `createClass` command word and delegates the parsing of the arguments (`d/Monday ti/H14`) to the `CreateClassCommandParser`.
 
 Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
 
-![UndoRedoState3](images/UndoRedoState3.png)
+**Step 4.** The `LogicManager` calls the `execute()` method on the returned `CreateClassCommand`.
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `CreateClassCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The uniqueness of a `TuitionClass` is strictly defined by its `ClassId` (which is composed of its `Day` and `Time`). The `equals()` method in `TuitionClass` compares only the `ClassId`, ensuring that two classes are considered duplicates if and only if they occupy the same timeslot, regardless of their tutor or student list.
 </div>
 
 The following sequence diagram shows how an undo operation goes through the `Logic` component:
@@ -222,11 +222,13 @@ Similarly, how an undo operation goes through the `Model` component is shown bel
 
 The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `CreateClassCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 
 </div>
 
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
+The following sequence diagram shows how `linkClass` flows through the `Logic` and `Model` components:
+
+**Note**: For readability, the sequence diagram omits early-return error branches (e.g. class/person not found, student already linked, tutor already teaching, class already has a different tutor) and the lookup of the current tutor's name via `Model#findPersonById`. These paths are covered in the Detailed Behaviour below.
 
 ![UndoRedoState4](images/UndoRedoState4.png)
 

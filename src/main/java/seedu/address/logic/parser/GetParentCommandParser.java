@@ -34,7 +34,12 @@ public class GetParentCommandParser implements Parser<GetParentCommand> {
                     MESSAGE_INVALID_COMMAND_FORMAT, GetParentCommand.MESSAGE_USAGE));
         }
 
-        Name studentName = new Name(rawName);
+        Name studentName;
+        try {
+            studentName = new Name(rawName);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
+        }
         return new GetParentCommand(studentName);
     }
 }
