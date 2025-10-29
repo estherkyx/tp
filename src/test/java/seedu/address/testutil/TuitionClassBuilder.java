@@ -2,7 +2,6 @@ package seedu.address.testutil;
 
 import static seedu.address.testutil.TypicalPersons.GEORGE;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -76,15 +75,7 @@ public class TuitionClassBuilder {
      * @return this builder for chaining
      */
     public TuitionClassBuilder withTutor(Person tutor) {
-        this.tutorId = tutor.getId();
-        return this;
-    }
-
-    /**
-     * Add students (by Person) to this tuition class builder.
-     */
-    public TuitionClassBuilder withStudents(Person... students) {
-        Arrays.stream(students).map(Person::getId).forEach(studentIds::add);
+        this.tutorId = (tutor == null) ? null : tutor.getId();
         return this;
     }
 

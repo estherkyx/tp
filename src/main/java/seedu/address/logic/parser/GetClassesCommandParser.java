@@ -34,8 +34,12 @@ public class GetClassesCommandParser implements Parser<GetClassesCommand> {
             throw new ParseException(String.format(
                     MESSAGE_INVALID_COMMAND_FORMAT, GetClassesCommand.MESSAGE_USAGE));
         }
-
-        Name tutorName = new Name(rawName);
+        Name tutorName;
+        try {
+            tutorName = new Name(rawName);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
+        }
         return new GetClassesCommand(tutorName);
     }
 }

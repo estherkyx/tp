@@ -12,7 +12,6 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Student;
-import seedu.address.model.person.Tutor;
 
 /**
  * Links a student to a parent in the address book.
@@ -29,7 +28,8 @@ public class LinkParentCommand extends Command {
             + PREFIX_NAME + "John Doe "
             + PREFIX_NAME + "Amy Tan";
 
-    public static final String MESSAGE_LINK_SUCCESS = "Linked Student %1$s to Parent %2$s";
+    public static final String MESSAGE_LINK_SUCCESS = "Linked Student %1$s to Parent %2$s.";
+    public static final String MESSAGE_LINK_SAME_PARENT = "Parent %1$s is already linked to Student %2$s.";
     public static final String MESSAGE_PERSON_NOT_FOUND = "The person with name %s could not be found.";
     public static final String MESSAGE_WRONG_PERSON_TYPE = "The person %s is not a %s.";
 
@@ -49,6 +49,7 @@ public class LinkParentCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireAllNonNull(model);
+        List<Person> personList = model.getAddressBook().getPersonList();
 
         // Find the student
         List<Person> personsNamedStudent = model.findPersonByName(studentName);
@@ -77,6 +78,19 @@ public class LinkParentCommand extends Command {
                 .filter(p -> p instanceof Parent)
                 .findFirst()
                 .orElseThrow(() -> new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND, parentName)));
+
+        // Find the old parent, if any
+        if (student.getParentId() != null) {
+            Optional<Person> oldParentOpt = personList.stream()
+                    .filter(p -> p instanceof Parent && p.getId().equals(student.getParentId()))
+                    .findFirst();
+            if (oldParentOpt.isPresent() && oldParentOpt.get().equals(parent)) {
+                throw new CommandException(String.format(MESSAGE_LINK_SAME_PARENT, parentName, studentName));
+            }
+            Parent oldParent = (Parent) oldParentOpt.get();
+            oldParent.removeChildId(student.getId());
+            model.setPerson(oldParent, oldParent);
+        }
 
         // Link the student and parent
         student.setParentId(parent.getId());

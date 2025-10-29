@@ -40,7 +40,8 @@ public class GetStudentsCommand extends Command {
      */
     public GetStudentsCommand(Name tutorName) {
         requireNonNull(tutorName);
-        this.tutorName = tutorName;}
+        this.tutorName = tutorName;
+    }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {

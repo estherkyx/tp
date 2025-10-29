@@ -1,17 +1,20 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -27,26 +30,28 @@ public class LinkParentCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_validStudentAndParent_success() {
-        Student studentToLink = (Student) ALICE;
-        Parent parentToLink = (Parent) DANIEL;
+    public void execute_validStudentAndParent_success() throws CommandException {
+        Student studentToLink = (Student) CARL;
+        Parent parentToLink = (Parent) ELLE;
 
         LinkParentCommand linkParentCommand = new LinkParentCommand(studentToLink.getName(), parentToLink.getName());
 
         String expectedMessage = String.format(LinkParentCommand.MESSAGE_LINK_SUCCESS,
                 studentToLink.getName(), parentToLink.getName());
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        CommandResult result = linkParentCommand.execute(model);
 
-        Student expectedStudent = (Student) expectedModel.getFilteredPersonList().stream()
-                .filter(p -> p.equals(studentToLink)).findFirst().get();
-        Parent expectedParent = (Parent) expectedModel.getFilteredPersonList().stream()
-                .filter(p -> p.equals(parentToLink)).findFirst().get();
+        assertEquals(expectedMessage, result.getFeedbackToUser());
 
-        expectedStudent.setParentId(expectedParent.getId());
-        expectedParent.addChildId(expectedStudent.getId());
+        Student updatedStudent = (Student) model.getFilteredPersonList().stream()
+                .filter(p -> p instanceof Student && p.getId().equals(studentToLink.getId()))
+                .findFirst().orElseThrow();
+        Parent updatedParent = (Parent) model.getFilteredPersonList().stream()
+                .filter(p -> p instanceof Parent && p.getId().equals(parentToLink.getId()))
+                .findFirst().orElseThrow();;
 
-        assertCommandSuccess(linkParentCommand, model, expectedMessage, expectedModel);
+        assertEquals(updatedParent.getId(), updatedStudent.getParentId());
+        assertTrue(updatedParent.getChildrenIds().contains(updatedStudent.getId()));
     }
 
     @Test
@@ -72,6 +77,42 @@ public class LinkParentCommandTest {
 
         assertCommandFailure(command, model, String.format(LinkParentCommand.MESSAGE_WRONG_PERSON_TYPE,
                 ALICE.getName(), "Parent"));
+    }
+
+    @Test
+    public void execute_relinkStudentToNewParent_unlinksFromOldParentAndLinksToNew() throws CommandException {
+        Student student = (Student) ALICE;
+        Parent oldParent = (Parent) DANIEL;
+        Parent newParent = (Parent) ELLE;
+
+        LinkParentCommand linkToOldParent = new LinkParentCommand(student.getName(), oldParent.getName());
+        linkToOldParent.execute(model);
+
+        LinkParentCommand relinkToNewParent = new LinkParentCommand(student.getName(), newParent.getName());
+        relinkToNewParent.execute(model);
+
+        Student updatedStudent = (Student) model.getFilteredPersonList().stream()
+                .filter(p -> p.equals(student)).findFirst().get();
+        Parent updatedOldParent = (Parent) model.getFilteredPersonList().stream()
+                .filter(p -> p.equals(oldParent)).findFirst().get();
+        Parent updatedNewParent = (Parent) model.getFilteredPersonList().stream()
+                .filter(p -> p.equals(newParent)).findFirst().get();
+
+        assertEquals(updatedStudent.getParentId(), updatedNewParent.getId());
+        assertFalse(updatedOldParent.getChildrenIds().contains(updatedStudent.getId()));
+        assertTrue(updatedNewParent.getChildrenIds().contains(updatedStudent.getId()));
+    }
+
+    @Test
+    public void execute_parentAndStudentAlreadyLinked_throwsCommandException() throws CommandException {
+        Student student = (Student) ALICE;
+        Parent parent = (Parent) DANIEL;
+
+        LinkParentCommand linkToParent = new LinkParentCommand(student.getName(), parent.getName());
+        linkToParent.execute(model);
+
+        assertCommandFailure(linkToParent, model, String.format(LinkParentCommand.MESSAGE_LINK_SAME_PARENT,
+                parent.getName(), student.getName()));
     }
 
     @Test

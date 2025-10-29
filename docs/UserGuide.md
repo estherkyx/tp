@@ -59,7 +59,10 @@ TutorFlow is a desktop app for tuition centre managers. It helps you keep track 
   Example: `help 123` is treated as `help`.
 </div>
 
-### Viewing help : `help`
+
+### App Basics
+
+#### Viewing help : `help`
 
 Shows a message explaining how to access the help page.
 
@@ -70,8 +73,27 @@ Format: `help`
 • [Back to Command Summary](#command-summary)
 
 
+#### Clearing all entries : `clear`
 
-### Adding a person: `add`
+Clears all entries from the address book.
+
+Format: `clear`
+
+• [Back to Command Summary](#command-summary)
+
+#### Exiting the program : `exit`
+
+Exits the program.
+
+Format: `exit`
+
+• [Back to Command Summary](#command-summary)
+
+
+
+### People Management
+
+#### Adding a person: `add`
 
 Adds a person to the address book.
 
@@ -87,7 +109,7 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
-### Listing all persons : `list`
+#### Listing all persons : `list`
 
 Shows a list of all persons in the address book. If you add a category, it shows all persons belonging to that category.
 
@@ -104,7 +126,7 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
-### Editing a person : `edit`
+#### Editing a person : `edit`
 
 Edits an existing person in the address book.
 
@@ -120,23 +142,7 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
-### Linking a student to a parent : `linkParent`
-
-Links an existing student to an existing parent in the address book.
-
-Format: `linkParent n/STUDENT_NAME n/PARENT_NAME`
-
-* Links the student identified by STUDENT_NAME to the parent identified by PARENT_NAME.
-* Both the student and the parent must already exist in the address book.
-* The names must be an exact match to the names stored in TutorFlow.
-* The person identified as the student must have the 'student' category, and the person identified as the parent must have the 'parent' category.
-
-Example:
-* `linkParent n/Alice Pauline n/Daniel Meier` Links the student 'Alice Pauline' to the parent 'Daniel Meier', assuming both exist in the address book with the correct categories.
-
-• [Back to Command Summary](#command-summary)
-
-### Locating persons by name: `find`
+#### Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords.
 
@@ -157,124 +163,7 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
-### Finding a student's parent: `getParent`
-
-Displays the parent of a specified student.
-
-Format: `getParent n/STUDENT_NAME`
-* The student must already exist in the address book.
-* The student name must be an exact match to the name stored in TutorFlow.
-* The student identified must have the 'student' category.
-
-Examples:
-* `getParent n/John Doe` shows the parent of student John Doe.
-
-• [Back to Command Summary](#command-summary)
-
-### Finding all students of a tutor: `getStudents`
-
-Displays all students of a specified tutor.
-
-Format: `getStudents n/TUTOR_NAME`
-* The tutor must already exist in the address book.
-* The tutor name must be an exact match to the name stored in TutorFlow.
-* The tutor identified must have the 'tutor' category.
-
-Examples:
-* `getStudents n/Roy Balakrishnan` shows all students of  tutor Roy Balakrishnan.
-
-• [Back to Command Summary](#command-summary)
-
-### Creating a class: `createClass`
-
-Creates a new class in the system. Create this first before linking a tutor and students to it.
-
-Format: `createClass d/DAY ti/TIME`
-
-* `DAY` must be one of `MONDAY`, `TUESDAY`, `WEDNESDAY`, `THURSDAY`, `FRIDAY`, `SATURDAY`, `SUNDAY` (case-insensitive).
-* `TIME` must be a supported timeslot `H12`, `H14`, `H16`, `H18`, `H20` (case-insensitive), which represents `12:00PM`, `2:00PM`, `4:00PM`, `6:00PM`, `8:00PM` respectively.
-* The class is created without linked persons. Link a tutor or student using `linkClass`.
-
-Examples:
-* `createClass d/MONDAY ti/H16` creates a class on Monday at 4:00 PM.
-* `createClass d/TUESDAY ti/H12` creates a class on Tuesday at 12:00 PM.
-
-See also: [`linkClass`](#linking-a-person-to-a-class-linkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
-
-• [Back to Command Summary](#command-summary)
-
-### Linking a person to a class: `linkClass`
-
-Links an existing student or tutor to an existing class.
-
-Format: `linkClass d/DAY ti/TIME n/NAME`
-
-* `NAME` must exactly match a person in TutorFlow.
-* Students can join only one class time.
-* Tutors can teach multiple class times.
-* Each class time can only have one tutor.
-* The class identified by `DAY` and `TIME` (case-insensitive) must already exist (created using `createClass`).
-
-Examples:
-* `linkClass d/MONDAY ti/H16 n/Roy Balakrishnan` links tutor Roy Balakrishnan to the Monday 4:00 PM class.
-* `linkClass d/SATURDAY ti/H12 n/Alice Pauline` links student Alice Pauline to the Saturday 12:00 PM class.
-
-See also: [`createClass`](#creating-a-class-createclass), [`unlinkClass`](#removing-a-person-from-a-class-unlinkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
-
-• [Back to Command Summary](#command-summary)
-
-### Removing a person from a class: `unlinkClass`
-
-Removes the person from an existing class.
-
-Format: `unlinkClass d/DAY ti/TIME n/NAME`
-
-* `NAME` must exactly match a person currently linked to the class.
-* The class identified by `DAY` and `TIME` (case-insensitive) must already exist.
-
-Examples:
-* `unlinkClass d/MONDAY ti/H16 n/Roy Balakrishnan` removes tutor Roy Balakrishnan from the Monday 4:00 PM class.
-* `unlinkClass d/SATURDAY ti/H12 n/Alice Pauline` removes student Alice Pauline from the Saturday 12:00 PM class.
-
-See also: [`linkClass`](#linking-a-person-to-a-class-linkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
-
-• [Back to Command Summary](#command-summary)
-
-### Viewing class details: `getClassDetails`
-
-Shows the tutor (if any) and students (if any) linked to the class time specified.
-
-Format: `getClassDetails d/DAY ti/TIME`
-
-* `DAY` must be one of `MONDAY` to `SUNDAY`.
-* `TIME` must be a supported timeslot (refer to [`createClass`](#creating-a-class-createclass) for the timeslots).
-
-Examples:
-* `getClassDetails d/MONDAY ti/H16` displays the tutor and students in the Monday 4:00 PM class.
-* `getClassDetails d/SATURDAY ti/H12` displays the tutor and students in the Saturday 12:00 PM class.
-
-See also: [`linkClass`](#linking-a-person-to-a-class-linkclass), [`getClasses`](#listing-classes-getclasses)
-
-• [Back to Command Summary](#command-summary)
-
-### Listing classes: `getClasses`
-
-Shows existing classes. If you add a tutor's name, it shows only that tutor’s classes.
-
-Format: `getClasses [n/TUTOR_NAME]`
-
-* Without `n/TUTOR_NAME`: shows all classes in the system.
-* With `n/TUTOR_NAME`: shows only classes linked to the specified tutor.
-
-Examples:
-* `getClasses` shows all classes.
-* `getClasses n/Roy Balakrishnan` shows classes linked to tutor Roy Balakrishnan.
-
-See also: [`getClassDetails`](#viewing-class-details-getclassdetails), [`linkClass`](#linking-a-person-to-a-class-linkclass)
-
-• [Back to Command Summary](#command-summary)
-
-### Deleting a person : `delete`
+#### Deleting a person : `delete`
 
 Deletes the specified person from the address book.
 
@@ -292,27 +181,172 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
-### Clearing all entries : `clear`
+### Relationship Management
 
-Clears all entries from the address book.
+#### Linking a student to a parent : `linkParent`
 
-Format: `clear`
+Links an existing student to an existing parent in the address book.
+
+Format: `linkParent n/STUDENT_NAME n/PARENT_NAME`
+
+* Links the student identified by STUDENT_NAME to the parent identified by PARENT_NAME.
+* Both the student and the parent must already exist in the address book.
+* The names must be an exact match to the names stored in TutorFlow.
+* The person identified as the student must have the 'student' category, and the person identified as the parent must have the 'parent' category.
+
+Example:
+* `linkParent n/Alice Pauline n/Daniel Meier` Links the student 'Alice Pauline' to the parent 'Daniel Meier', assuming both exist in the address book with the correct categories.
 
 • [Back to Command Summary](#command-summary)
 
-### Exiting the program : `exit`
+#### Finding a student's parent: `getParent`
 
-Exits the program.
+Displays the parent of a specified student.
 
-Format: `exit`
+Format: `getParent n/STUDENT_NAME`
+* The student must already exist in the address book.
+* The student name must be an exact match to the name stored in TutorFlow.
+* The student identified must have the 'student' category.
+
+Examples:
+* `getParent n/John Doe` shows the parent of student John Doe.
 
 • [Back to Command Summary](#command-summary)
 
-### Saving the data
+#### Finding all students of a tutor: `getStudents`
+
+Displays all students of a specified tutor.
+
+Format: `getStudents n/TUTOR_NAME`
+* The tutor must already exist in the address book.
+* The tutor name must be an exact match to the name stored in TutorFlow.
+* The tutor identified must have the 'tutor' category.
+
+Examples:
+* `getStudents n/Roy Balakrishnan` shows all students of  tutor Roy Balakrishnan.
+
+• [Back to Command Summary](#command-summary)
+
+### Class Management
+
+#### Creating a class: `createClass`
+
+Creates a new class in the system. Create this first before linking a tutor and students to it.
+
+Format: `createClass d/DAY ti/TIME`
+
+* `DAY` must be one of `MONDAY`, `TUESDAY`, `WEDNESDAY`, `THURSDAY`, `FRIDAY`, `SATURDAY`, `SUNDAY` (case-insensitive).
+* `TIME` must be a supported timeslot `H12`, `H14`, `H16`, `H18`, `H20` (case-insensitive), which represents `12:00PM`, `2:00PM`, `4:00PM`, `6:00PM`, `8:00PM` respectively.
+* The class is created without linked persons. Link a tutor or student using `linkClass`.
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+Each timeslot (a combination of a day and a time) is unique. You cannot create a class for a timeslot that is already taken.
+</div>
+
+Examples:
+* `createClass d/MONDAY ti/H16` creates a class on Monday at 4:00 PM.
+* `createClass d/TUESDAY ti/H12` creates a class on Tuesday at 12:00 PM.
+
+See also: [`linkClass`](#linking-a-person-to-a-class-linkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
+
+• [Back to Command Summary](#command-summary)
+
+#### Linking a person to a class: `linkClass`
+
+Links an existing student or tutor to an existing class.
+
+Format: `linkClass d/DAY ti/TIME n/NAME`
+
+* `NAME` must **exactly match** a person in TutorFlow.
+* The class identified by `DAY` and `TIME` (case-insensitive) must already exist (created using `createClass`).
+
+The `linkClass` command works differently for students and tutors. Here’s what you need to know.
+
+**Linking a Student to a Class**
+
+Each student can be enrolled in only one class at a time.
+
+| Scenario                               | Result                                                              |
+|----------------------------------------|---------------------------------------------------------------------|
+| The student is **not** in any class    | **Success!** The student is added to the class.                     |
+| The student is **already** in a class  | **Error.** The app will tell you the student is already linked. |
+
+**Assigning a Tutor to a Class**
+
+Each class can only have one tutor, but a tutor can teach multiple classes.
+
+| Scenario                               | Result                                                                          |
+|----------------------------------------|---------------------------------------------------------------------------------|
+| The class has **no tutor**             | **Success!** The tutor is assigned to the class.                                  |
+| The class **already has a tutor**      | **Error.** The app will tell you to use `unlinkClass` to remove the current tutor first. |
+| The tutor is **already teaching** that class | **Error.** The app will tell you the tutor is already assigned.           |
+
+Examples:
+* `linkClass d/MONDAY ti/H16 n/Roy Balakrishnan` links tutor Roy Balakrishnan to the Monday 4:00 PM class.
+* `linkClass d/SATURDAY ti/H12 n/Alice Pauline` links student Alice Pauline to the Saturday 12:00 PM class.
+
+See also: [`createClass`](#creating-a-class-createclass), [`unlinkClass`](#removing-a-person-from-a-class-unlinkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
+
+• [Back to Command Summary](#command-summary)
+
+#### Removing a person from a class: `unlinkClass`
+
+Removes the person from an existing class.
+
+Format: `unlinkClass d/DAY ti/TIME n/NAME`
+
+* `NAME` must exactly match a person currently linked to the class.
+* The class identified by `DAY` and `TIME` (case-insensitive) must already exist.
+
+Examples:
+* `unlinkClass d/MONDAY ti/H16 n/Roy Balakrishnan` removes tutor Roy Balakrishnan from the Monday 4:00 PM class.
+* `unlinkClass d/SATURDAY ti/H12 n/Alice Pauline` removes student Alice Pauline from the Saturday 12:00 PM class.
+
+See also: [`linkClass`](#linking-a-person-to-a-class-linkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
+
+• [Back to Command Summary](#command-summary)
+
+#### Viewing class details: `getClassDetails`
+
+Shows the tutor (if any) and students (if any) linked to the class time specified.
+
+Format: `getClassDetails d/DAY ti/TIME`
+
+* `DAY` must be one of `MONDAY` to `SUNDAY`.
+* `TIME` must be a supported timeslot (refer to [`createClass`](#creating-a-class-createclass) for the timeslots).
+
+Examples:
+* `getClassDetails d/MONDAY ti/H16` displays the tutor and students in the Monday 4:00 PM class.
+* `getClassDetails d/SATURDAY ti/H12` displays the tutor and students in the Saturday 12:00 PM class.
+
+See also: [`linkClass`](#linking-a-person-to-a-class-linkclass), [`getClasses`](#listing-classes-getclasses)
+
+• [Back to Command Summary](#command-summary)
+
+#### Listing classes: `getClasses`
+
+Shows existing classes. If you add a tutor's name, it shows only that tutor’s classes.
+
+Format: `getClasses [n/TUTOR_NAME]`
+
+* Without `n/TUTOR_NAME`: shows all classes in the system.
+* With `n/TUTOR_NAME`: shows only classes linked to the specified tutor.
+
+Examples:
+* `getClasses` shows all classes.
+* `getClasses n/Roy Balakrishnan` shows classes linked to tutor Roy Balakrishnan.
+
+See also: [`getClassDetails`](#viewing-class-details-getclassdetails), [`linkClass`](#linking-a-person-to-a-class-linkclass)
+
+• [Back to Command Summary](#command-summary)
+
+### Data and Storage
+
+#### Saving the data
 
 TutorFlow data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
-### Editing the data file
+#### Editing the data file
 
 TutorFlow data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
