@@ -35,7 +35,12 @@ public class GetStudentsCommandParser implements Parser<GetStudentsCommand> {
                     MESSAGE_INVALID_COMMAND_FORMAT, GetStudentsCommand.MESSAGE_USAGE));
         }
 
-        Name tutorName = new Name(rawName);
+        Name tutorName;
+        try {
+            tutorName = new Name(rawName);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
+        }
         return new GetStudentsCommand(tutorName);
     }
 }

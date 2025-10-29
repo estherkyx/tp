@@ -142,7 +142,24 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
-#### Locating persons by name: `find`
+### Linking a student to a parent : `linkParent`
+
+Links an existing student to an existing parent in the address book.
+
+Format: `linkParent n/STUDENT_NAME n/PARENT_NAME`
+
+* Links the student identified by STUDENT_NAME to the parent identified by PARENT_NAME.
+* Both the student and the parent must already exist in the address book.
+* The names must be an **exact match** to the names stored in TutorFlow.
+* The person identified as the student must have the 'student' category, and the person identified as the parent must have the 'parent' category.
+* A student can only be linked to **one** parent.
+
+Example:
+* `linkParent n/Alice Pauline n/Daniel Meier` Links the student 'Alice Pauline' to the parent 'Daniel Meier', assuming both exist in the address book with the correct categories.
+
+• [Back to Command Summary](#command-summary)
+
+### Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords.
 
@@ -239,6 +256,10 @@ Format: `createClass d/DAY ti/TIME`
 * `TIME` must be a supported timeslot `H12`, `H14`, `H16`, `H18`, `H20` (case-insensitive), which represents `12:00PM`, `2:00PM`, `4:00PM`, `6:00PM`, `8:00PM` respectively.
 * The class is created without linked persons. Link a tutor or student using `linkClass`.
 
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+Each timeslot (a combination of a day and a time) is unique. You cannot create a class for a timeslot that is already taken.
+</div>
+
 Examples:
 * `createClass d/MONDAY ti/H16` creates a class on Monday at 4:00 PM.
 * `createClass d/TUESDAY ti/H12` creates a class on Tuesday at 12:00 PM.
@@ -253,11 +274,30 @@ Links an existing student or tutor to an existing class.
 
 Format: `linkClass d/DAY ti/TIME n/NAME`
 
-* `NAME` must exactly match a person in TutorFlow.
-* Students can join only one class time.
-* Tutors can teach multiple class times.
-* Each class time can only have one tutor.
+* `NAME` must **exactly match** a person in TutorFlow.
 * The class identified by `DAY` and `TIME` (case-insensitive) must already exist (created using `createClass`).
+
+---
+The `linkClass` command works differently for students and tutors. Here’s what you need to know.
+
+#### Linking a Student to a Class
+
+Each student can be enrolled in only one class at a time.
+
+| Scenario                               | Result                                                              |
+|----------------------------------------|---------------------------------------------------------------------|
+| The student is **not** in any class    | **Success!** The student is added to the class.                     |
+| The student is **already** in a class  | **Error.** The app will tell you the student is already linked. |
+
+#### Assigning a Tutor to a Class
+
+Each class can only have one tutor, but a tutor can teach multiple classes.
+
+| Scenario                               | Result                                                                          |
+|----------------------------------------|---------------------------------------------------------------------------------|
+| The class has **no tutor**             | **Success!** The tutor is assigned to the class.                                  |
+| The class **already has a tutor**      | **Error.** The app will tell you to use `unlinkClass` to remove the current tutor first. |
+| The tutor is **already teaching** that class | **Error.** The app will tell you the tutor is already assigned.           |
 
 Examples:
 * `linkClass d/MONDAY ti/H16 n/Roy Balakrishnan` links tutor Roy Balakrishnan to the Monday 4:00 PM class.
