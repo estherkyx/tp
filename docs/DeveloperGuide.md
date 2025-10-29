@@ -262,7 +262,7 @@ Given below is an example usage scenario and how the `linkClass` mechanism behav
 
 The following sequence diagram shows how `linkClass` flows through the `Logic` and `Model` components:
 
-**Note**: For readability, the sequence diagram omits early-return error branches (e.g. class/person not found, student already linked, tutor already teaching, class already has a different tutor) and the lookup of the current tutor's name via `Model#findPersonById`. These paths are covered in the Detailed Behaviour below.
+**Note**: For readability, the sequence diagram omits early-return error branches (e.g. class/person not found, student already linked, tutor already teaching, class already has a different tutor) and the lookup of the current tutor's name via `Model#findPersonById`.
 
 ![LinkClassSequenceDiagram](images/LinkClassSequenceDiagram-Logic.png)
 
