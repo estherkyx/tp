@@ -142,23 +142,6 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
-### Linking a student to a parent : `linkParent`
-
-Links an existing student to an existing parent in the address book.
-
-Format: `linkParent n/STUDENT_NAME n/PARENT_NAME`
-
-* Links the student identified by STUDENT_NAME to the parent identified by PARENT_NAME.
-* Both the student and the parent must already exist in the address book.
-* The names must be an **exact match** to the names stored in TutorFlow.
-* The person identified as the student must have the 'student' category, and the person identified as the parent must have the 'parent' category.
-* A student can only be linked to **one** parent.
-
-Example:
-* `linkParent n/Alice Pauline n/Daniel Meier` Links the student 'Alice Pauline' to the parent 'Daniel Meier', assuming both exist in the address book with the correct categories.
-
-• [Back to Command Summary](#command-summary)
-
 ### Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords.
@@ -280,7 +263,7 @@ Format: `linkClass d/DAY ti/TIME n/NAME`
 ---
 The `linkClass` command works differently for students and tutors. Here’s what you need to know.
 
-#### Linking a Student to a Class
+##### Linking a Student to a Class
 
 Each student can be enrolled in only one class at a time.
 
@@ -289,7 +272,7 @@ Each student can be enrolled in only one class at a time.
 | The student is **not** in any class    | **Success!** The student is added to the class.                     |
 | The student is **already** in a class  | **Error.** The app will tell you the student is already linked. |
 
-#### Assigning a Tutor to a Class
+##### Assigning a Tutor to a Class
 
 Each class can only have one tutor, but a tutor can teach multiple classes.
 
