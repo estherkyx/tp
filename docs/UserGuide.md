@@ -91,7 +91,7 @@ Format: `exit`
 
 
 
-### Contact Management
+### People Management
 
 #### Adding a person: `add`
 
@@ -181,7 +181,7 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
-### Relationships
+### Relationship Management
 
 #### Linking a student to a parent : `linkParent`
 
@@ -227,7 +227,7 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
-### Class Scheduling
+### Class Management
 
 #### Creating a class: `createClass`
 
