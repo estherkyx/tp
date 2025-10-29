@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonId;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
@@ -39,16 +40,16 @@ public class GetStudentsCommand extends Command {
      */
     public GetStudentsCommand(Name tutorName) {
         requireNonNull(tutorName);
-        this.tutorName = tutorName;
-    }
+        this.tutorName = tutorName;}
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        Tutor tutor = model.findPersonByName(tutorName)
+        List<Person> personsNamed = model.findPersonByName(tutorName);
+        Tutor tutor = (Tutor) personsNamed.stream()
                 .filter(person -> person instanceof Tutor)
-                .map(person -> (Tutor) person)
+                .findFirst()
                 .orElseThrow(() -> new CommandException(String.format(MESSAGE_TUTOR_NOT_FOUND, tutorName)));
 
         List<TuitionClass> tutorClasses = model.getClassesByTutor(tutor);

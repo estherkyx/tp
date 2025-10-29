@@ -12,6 +12,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Student;
+import seedu.address.model.person.Tutor;
 
 /**
  * Links a student to a parent in the address book.
@@ -48,40 +49,45 @@ public class LinkParentCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireAllNonNull(model);
-        List<Person> personList = model.getAddressBook().getPersonList();
 
         // Find the student
-        Optional<Person> studentOpt = personList.stream()
-                .filter(p -> p.getName().equals(studentName)).findFirst();
-        if (studentOpt.isEmpty()) {
+        List<Person> personsNamedStudent = model.findPersonByName(studentName);
+        if (personsNamedStudent.isEmpty()) {
             throw new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND, studentName));
         }
-        if (!(studentOpt.get() instanceof Student)) {
+        boolean namedNotStudent = personsNamedStudent.stream().noneMatch(p -> p instanceof Student);
+        if (namedNotStudent) {
             throw new CommandException(String.format(MESSAGE_WRONG_PERSON_TYPE, studentName, "Student"));
         }
-        Student studentToLink = (Student) studentOpt.get();
+        Student student = (Student) personsNamedStudent.stream()
+                .filter(p -> p instanceof Student)
+                .findFirst()
+                .orElseThrow(() -> new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND, studentName)));
 
         // Find the parent
-        Optional<Person> parentOpt = personList.stream()
-                .filter(p -> p.getName().equals(parentName)).findFirst();
-        if (parentOpt.isEmpty()) {
+        List<Person> personsNamedParent = model.findPersonByName(parentName);
+        if (personsNamedParent.isEmpty()) {
             throw new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND, parentName));
         }
-        if (!(parentOpt.get() instanceof Parent)) {
+        boolean namedNotParent = personsNamedParent.stream().noneMatch(p -> p instanceof Parent);
+        if (namedNotParent) {
             throw new CommandException(String.format(MESSAGE_WRONG_PERSON_TYPE, parentName, "Parent"));
         }
-        Parent parentToLink = (Parent) parentOpt.get();
+        Parent parent = (Parent) personsNamedParent.stream()
+                .filter(p -> p instanceof Parent)
+                .findFirst()
+                .orElseThrow(() -> new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND, parentName)));
 
         // Link the student and parent
-        studentToLink.setParentId(parentToLink.getId());
-        parentToLink.addChildId(studentToLink.getId());
+        student.setParentId(parent.getId());
+        parent.addChildId(student.getId());
 
         // Even though the objects are mutated, use setPerson to ensure the UI updates
-        model.setPerson(studentOpt.get(), studentToLink);
-        model.setPerson(parentOpt.get(), parentToLink);
+        model.setPerson(student, student);
+        model.setPerson(parent, parent);
 
         return new CommandResult(String.format(MESSAGE_LINK_SUCCESS,
-                studentToLink.getName(), parentToLink.getName()));
+                student.getName(), parent.getName()));
     }
 
     @Override

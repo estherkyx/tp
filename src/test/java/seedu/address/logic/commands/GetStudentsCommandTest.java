@@ -2,8 +2,11 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.model.person.Category.PARENT;
+import static seedu.address.model.person.Category.TUTOR;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.FIONA;
@@ -14,12 +17,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
 import seedu.address.model.tuitionclass.Day;
@@ -27,6 +35,8 @@ import seedu.address.model.tuitionclass.Time;
 import seedu.address.model.tuitionclass.TuitionClass;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TuitionClassBuilder;
+
+import java.util.HashSet;
 
 /**
  * Contains integration tests and unit tests for GetStudentsCommand.
@@ -114,6 +124,33 @@ public class GetStudentsCommandTest {
 
         assertCommandFailure(cmd, model,
                 String.format(GetStudentsCommand.MESSAGE_TUTOR_NOT_FOUND, ghost));
+    }
+
+    @Test
+    public void execute_parentSameNameAsTutor_findsTutorSuccessfully() throws CommandException {
+        Parent sameNameParent = new Parent(PARENT,
+                new Name("John Doe"),
+                new Phone("98765432"),
+                new Email("johnd@example.com"),
+                new Address("123 Street"),
+                new HashSet<>());
+        this.model.addPerson(sameNameParent);
+
+        Tutor sameNameTutor = new Tutor(TUTOR,
+                new Name("John Doe"),
+                new Phone("98765432"),
+                new Email("johnd@example.com"),
+                new Address("123 Street"),
+                new HashSet<>());
+        this.model.addPerson(sameNameTutor);
+
+        GetStudentsCommand command = new GetStudentsCommand(new Name("John Doe"));
+        CommandResult result = command.execute(model);
+
+        ObservableList<Person> shown = model.getFilteredPersonList();
+        assertEquals(0, shown.size(), "Expected exactly 0 students");
+        assertEquals(String.format(GetStudentsCommand.MESSAGE_NO_STUDENT_LINKED, new Name("John Doe")),
+                result.getFeedbackToUser());
     }
 
     @Test

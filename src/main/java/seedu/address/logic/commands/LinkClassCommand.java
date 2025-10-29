@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 
+import java.util.List;
 import java.util.Optional;
 
 import seedu.address.commons.util.ToStringBuilder;
@@ -73,11 +74,13 @@ public class LinkClassCommand extends Command {
         TuitionClass classToLink = classToLinkOpt.get();
 
         // 2. Find the Person
-        Optional<Person> personToLinkOpt = model.findPersonByName(personName);
-        if (personToLinkOpt.isEmpty()) {
+        List<Person> personsNamed = model.findPersonByName(personName);
+        if (personsNamed.isEmpty()) {
             throw new CommandException(Messages.messagePersonNotFound(personName));
         }
-        Person personToLink = personToLinkOpt.get();
+
+        // wrong logic from here on out
+        Person personToLink = personsNamed.get(0);
 
         // 3. Branch logic based on Person type
         if (personToLink instanceof Student) {

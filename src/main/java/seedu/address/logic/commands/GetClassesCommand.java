@@ -50,7 +50,6 @@ public class GetClassesCommand extends Command {
 
         // Always start from all classes
         List<TuitionClass> allClasses = model.getTuitionClassList();
-        List<Person> allPersons = model.getAddressBook().getPersonList();
 
         if (tutorName == null) {
             // Case 1: List all classes
@@ -70,13 +69,11 @@ public class GetClassesCommand extends Command {
 
         // Case 2: List classes for a specific tutor
         // Find the tutor in the system
-        Tutor tutor = (Tutor) allPersons.stream()
-                .filter(p -> p instanceof Tutor && p.getName().equals(tutorName))
-                .findFirst().orElse(null);
-
-        if (tutor == null) {
-            throw new CommandException(String.format(MESSAGE_TUTOR_NOT_FOUND, tutorName));
-        }
+        List<Person> personsNamed = model.findPersonByName(tutorName);
+        Tutor tutor = (Tutor) personsNamed.stream()
+                .filter(p -> p instanceof Tutor)
+                .findFirst()
+                .orElseThrow(() -> new CommandException(String.format(MESSAGE_TUTOR_NOT_FOUND, tutorName)));
 
         // Filter classes by tutor
         List<TuitionClass> tutorClasses = model.getClassesByTutor(tutor);

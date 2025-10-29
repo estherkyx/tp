@@ -199,7 +199,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public Optional<Person> findPersonByName(Name name) {
+        public List<Person> findPersonByName(Name name) {
             throw new AssertionError("This method should not be called.");
         }
 

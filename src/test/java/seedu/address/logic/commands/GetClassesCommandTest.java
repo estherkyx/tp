@@ -117,7 +117,7 @@ public class GetClassesCommandTest {
     }
 
     @Test
-    public void execute_parentSameNameAsTutor_findsTutorSuccessfully() throws CommandException {
+    public void execute_parentSameNameAsTutor_findsTutorSuccessfully() {
         Parent sameNameParent = new Parent(PARENT,
                 new Name("John Doe"),
                 new Phone("98765432"),
