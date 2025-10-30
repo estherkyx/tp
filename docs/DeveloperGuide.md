@@ -642,62 +642,62 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 --------------------------------------------------------------------------------------------------------------------
 
  **Use case: UC11 - Edit a person**
- 
+
  **Preconditions**: At least 1 person exists in the system
- 
+
  **MSS**
- 
+
  1.  User requests to list persons.
  2.  TutorFlow shows a list of persons.
  3.  User requests to edit a specific person in the list by their index, providing one or more updated fields (e.g., name, phone, email, address, category, tags).
  5.  TutorFlow updates the person, refreshes the contact list, and shows a success message.
- 
+
      Use case ends.
- 
+
  **Extensions**
- 
+
  *   2a. The list is empty.
- 
+
      Use case ends.
- 
+
  *   3a. The given index is not a positive integer.
      *   3a1. TutorFlow shows an error message: _"Invalid command format!"_
- 
+
          Use case ends.
- 
+
  *   3b. The given index is out of range (e.g., greater than the list size).
      *   3b1. TutorFlow shows an error message: _"The person index provided is invalid."_
- 
+
          Use case ends.
- 
+
  *   3c. No fields are provided to edit.
      *   3c1. TutorFlow shows an error message: _"At least one field to edit must be provided."_
- 
+
          Use case ends.
- 
+
  *   3d. The user provides an invalid name.
      *   3d1. TutorFlow shows an error message: _"Names should only contain alphanumeric characters and spaces, and it should not be blank"._
- 
+
          Use case ends.
- 
+
  *   3e. The user provides an invalid phone number (e.g., not at least 3 digits/contains non-numbers).
      *   3e1. TutorFlow shows an error message: _"Phone numbers should only contain numbers, and it should be at least 3 digits long"._
- 
+
          Use case ends.
- 
+
  *   3f. The user provides an invalid email format.
      *   3f1. TutorFlow shows an error message: _"Emails should be of the format local-part@domain"._
- 
+
          Use case ends.
- 
+
  *   3g. The user provides an invalid category.
      *   3g1. TutorFlow shows an error message: _"Invalid category"._
- 
+
          Use case ends.
- 
+
  *   3h. The edited details would duplicate an existing person (same identifying fields).
      *   3h1. TutorFlow shows an error message: _"This person already exists in the address book"._
- 
+
          Use case ends.
 
 ---
@@ -800,7 +800,7 @@ TutorFlow evolved from the AddressBook Level 3 (AB3) codebase. While AB3 support
 
 
 ### Achievements
-* Expanded AB3’s single-entity model into a multi-entity, relationship-aware system. 
-* Implemented relational and scheduling features (e.g. `linkParent`, `linkClass`) with consistent data handling. 
-* Enhanced the UI to visualise categories, relationships, and class timings. 
+* Expanded AB3’s single-entity model into a multi-entity, relationship-aware system.
+* Implemented relational and scheduling features (e.g. `linkParent`, `linkClass`) with consistent data handling.
+* Enhanced the UI to visualise categories, relationships, and class timings.
 * Preserved AB3’s structure while substantially increasing functionality and technical depth.
