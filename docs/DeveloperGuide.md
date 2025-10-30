@@ -162,14 +162,14 @@ The `Model` component,
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
+
 <div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
 
 <img src="images/BetterModelClassDiagram.png" width="450" />
 
 </div>
-
-<div style="page-break-after: always;"></div>
-<div class="print-tight"></div>
 
 ### Storage component
 
@@ -183,12 +183,12 @@ The `Storage` component,
 * stores data in a local JSON file located at `/data/addressbook.json`.
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
+
 ### Common classes
 
 Classes used by multiple components are in the `seedu.address.commons` package.
-
-<div style="page-break-after: always;"></div>
-<div class="print-tight"></div>
 
 ## **Implementation**
 
@@ -216,6 +216,8 @@ The `execute()` method in `CreateClassCommand` performs the following key operat
 *   It then calls `model.hasTuitionClass(newClass)` to check if a class at that timeslot already exists. This check is the core of the duplicate prevention mechanism.
 *   If no duplicate is found, it calls `model.addTuitionClass(newClass)` to add the new class to the `AddressBook`.
 
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
 
 #### Usage Scenario
 
@@ -224,9 +226,6 @@ Given below is an example usage scenario and how the `createClass` mechanism beh
 **Step 1.** The user executes the command `createClass d/Monday ti/H14`.
 
 **Step 2.** The `LogicManager` passes the command string to the `AddressBookParser`. The parser identifies the `createClass` command word and delegates the parsing of the arguments (`d/Monday ti/H14`) to the `CreateClassCommandParser`.
-
-<div style="page-break-after: always;"></div>
-<div class="print-tight"></div>
 
 **Step 3.** The `CreateClassCommandParser` tokenizes the arguments, validates that both `d/` and `ti/` prefixes are present, and parses the values into `Day.MONDAY` and `Time.H14` enums. It then instantiates and returns a `new CreateClassCommand(Day.MONDAY, Time.H14)`.
 
