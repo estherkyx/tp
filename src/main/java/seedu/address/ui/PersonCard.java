@@ -99,12 +99,9 @@ public class PersonCard extends UiPart<Region> {
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
         // Ensure relationship rows don't take space unless shown
-        parent.setVisible(false);
-        parent.setManaged(false);
-        children.setVisible(false);
-        children.setManaged(false);
-        tuitionClass.setVisible(false);
-        tuitionClass.setManaged(false);
+        hide(parent);
+        hide(children);
+        hide(tuitionClass);
 
         // Set up parent/children information
         setupParentChildrenInfo(personLookup);
@@ -118,63 +115,92 @@ public class PersonCard extends UiPart<Region> {
      */
     private void setupParentChildrenInfo(Function<PersonId, Optional<Person>> personLookup) {
         if (personLookup == null) {
-            parent.setVisible(false);
-            parent.setManaged(false);
-            children.setVisible(false);
-            children.setManaged(false);
+            hide(parent);
+            hide(children);
             return;
         }
         if (person instanceof Student) {
-            Student student = (Student) person;
-            PersonId parentId = student.getParentId();
-            if (parentId != null) {
-                Optional<Person> parentPerson = personLookup.apply(parentId);
-                if (parentPerson.isPresent()) {
-                    parent.setText("Parent: " + parentPerson.get().getName().fullName);
-                    parent.setVisible(true);
-                    parent.setManaged(true);
-                } else {
-                    parent.setVisible(false);
-                    parent.setManaged(false);
-                }
-            } else {
-                parent.setVisible(false);
-                parent.setManaged(false);
-            }
-            children.setVisible(false);
-            children.setManaged(false);
+            handleStudentRelationships((Student) person, personLookup);
         } else if (person instanceof Parent) {
-            Parent parentPerson = (Parent) person;
-            List<PersonId> childrenIds = parentPerson.getChildrenIds().stream().toList();
-            if (!childrenIds.isEmpty()) {
-                StringBuilder childrenText = new StringBuilder("Children: ");
-                for (int i = 0; i < childrenIds.size(); i++) {
-                    if (i > 0) {
-                        childrenText.append(", ");
-                    }
-                    Optional<Person> child = personLookup.apply(childrenIds.get(i));
-                    if (child.isPresent()) {
-                        childrenText.append(child.get().getName().fullName);
-                    } else {
-                        childrenText.append("Unknown");
-                    }
-                }
-                children.setText(childrenText.toString());
-                children.setVisible(true);
-                children.setManaged(true);
-            } else {
-                children.setVisible(false);
-                children.setManaged(false);
-            }
-            parent.setVisible(false);
-            parent.setManaged(false);
+            handleParentRelationships((Parent) person, personLookup);
         } else {
             // For tutors or other types
-            parent.setVisible(false);
-            parent.setManaged(false);
-            children.setVisible(false);
-            children.setManaged(false);
+            hide(parent);
+            hide(children);
         }
+    }
+
+    /**
+     * Shows the student's parent if found; hides children for students.
+     *
+     * @param student the student to render relationships for
+     * @param personLookup resolves a {@link PersonId} to an optional {@link Person}
+     */
+    private void handleStudentRelationships(Student student,
+                                            Function<PersonId, Optional<Person>> personLookup) {
+        PersonId parentId = student.getParentId();
+        if (parentId != null) {
+            Optional<Person> parentPerson = personLookup.apply(parentId);
+            if (parentPerson.isPresent()) {
+                setTextAndShow(parent, "Parent: " + parentPerson.get().getName().fullName);
+            } else {
+                hide(parent);
+            }
+        } else {
+            hide(parent);
+        }
+        hide(children);
+    }
+
+    /**
+     * Shows the parent's children list; hides the parent label for parents.
+     *
+     * @param parentPerson the parent to render relationships for
+     * @param personLookup resolves a {@link PersonId} to an optional {@link Person}
+     */
+    private void handleParentRelationships(Parent parentPerson,
+                                           Function<PersonId, Optional<Person>> personLookup) {
+        List<PersonId> childrenIds = parentPerson.getChildrenIds().stream().toList();
+        if (!childrenIds.isEmpty()) {
+            StringBuilder childrenText = new StringBuilder("Children: ");
+            for (int i = 0; i < childrenIds.size(); i++) {
+                if (i > 0) {
+                    childrenText.append(", ");
+                }
+                Optional<Person> child = personLookup.apply(childrenIds.get(i));
+                if (child.isPresent()) {
+                    childrenText.append(child.get().getName().fullName);
+                } else {
+                    childrenText.append("Unknown");
+                }
+            }
+            setTextAndShow(children, childrenText.toString());
+        } else {
+            hide(children);
+        }
+        hide(parent);
+    }
+
+    /**
+     * Hides a {@link Label} from view and layout.
+     *
+     * @param label the label to hide
+     */
+    private void hide(Label label) {
+        label.setVisible(false);
+        label.setManaged(false);
+    }
+
+    /**
+     * Sets label text and shows it.
+     *
+     * @param label the label to show
+     * @param text the text to set
+     */
+    private void setTextAndShow(Label label, String text) {
+        label.setText(text);
+        label.setVisible(true);
+        label.setManaged(true);
     }
 
     /**
@@ -182,40 +208,52 @@ public class PersonCard extends UiPart<Region> {
      */
     private void setupTuitionClassInfo(Function<Person, List<TuitionClass>> tuitionClassLookup) {
         if (tuitionClassLookup == null) {
-            tuitionClass.setVisible(false);
-            tuitionClass.setManaged(false);
+            hide(tuitionClass);
             return;
         }
 
         if (person instanceof Student) {
-            Student student = (Student) person;
-            List<TuitionClass> studentClass = tuitionClassLookup.apply(student);
-            if (!studentClass.isEmpty()) {
-                tuitionClass.setText("Class: " + studentClass.get(0).toSimpleString());
-                tuitionClass.setVisible(true);
-                tuitionClass.setManaged(true);
-            } else {
-                tuitionClass.setVisible(false);
-                tuitionClass.setManaged(false);
-            }
+            handleStudentTuitionInfo((Student) person, tuitionClassLookup);
         } else if (person instanceof Tutor) {
-            Tutor tutor = (Tutor) person;
-            List<TuitionClass> classes = tuitionClassLookup.apply(tutor);
-            if (!classes.isEmpty()) {
-                String classInfo = classes.stream()
-                        .map(TuitionClass::toSimpleString)
-                        .collect(Collectors.joining(", "));
-                tuitionClass.setText("Classes: " + classInfo);
-                tuitionClass.setVisible(true);
-                tuitionClass.setManaged(true);
-            } else {
-                tuitionClass.setVisible(false);
-                tuitionClass.setManaged(false);
-            }
+            handleTutorTuitionInfo((Tutor) person, tuitionClassLookup);
         } else {
             // For parents or other types
-            tuitionClass.setVisible(false);
-            tuitionClass.setManaged(false);
+            hide(tuitionClass);
+        }
+    }
+
+    /**
+     * Shows the student's first class if any; otherwise hides the label.
+     *
+     * @param student the student to render class info for
+     * @param tuitionClassLookup resolves a {@link Person} to their classes
+     */
+    private void handleStudentTuitionInfo(Student student,
+                                          Function<Person, List<TuitionClass>> tuitionClassLookup) {
+        List<TuitionClass> studentClass = tuitionClassLookup.apply(student);
+        if (!studentClass.isEmpty()) {
+            setTextAndShow(tuitionClass, "Class: " + studentClass.get(0).toSimpleString());
+        } else {
+            hide(tuitionClass);
+        }
+    }
+
+    /**
+     * Shows all classes taught by the tutor, joined by comma; hides label if none.
+     *
+     * @param tutor the tutor to render class info for
+     * @param tuitionClassLookup resolves a {@link Person} to their classes
+     */
+    private void handleTutorTuitionInfo(Tutor tutor,
+                                        Function<Person, List<TuitionClass>> tuitionClassLookup) {
+        List<TuitionClass> classes = tuitionClassLookup.apply(tutor);
+        if (!classes.isEmpty()) {
+            String classInfo = classes.stream()
+                    .map(TuitionClass::toSimpleString)
+                    .collect(Collectors.joining(", "));
+            setTextAndShow(tuitionClass, "Classes: " + classInfo);
+        } else {
+            hide(tuitionClass);
         }
     }
 }
