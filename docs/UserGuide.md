@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-**TutorFlow** is a desktop app for tuition centre managers. It helps you keep track of students, parents, tutors, and classes using simple type-and-press-Enter commands. For those comfortable with a command line, TutorFlow can get your contact management tasks done quickly and easily.
+<div class="intro-para"><b>TutorFlow</b> is a desktop app for tuition centre managers. It helps you keep track of students, parents, tutors, and classes using simple type-and-press-Enter commands. For those comfortable with a command line, TutorFlow can get your contact management tasks done quickly and easily.</div><span class="short-break"></span>
 
 * Table of Contents
 {:toc}
@@ -40,9 +40,9 @@ title: User Guide
    * `exit` : Exits the app.
 
 6. Refer to the [Features](#features) below for details of each command.
-<div class="print-tight"></div>
 
 
+<div style="page-break-after: always;"></div>
 <div class="print-tight"></div>
 
 
@@ -68,8 +68,9 @@ title: User Guide
   Example: `help 123` is treated as `help`.
 </div>
 
+<!-- <div class="print-tight"></div> -->
 
-### <u>App Basics</u>
+### App Basics
 
 #### Viewing help : `help`
 
@@ -89,6 +90,9 @@ Format: `clear`
 
 • [Back to Command Summary](#command-summary)
 
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
+
 #### Exiting the program : `exit`
 
 Exits the program.
@@ -98,9 +102,7 @@ Format: `exit`
 • [Back to Command Summary](#command-summary)
 
 
-<div class="print-tight"></div>
-
-### <u>People Management</u>
+### People Management
 
 #### Adding a person: `add`
 
@@ -163,7 +165,7 @@ Format: `find *KEYWORD...`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned.
-  e.g. `hans yap` will return `Hans Bo`, `Yap Yang`
+  e.g. `hans yap` will return `Hans Bo`, `Yap`
 
 Examples:
 * `find John` returns `john` and `John Doe`
@@ -173,7 +175,8 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
-<div class="print-tight"></div>
+<div class="print-tight-double"></div>
+<div class="print-tight-double"></div>
 
 #### Deleting a person : `delete`
 
@@ -192,7 +195,10 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
-### <u>Relationship Management</u>
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
+
+### Relationship Management
 
 #### Linking a student to a parent : `linkParent`
 
@@ -208,9 +214,6 @@ Example:
 * `linkParent n/Alice Pauline n/Daniel Meier` Links the student 'Alice Pauline' to the parent 'Daniel Meier', assuming both exist in the address book with the correct categories.
 
 • [Back to Command Summary](#command-summary)
-
-<div style="page-break-after: always;"></div>
-<div class="print-tight"></div>
 
 #### Finding a student's parent: `getParent`
 
@@ -238,7 +241,10 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
-### <u>Class Management</u>
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
+
+### Class Management
 
 #### Creating a class: `createClass`
 
@@ -259,8 +265,6 @@ Examples:
 * `createClass d/tuesday ti/h12` creates a class on Tuesday at 12:00 PM.
 
 • [Back to Command Summary](#command-summary)
-
-<div class="print-tight"></div>
 
 #### Linking a person to a class: `linkClass`
 
@@ -288,9 +292,14 @@ Each student can be only be enrolled in one class at a time.
   </tr>
   <tr>
     <td>The student is <b>already</b> in a class</td>
-    <td><b>Error.</b> The app will tell you the student is already linked.</td>
+    <td><b>Error.</b> The app will tell you the student is already linked. Use <a href="#removing-a-person-from-a-class-unlinkclass"><code>unlinkClass</code></a> to remove the current class.</td>
   </tr>
 </table>
+
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
+<div class="print-tight"></div>
+<div class="print-tight-double"></div>
 
 **Assigning a Tutor to a Class**
 
@@ -307,7 +316,7 @@ Each class can only have one tutor, but a tutor can teach multiple classes.
   </tr>
   <tr>
     <td>The class <b>already has a tutor</b></td>
-    <td><b>Error.</b> The app will tell you to use <code>unlinkClass</code> to remove the current tutor first.</td>
+    <td><b>Error.</b> The app will tell you to use <a href="#removing-a-person-from-a-class-unlinkclass"><code>unlinkClass</code></a> to remove the current tutor first.</td>
   </tr>
   <tr>
     <td>The tutor is <b>already teaching</b> that class</td>
@@ -335,6 +344,10 @@ Examples:
 * `unlinkClass d/saturday ti/h12 n/Alice Pauline` removes student Alice Pauline from the Saturday 12:00 PM class.
 
 • [Back to Command Summary](#command-summary)
+
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
+<div class="print-tight-double"></div>
 
 #### Viewing class details: `getClassDetails`
 
@@ -375,39 +388,92 @@ Examples:
 Manual changes to the file may corrupt TutorFlow's data. Always save a backup of the file before editing it.
 </div>
 
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
 
 ## FAQ
 
 **Q**: How do I transfer my TutorFlow data to another computer?<br>
 **A**: Install TutorFlow on your new computer (refer [here](#quick-start)). After running the app once, replace the `addressbook.json` data file with your backup.
 
---------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
 
 1. **TutorFlow opens off-screen** if previously moved to a secondary screen.<br>Solution: Delete `preferences.json` before running the app again.
 2. **Help Window will not reappear** if previously minimised.<br>Solution: Manually restore the minimised window. 
 
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
 
 ## Command Summary
 
-Action | Format, Examples
---------|------------------
-[Add](#adding-a-person-add) | `add c/*CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add c/parent n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/J2 t/Trial lesson`
-[List](#listing-all-persons--list) | `list [c/*CATEGORY]` <br> e.g., `list c/student`
-[Edit](#editing-a-person--edit) | `edit INDEX [c/*CATEGORY] [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-[Find](#locating-persons-by-name-find) | `find *KEYWORD...`<br> e.g., `find James Jake`
-[Delete](#deleting-a-person--delete) | `delete INDEX`<br> e.g., `delete 3`
-[Link Parent](#linking-a-student-to-a-parent--linkparent) | `linkParent n/STUDENT_NAME n/PARENT_NAME`<br> e.g., `linkParent n/Alice Pauline n/Fiona Kunz`
-[Get Parent](#finding-a-students-parent-getparent) | `getParent n/STUDENT_NAME`<br> e.g., `getParent n/John Doe`
-[Get Students](#finding-all-students-of-a-tutor-getstudents) | `getStudents n/TUTOR_NAME`<br> e.g., `getStudents n/Roy Balakrishnan`
-[Create Class](#creating-a-class-createclass) | `createClass d/*DAY ti/*TIME`<br> e.g., `createClass d/MONDAY ti/H16`
-[Link Class](#linking-a-person-to-a-class-linkclass) | `linkClass d/*DAY ti/*TIME n/NAME`<br> e.g., `linkClass d/MONDAY ti/H16 n/Roy Balakrishnan`
-[Unlink Class](#removing-a-person-from-a-class-unlinkclass) | `unlinkClass d/*DAY ti/*TIME n/NAME`<br> e.g., `unlinkClass d/MONDAY ti/H16 n/Alice Pauline`
-[Get Class Details](#viewing-class-details-getclassdetails) | `getClassDetails d/*DAY ti/*TIME`<br> e.g., `getClassDetails d/MONDAY ti/H16`
-[Get Classes](#listing-classes-getclasses) | `getClasses [n/TUTOR_NAME]`<br> e.g., `getClasses n/Roy Balakrishnan`
-[Clear](#clearing-all-entries--clear) | `clear`
-[Help](#viewing-help--help) | `help`
-[Exit](#exiting-the-program--exit) | `exit`
+<table class="indent-table command-summary-table">
+  <tr>
+    <th>Action</th>
+    <th>Format, Examples</th>
+  </tr>
+  <tr>
+    <td><a href="#adding-a-person-add">Add</a></td>
+    <td><code>add c/*CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​</code><br>e.g., <code>add c/parent n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/J2 t/Trial lesson</code></td>
+  </tr>
+  <tr>
+    <td><a href="#listing-all-persons--list">List</a></td>
+    <td><code>list [c/*CATEGORY]</code> <br>e.g., <code>list c/student</code></td>
+  </tr>
+  <tr>
+    <td><a href="#editing-a-person--edit">Edit</a></td>
+    <td><code>edit INDEX [c/*CATEGORY] [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​</code><br>e.g., <code>edit 2 n/James Lee e/jameslee@example.com</code></td>
+  </tr>
+  <tr>
+    <td><a href="#locating-persons-by-name-find">Find</a></td>
+    <td><code>find *KEYWORD...</code><br>e.g., <code>find James Jake</code></td>
+  </tr>
+  <tr>
+    <td><a href="#deleting-a-person--delete">Delete</a></td>
+    <td><code>delete INDEX</code><br>e.g., <code>delete 3</code></td>
+  </tr>
+  <tr>
+    <td><a href="#linking-a-student-to-a-parent--linkparent">Link Parent</a></td>
+    <td><code>linkParent n/STUDENT_NAME n/PARENT_NAME</code><br>e.g., <code>linkParent n/Alice Pauline n/Fiona Kunz</code></td>
+  </tr>
+  <tr>
+    <td><a href="#finding-a-students-parent-getparent">Get Parent</a></td>
+    <td><code>getParent n/STUDENT_NAME</code><br>e.g., <code>getParent n/John Doe</code></td>
+  </tr>
+  <tr>
+    <td><a href="#finding-all-students-of-a-tutor-getstudents">Get Students</a></td>
+    <td><code>getStudents n/TUTOR_NAME</code><br>e.g., <code>getStudents n/Roy Balakrishnan</code></td>
+  </tr>
+  <tr>
+    <td><a href="#creating-a-class-createclass">Create Class</a></td>
+    <td><code>createClass d/*DAY ti/*TIME</code><br>e.g., <code>createClass d/MONDAY ti/H16</code></td>
+  </tr>
+  <tr>
+    <td><a href="#linking-a-person-to-a-class-linkclass">Link Class</a></td>
+    <td><code>linkClass d/*DAY ti/*TIME n/NAME</code><br>e.g., <code>linkClass d/MONDAY ti/H16 n/Roy Balakrishnan</code></td>
+  </tr>
+  <tr>
+    <td><a href="#removing-a-person-from-a-class-unlinkclass">Unlink Class</a></td>
+    <td><code>unlinkClass d/*DAY ti/*TIME n/NAME</code><br>e.g., <code>unlinkClass d/MONDAY ti/H16 n/Alice Pauline</code></td>
+  </tr>
+  <tr>
+    <td><a href="#viewing-class-details-getclassdetails">Get Class Details</a></td>
+    <td><code>getClassDetails d/*DAY ti/*TIME</code><br>e.g., <code>getClassDetails d/MONDAY ti/H16</code></td>
+  </tr>
+  <tr>
+    <td><a href="#listing-classes-getclasses">Get Classes</a></td>
+    <td><code>getClasses [n/TUTOR_NAME]</code><br>e.g., <code>getClasses n/Roy Balakrishnan</code></td>
+  </tr>
+  <tr>
+    <td><a href="#clearing-all-entries--clear">Clear</a></td>
+    <td><code>clear</code></td>
+  </tr>
+  <tr>
+    <td><a href="#viewing-help--help">Help</a></td>
+    <td><code>help</code></td>
+  </tr>
+  <tr>
+    <td><a href="#exiting-the-program--exit">Exit</a></td>
+    <td><code>exit</code></td>
+  </tr>
+</table>
