@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.person.Category;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
@@ -205,6 +207,11 @@ public class AddCommandTest {
 
         @Override
         public Optional<Person> findPersonById(PersonId id) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Set<PersonId> getPersonIdsByCategory(Category category) {
             throw new AssertionError("This method should not be called.");
         }
 

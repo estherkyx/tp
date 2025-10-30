@@ -18,7 +18,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -92,28 +91,14 @@ public class GetStudentsCommandTest {
                 .withDay(Day.TUESDAY).withTime(Time.H14).withTutor(newFiona)
                 .build();
         model.addTuitionClass(fionaClass);
-
-        GetStudentsCommand cmd = new GetStudentsCommand(FIONA.getName());
-        CommandResult res = cmd.execute(model);
-
-        ObservableList<Person> shown = model.getFilteredPersonList();
-        assertEquals(0, shown.size(), "Expected exactly 0 students");
-        assertEquals(String.format(GetStudentsCommand.MESSAGE_NO_STUDENT_LINKED, FIONA.getName()),
-                res.getFeedbackToUser());
+        assertShowsNoStudents(FIONA.getName());
     }
 
     @Test
     public void execute_tutorExistsNoClasses_showsNoStudent() throws Exception {
         Tutor newFiona = (Tutor) new PersonBuilder(FIONA).build();
         model.setPerson(FIONA, newFiona);
-
-        GetStudentsCommand cmd = new GetStudentsCommand(FIONA.getName());
-        CommandResult res = cmd.execute(model);
-
-        ObservableList<Person> shown = model.getFilteredPersonList();
-        assertEquals(0, shown.size(), "Expected exactly 0 students");
-        assertEquals(String.format(GetStudentsCommand.MESSAGE_NO_STUDENT_LINKED, FIONA.getName()),
-                res.getFeedbackToUser());
+        assertShowsNoStudents(FIONA.getName());
     }
 
     @Test
@@ -126,7 +111,7 @@ public class GetStudentsCommandTest {
     }
 
     @Test
-    public void execute_parentSameNameAsTutor_findsTutorSuccessfully() throws CommandException {
+    public void execute_parentSameNameAsTutor_findsTutorSuccessfully() throws Exception {
         Parent sameNameParent = new Parent(PARENT,
                 new Name("John Doe"),
                 new Phone("98765432"),
@@ -143,13 +128,7 @@ public class GetStudentsCommandTest {
                 new HashSet<>());
         this.model.addPerson(sameNameTutor);
 
-        GetStudentsCommand command = new GetStudentsCommand(new Name("John Doe"));
-        CommandResult result = command.execute(model);
-
-        ObservableList<Person> shown = model.getFilteredPersonList();
-        assertEquals(0, shown.size(), "Expected exactly 0 students");
-        assertEquals(String.format(GetStudentsCommand.MESSAGE_NO_STUDENT_LINKED, new Name("John Doe")),
-                result.getFeedbackToUser());
+        assertShowsNoStudents(new Name("John Doe"));
     }
 
     @Test
@@ -171,5 +150,16 @@ public class GetStudentsCommandTest {
 
         // different name -> returns false
         assertFalse(a.equals(b));
+    }
+
+    // Helper method to prevent repetition
+    private void assertShowsNoStudents(Name tutorName) throws Exception {
+        GetStudentsCommand cmd = new GetStudentsCommand(tutorName);
+        CommandResult res = cmd.execute(model);
+
+        ObservableList<Person> shown = model.getFilteredPersonList();
+        assertEquals(0, shown.size());
+        assertEquals(String.format(GetStudentsCommand.MESSAGE_NO_STUDENT_LINKED, tutorName),
+                res.getFeedbackToUser());
     }
 }

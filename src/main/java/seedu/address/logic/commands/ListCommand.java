@@ -5,7 +5,6 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import seedu.address.model.Model;
 import seedu.address.model.person.Category;
@@ -63,7 +62,7 @@ public class ListCommand extends Command {
         }
 
         Category cat = category.get();
-        Set<PersonId> listedPersons = findPersonsByCategory(model, cat);
+        Set<PersonId> listedPersons = model.getPersonIdsByCategory(cat);
 
         // Category has no one
         if (listedPersons.isEmpty()) {
@@ -72,8 +71,7 @@ public class ListCommand extends Command {
         }
 
         // Update UI to show filtered list
-        model.updateFilteredPersonList(p ->
-                p.getCategory() == cat && listedPersons.contains(p.getId()));
+        model.updateFilteredPersonList(p -> listedPersons.contains(p.getId()));
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, cat.toString()));
     }
@@ -93,12 +91,5 @@ public class ListCommand extends Command {
         // state check
         ListCommand e = (ListCommand) other;
         return category.equals(e.category);
-    }
-
-    private Set<PersonId> findPersonsByCategory(Model model, Category category) {
-        return model.getAddressBook().getPersonList().stream()
-                .filter(p -> p.getCategory() == category)
-                .map(p -> p.getId())
-                .collect(Collectors.toSet());
     }
 }

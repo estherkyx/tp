@@ -15,7 +15,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Category;
-import seedu.address.model.person.Person;
+import seedu.address.testutil.AddressBookBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
@@ -55,8 +55,9 @@ public class ListCommandTest {
     @Test
     public void execute_emptyCategory_showsEmptyList() {
         Category emptyCategory = Category.PARENT;
-        model = new ModelManager(addressBookWithoutCategory(emptyCategory), new UserPrefs());
-        expectedModel = new ModelManager(addressBookWithoutCategory(emptyCategory), new UserPrefs());
+        AddressBook ab = new AddressBookBuilder().withoutCategory(emptyCategory).build();
+        model = new ModelManager(ab, new UserPrefs());
+        expectedModel = new ModelManager(ab, new UserPrefs());
 
         ListCommand cmd = new ListCommand(emptyCategory);
 
@@ -64,16 +65,6 @@ public class ListCommandTest {
         String expectedMessage = String.format(ListCommand.MESSAGE_EMPTY_CATEGORY, emptyCategory.toString());
 
         assertCommandSuccess(cmd, model, expectedMessage, expectedModel);
-    }
-
-    private AddressBook addressBookWithoutCategory(Category toRemove) {
-        AddressBook ab = new AddressBook();
-        for (Person p : getTypicalAddressBook().getPersonList()) {
-            if (p.getCategory() != toRemove) {
-                ab.addPerson(p);
-            }
-        }
-        return ab;
     }
 
     @Test

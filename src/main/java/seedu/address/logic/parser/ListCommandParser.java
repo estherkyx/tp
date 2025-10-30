@@ -5,6 +5,8 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.ListCommand.MESSAGE_MISSING_CATEGORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CATEGORY;
 
+import java.util.Optional;
+
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Category;
@@ -32,13 +34,13 @@ public class ListCommandParser implements Parser<ListCommand> {
         }
 
         // user input is "list"
-        var opt = argMultimap.getValue(PREFIX_CATEGORY);
-        if (opt.isEmpty()) {
+        Optional<String> categoryPrefix = argMultimap.getValue(PREFIX_CATEGORY);
+        if (categoryPrefix.isEmpty()) {
             return new ListCommand();
         }
 
         // user input is "list c/" without a specified category
-        String rawName = opt.get().trim();
+        String rawName = categoryPrefix.get().trim();
         if (rawName.isEmpty()) {
             throw new ParseException(MESSAGE_MISSING_CATEGORY);
         }
