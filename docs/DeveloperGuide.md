@@ -216,9 +216,6 @@ Given below is an example usage scenario and how the `createClass` mechanism beh
 The following sequence diagram illustrates the process:
 ![CreateClassSequenceDiagram](images/CreateClassCommandDiagram.png)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `CreateClassCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-</div>
-
 ---
 
 ### Link classes to a tutee/tutor: `linkClass` feature
