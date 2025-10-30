@@ -118,6 +118,12 @@ public class ModelManager implements Model {
         // Unlink student from parent if target is a student
         if (target instanceof Student) {
             unlinkStudentFromParent(target.getId());
+            unlinkStudentFromClasses(target.getId());
+        }
+
+        // Unlink tutor from classes if target is a tutor
+        if (target instanceof Tutor) {
+            unlinkTutorFromClasses(target.getId());
         }
 
         addressBook.removePerson(target);
@@ -180,6 +186,7 @@ public class ModelManager implements Model {
                 Student student = (Student) person;
                 if (parentId.equals(student.getParentId())) {
                     student.clearParent();
+                    break;
                 }
             }
         }
@@ -198,6 +205,31 @@ public class ModelManager implements Model {
                     parent.removeChildId(studentId);
                     addressBook.setPerson(parent, parent);
                 }
+            }
+        }
+    }
+
+    @Override
+    public void unlinkTutorFromClasses(PersonId tutorId) {
+        requireNonNull(tutorId);
+        List<TuitionClass> allClasses = addressBook.getTuitionClassList();
+
+        for (TuitionClass tuitionClass : allClasses) {
+            if (tutorId.equals(tuitionClass.getTutorId())) {
+                tuitionClass.removeTutorId();
+            }
+        }
+    }
+
+    @Override
+    public void unlinkStudentFromClasses(PersonId studentId) {
+        requireNonNull(studentId);
+        List<TuitionClass> allClasses = addressBook.getTuitionClassList();
+
+        for (TuitionClass tuitionClass : allClasses) {
+            if (tuitionClass.getStudentIds().contains(studentId)) {
+                tuitionClass.removeStudentId(studentId);
+                break;
             }
         }
     }
