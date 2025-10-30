@@ -8,7 +8,8 @@ TutorFlow is a desktop app for tuition centre managers. It helps you keep track 
 * Table of Contents
 {:toc}
 
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
 
 ## Quick Start
 
@@ -37,8 +38,11 @@ TutorFlow is a desktop app for tuition centre managers. It helps you keep track 
    * `exit` : Exits the app.
 
 6. Refer to the [Features](#features) below for details of each command.
+<div class="print-tight"></div>
 
---------------------------------------------------------------------------------------------------------------------
+
+<div class="print-tight"></div>
+
 
 ## Features
 
@@ -60,7 +64,7 @@ TutorFlow is a desktop app for tuition centre managers. It helps you keep track 
 </div>
 
 
-### App Basics
+### <u>App Basics</u>
 
 #### Viewing help : `help`
 
@@ -90,8 +94,9 @@ Format: `exit`
 • [Back to Command Summary](#command-summary)
 
 
+<div class="print-tight"></div>
 
-### People Management
+### <u>People Management</u>
 
 #### Adding a person: `add`
 
@@ -127,6 +132,9 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
+<div style="page-break-after: always;"></div>
+
+<div class="print-tight"></div>
 #### Editing a person : `edit`
 
 Edits an existing person in the address book.
@@ -160,9 +168,11 @@ Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
 
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+![result for 'find alex david'](images/findAlexDavidResult.png)
 
 • [Back to Command Summary](#command-summary)
+
+<div class="print-tight"></div>
 
 #### Deleting a person : `delete`
 
@@ -182,7 +192,7 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
-### Relationship Management
+### <u>Relationship Management</u>
 
 #### Linking a student to a parent : `linkParent`
 
@@ -198,6 +208,9 @@ Example:
 * `linkParent n/Alice Pauline n/Daniel Meier` Links the student 'Alice Pauline' to the parent 'Daniel Meier', assuming both exist in the address book with the correct categories.
 
 • [Back to Command Summary](#command-summary)
+
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
 
 #### Finding a student's parent: `getParent`
 
@@ -225,7 +238,7 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
-### Class Management
+### <u>Class Management</u>
 
 #### Creating a class: `createClass`
 
@@ -245,9 +258,9 @@ Examples:
 * `createClass d/MONDAY ti/H16` creates a class on Monday at 4:00 PM.
 * `createClass d/TUESDAY ti/H12` creates a class on Tuesday at 12:00 PM.
 
-See also: [`linkClass`](#linking-a-person-to-a-class-linkclass), [`getClassDetails`](#viewing-class-details-getclassdetails)
-
 • [Back to Command Summary](#command-summary)
+
+<div class="print-tight"></div>
 
 #### Linking a person to a class: `linkClass`
 
@@ -264,20 +277,43 @@ The `linkClass` command works differently for students and tutors. Here’s what
 
 Each student can be enrolled in only one class at a time.
 
-| Scenario                               | Result                                                              |
-|----------------------------------------|---------------------------------------------------------------------|
-| The student is **not** in any class    | **Success!** The student is added to the class.                     |
-| The student is **already** in a class  | **Error.** The app will tell you the student is already linked. |
+<table class="indent-table">
+  <tr>
+    <th>Scenario</th>
+    <th>Result</th>
+  </tr>
+  <tr>
+    <td>The student is <b>not</b> in any class</td>
+    <td><b>Success!</b> The student is added to the class.</td>
+  </tr>
+  <tr>
+    <td>The student is <b>already</b> in a class</td>
+    <td><b>Error.</b> The app will tell you the student is already linked.</td>
+  </tr>
+</table>
 
 **Assigning a Tutor to a Class**
 
 Each class can only have one tutor, but a tutor can teach multiple classes.
 
-| Scenario                               | Result                                                                          |
-|----------------------------------------|---------------------------------------------------------------------------------|
-| The class has **no tutor**             | **Success!** The tutor is assigned to the class.                                  |
-| The class **already has a tutor**      | **Error.** The app will tell you to use `unlinkClass` to remove the current tutor first. |
-| The tutor is **already teaching** that class | **Error.** The app will tell you the tutor is already assigned.           |
+<table class="indent-table">
+  <tr>
+    <th>Scenario</th>
+    <th>Result</th>
+  </tr>
+  <tr>
+    <td>The class has <b>no tutor</b></td>
+    <td><b>Success!</b> The tutor is assigned to the class.</td>
+  </tr>
+  <tr>
+    <td>The class <b>already has a tutor</b></td>
+    <td><b>Error.</b> The app will tell you to use <code>unlinkClass</code> to remove the current tutor first.</td>
+  </tr>
+  <tr>
+    <td>The tutor is <b>already teaching</b> that class</td>
+    <td><b>Error.</b> The app will tell you the tutor is already assigned.</td>
+  </tr>
+</table>
 
 Examples:
 * `linkClass d/MONDAY ti/H16 n/Roy Balakrishnan` links tutor Roy Balakrishnan to the Monday 4:00 PM class.
@@ -339,7 +375,7 @@ See also: [`getClassDetails`](#viewing-class-details-getclassdetails), [`linkCla
 
 • [Back to Command Summary](#command-summary)
 
-### Data and Storage
+### <u>Data and Storage</u>
 
 #### Saving the data
 
