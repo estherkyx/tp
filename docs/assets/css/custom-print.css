@@ -5,8 +5,8 @@
     line-height: 1.4;
   }
 
-  p { 
-    margin-left: 2.0rem; 
+  p {
+    margin-left: 2.0rem;
     margin-right: 2.0rem;
   }
 
@@ -63,7 +63,7 @@
     margin: 0;
     padding: 0;
   }
-  
+
   .print-tight-double {
     display: block;
     height: 1.5rem;

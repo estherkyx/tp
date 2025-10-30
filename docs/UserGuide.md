@@ -233,7 +233,7 @@ Examples:
 Displays all students of a specified tutor.
 
 Format: `getStudents n/TUTOR_NAME`
-* The tutor name must **exactly match** a tutor in TutorFlow (case-sensitive). 
+* The tutor name must **exactly match** a tutor in TutorFlow (case-sensitive).
 * The tutor identified must have the `tutor` category.
 
 Examples:
@@ -252,7 +252,7 @@ Creates a new class in the system. Create this first before linking a tutor and 
 
 Format: `createClass d/*DAY ti/*TIME`
 
-* `DAY` must be a valid day of the week (e.g. Monday, TUESDAY, wednesday). 
+* `DAY` must be a valid day of the week (e.g. Monday, TUESDAY, wednesday).
 * `TIME` must be a supported timeslot `H12`, `H14`, `H16`, `H18`, `H20`, which represents `12:00PM`, `2:00PM`, `4:00PM`, `6:00PM`, `8:00PM` respectively.
 * The class is created without linked persons. Link a tutor or student using [`linkClass`](#linking-a-person-to-a-class-linkclass).
 
@@ -272,7 +272,7 @@ Links an existing student or tutor to an existing class.
 
 Format: `linkClass d/*DAY ti/*TIME n/NAME`
 
-* `NAME` must **exactly match** a student or a tutor in TutorFlow (case-sensitive). 
+* `NAME` must **exactly match** a student or a tutor in TutorFlow (case-sensitive).
 * The class identified by `DAY` and `TIME` must already exist (created using [`createClass`](#creating-a-class-createclass)).
 
 The `linkClass` command works differently for students and tutors. Here’s what you need to know:
@@ -400,7 +400,7 @@ Manual changes to the file may corrupt TutorFlow's data. Always save a backup of
 ## Known issues
 
 1. **TutorFlow opens off-screen** if previously moved to a secondary screen.<br>Solution: Delete `preferences.json` before running the app again.
-2. **Help Window will not reappear** if previously minimised.<br>Solution: Manually restore the minimised window. 
+2. **Help Window will not reappear** if previously minimised.<br>Solution: Manually restore the minimised window.
 
 <div style="page-break-after: always;"></div>
 <div class="print-tight"></div>
