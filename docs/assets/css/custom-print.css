@@ -78,7 +78,7 @@
   }
 
   img[src$="images/Ui.png"] {
-    width: 75%;
+    width: 60%;
     height: auto;
     display: block;
     margin-left: auto;
@@ -86,7 +86,7 @@
   }
 
   img[src$="images/delete2Result.png"] {
-    width: 75%;
+    width: 60%;
     height: auto;
     display: block;
     margin-left: auto;

@@ -59,7 +59,7 @@ title: User Guide
   Example: `getClasses [n/TUTOR_NAME]` can be `getClasses n/Eric Hanson` or just `getClasses`.
 
 * `*` (asterisk): Case-insensitive inputs. <br>
-  Example: `list [c/*CATEGORY]` can be `list c/tutor`, `list c/STUDENT`, or `list c/Parent`. 
+  Example: `list [c/*CATEGORY]` can be `list c/tutor`, `list c/STUDENT`, or `list c/Parent`.
 
 * `...`(ellipsis): Multiple inputs are accepted. <br>
   Example: `find *KEYWORD...` can be `find alex` or `find alex bryan david`
@@ -145,7 +145,7 @@ Edits an existing person in the address book.
 
 Format: `edit INDEX [c/*CATEGORY] [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
-* Edits the person at the specified `INDEX` in the currently displayed list. 
+* Edits the person at the specified `INDEX` in the currently displayed list.
 * The index must be a **positive number** (e.g. 1, 2, 3, …)
 * You must provide at least one field to change (e.g. n/, p/).
 * Editing tags will **replace all old tags** with the new ones you provide. To clear all tags, simply type t/ with nothing after it.
@@ -184,7 +184,7 @@ Deletes the specified person from the address book.
 
 Format: `delete INDEX`
 
-* Deletes the person at the specified `INDEX` in the currently displayed list. 
+* Deletes the person at the specified `INDEX` in the currently displayed list.
 * The index must be a **positive number** (e.g. 1, 2, 3, …)
 
 Examples:
