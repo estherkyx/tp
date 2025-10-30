@@ -202,7 +202,7 @@ public class EditCommand extends Command {
 
             // remove tutor from classes
             List<TuitionClass> tutorClasses = allClasses.stream()
-                    .filter(c -> c.getTutorId().equals(tutor.getId())).toList();
+                    .filter(c -> tutor.getId().equals(c.getTutorId())).toList();
             if (!tutorClasses.isEmpty()) {
                 for (TuitionClass tc : tutorClasses) {
                     tc.removeTutorId();
