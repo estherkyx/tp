@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.UnlinkClassCommand;
@@ -37,7 +38,7 @@ public class UnlinkClassCommandParser implements Parser<UnlinkClassCommand> {
             Day day = ParserUtil.parseDay(argMultimap.getValue(PREFIX_DAY).get());
             Time time = ParserUtil.parseTime(argMultimap.getValue(PREFIX_TIME).get());
             Name studentName = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
-            var opt = argMultimap.getValue(PREFIX_CATEGORY);
+            Optional<String> opt = argMultimap.getValue(PREFIX_CATEGORY);
             if (opt.isEmpty()) {
                 return new UnlinkClassCommand(day, time, studentName);
             }
