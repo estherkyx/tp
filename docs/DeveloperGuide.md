@@ -147,8 +147,11 @@ How the parsing works:
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<img src="images/ModelClassDiagram.png" width="450" />
+**Core Model Structure**
+<img src="images/CoreModelStructureClassDiagram.png" width="550" />
 
+**Domain Entities**
+<img src="images/DomainEntitiesClassDiagram.png" width="550" />
 
 The `Model` component,
 
@@ -175,6 +178,7 @@ The `Model` component,
 The `Storage` component,
 * can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
 * inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
+* stores data in a local JSON file located at `/data/addressbook.json`.
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
 ### Common classes
@@ -347,7 +351,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use Cases
 
-(For all use cases below, the **System** is `TutorFlow` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is `TutorFlow` and the **Actor** is the `tuition centre manager`, unless specified otherwise)
 
 **Use case: UC1 - Add a person**
 
