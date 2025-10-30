@@ -693,8 +693,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Index**: The 1-based number that identifies a contact's position in the displayed list.
 * **Mainstream OS**: Windows, Linux, Unix, MacOS.
 * **MSS** (Main Success Scenario): A term used in use cases to describe the ideal workflow where everything happens as expected without any errors.
-* **Class (tuition class)**: A scheduled GP tuition session identified by a day and time slot.
-* **Command**: A textual instruction entered in the CLI to perform an action (e.g., `add`, `delete`).
+* **Class** (tuition class)**: A scheduled GP tuition session identified by a day and timeslot.
+* **Command**: A textual instruction executed in the CLI to perform an action (e.g., `add`, `delete`).
 * **Dataset**: The collection of all stored contacts and classes used by the application.
 * **JSON** (JavaScript Object Notation): The data format used by TutorFlow to persist information to disk.
 * **Tag**: A label attached to a contact to group or describe them (e.g., "Needs extra help").
