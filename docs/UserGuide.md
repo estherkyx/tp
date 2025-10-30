@@ -123,7 +123,7 @@ Examples:
 
 #### Listing all persons : `list`
 
-Shows a list of all persons in the address book. If you add a category, it shows all persons belonging to that category.
+Displays all persons in the address book. If you add a category, it shows all persons belonging to that category.
 
 Format: `list [c/*CATEGORY]`
 
@@ -217,7 +217,7 @@ Example:
 
 #### Finding a student's parent: `getParent`
 
-Displays the parent of a specified student.
+Displays the parent linked to the specified student.
 
 Format: `getParent n/STUDENT_NAME`
 * The student name must **exactly match** a student in TutorFlow (case-sensitive).
@@ -230,7 +230,7 @@ Examples:
 
 #### Finding all students of a tutor: `getStudents`
 
-Displays all students of a specified tutor.
+Displays all students linked to the specified tutor.
 
 Format: `getStudents n/TUTOR_NAME`
 * The tutor name must **exactly match** a tutor in TutorFlow (case-sensitive).
@@ -248,7 +248,7 @@ Examples:
 
 #### Creating a class: `createClass`
 
-Creates a new class in the system. Create this first before linking a tutor and students to it.
+Creates a new class. This must be done before linking a tutor or students to it.
 
 Format: `createClass d/*DAY ti/*TIME`
 
@@ -270,7 +270,7 @@ Examples:
 
 Links an existing student or tutor to an existing class.
 
-Format: `linkClass d/*DAY ti/*TIME n/NAME`
+Format: `linkClass d/*DAY ti/*TIME n/TUTOR_NAME or STUDENT_NAME [c/*CATEGORY]`
 
 * `NAME` must **exactly match** a student or a tutor in TutorFlow (case-sensitive).
 * The class identified by `DAY` and `TIME` must already exist (created using [`createClass`](#creating-a-class-createclass)).
@@ -326,7 +326,7 @@ Each class can only have one tutor, but a tutor can teach multiple classes.
 
 Examples:
 * `linkClass d/MONDAY ti/H16 n/Roy Balakrishnan` links tutor Roy Balakrishnan to the Monday 4:00 PM class.
-* `linkClass d/saturday ti/h12 n/Alice Pauline` links student Alice Pauline to the Saturday 12:00 PM class.
+* `linkClass d/SATURDAY ti/H12 n/Alice Pauline c/student` links student Alice Pauline to the Saturday 12:00 PM class.
 
 • [Back to Command Summary](#command-summary)
 
@@ -334,14 +334,14 @@ Examples:
 
 Removes a person from an existing class.
 
-Format: `unlinkClass d/*DAY ti/*TIME n/NAME`
+Format: `unlinkClass d/*DAY ti/*TIME n/TUTOR_NAME or STUDENT_NAME [c/*CATEGORY]`
 
 * `NAME` must **exactly match** a student or tutor currently linked to the class (case-sensitive).
 * The class identified by `DAY` and `TIME` must already exist (created using [`createClass`](#creating-a-class-createclass)).
 
 Examples:
 * `unlinkClass d/MONDAY ti/H16 n/Roy Balakrishnan` removes tutor Roy Balakrishnan from the Monday 4:00 PM class.
-* `unlinkClass d/saturday ti/h12 n/Alice Pauline` removes student Alice Pauline from the Saturday 12:00 PM class.
+* `unlinkClass d/SATURDAY ti/H12 n/Alice Pauline c/student` removes student Alice Pauline from the Saturday 12:00 PM class.
 
 • [Back to Command Summary](#command-summary)
 
@@ -360,13 +360,12 @@ Format: `getClassDetails d/*DAY ti/*TIME`
 
 Examples:
 * `getClassDetails d/MONDAY ti/H16` displays the tutor and students in the Monday 4:00 PM class.
-* `getClassDetails d/saturday ti/h12` displays the tutor and students in the Saturday 12:00 PM class.
 
 • [Back to Command Summary](#command-summary)
 
 #### Listing classes: `getClasses`
 
-Shows all existing classes in TutorFlow. If you add a tutor's name, it displays the tutor’s classes.
+Shows all existing classes. If you add a tutor's name, it displays only classes linked to that tutor.
 
 Format: `getClasses [n/TUTOR_NAME]`
 

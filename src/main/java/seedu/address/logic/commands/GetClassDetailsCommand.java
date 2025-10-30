@@ -77,6 +77,7 @@ public class GetClassDetailsCommand extends Command {
                     .map(s -> s.getName().toString())
                     .collect(Collectors.joining(", "));
             sb.append(" ").append(list);
+            sb.append("\n\n(To get back to the full list of contacts, run the 'list' command)");
         }
 
         model.updateFilteredPersonList(p -> studentIds.contains(p.getId())
