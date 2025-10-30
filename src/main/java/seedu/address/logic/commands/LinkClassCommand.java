@@ -29,7 +29,7 @@ public class LinkClassCommand extends Command {
 
     public static final String COMMAND_WORD = "linkClass";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Links a student or tutor to a tuition class. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Links a student or tutor to a tuition class. \n"
             + "Parameters: "
             + PREFIX_DAY + "DAY "
             + PREFIX_TIME + "TIME "

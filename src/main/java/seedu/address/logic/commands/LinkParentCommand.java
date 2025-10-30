@@ -20,10 +20,11 @@ public class LinkParentCommand extends Command {
     public static final String COMMAND_WORD = "linkParent";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": links a student to a parent by their names "
+            + ": Links a student to a parent by their names. "
+            + "Existing parent will be overwritten if a new parent is linked. \n"
             + "Parameters: "
-            + PREFIX_NAME + "NAME "
-            + PREFIX_NAME + "NAME "
+            + PREFIX_NAME + "STUDENT_NAME "
+            + PREFIX_NAME + "PARENT_NAME\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_NAME + "Amy Tan";

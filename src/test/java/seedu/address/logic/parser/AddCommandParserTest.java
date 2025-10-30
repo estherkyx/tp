@@ -188,7 +188,8 @@ public class AddCommandParserTest {
     public void parse_invalidValue_failure() {
         // invalid category
         assertParseFailure(parser, INVALID_CATEGORY_DESC + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, "Invalid category"); // to implement later
+                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                "Invalid category. Use student, tutor or parent.");
         // invalid name
         assertParseFailure(parser, CATEGORY_DESC_BOB + INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Name.MESSAGE_CONSTRAINTS);

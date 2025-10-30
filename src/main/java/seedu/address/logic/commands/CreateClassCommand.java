@@ -18,7 +18,7 @@ public class CreateClassCommand extends Command {
 
     public static final String COMMAND_WORD = "createClass";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates a new tuition class time slot. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates a new tuition class time slot. \n"
             + "Parameters: "
             + PREFIX_DAY + "DAY "
             + PREFIX_TIME + "TIME \n"

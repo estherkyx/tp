@@ -29,7 +29,7 @@ public class UnlinkClassCommand extends Command {
 
     public static final String COMMAND_WORD = "unlinkClass";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unlinks a student or tutor from a tuition class. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unlinks a student or tutor from a tuition class. \n"
             + "Parameters: "
             + PREFIX_DAY + "DAY "
             + PREFIX_TIME + "TIME "
