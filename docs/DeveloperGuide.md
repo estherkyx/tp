@@ -24,14 +24,12 @@ We would like to acknowledge the following sources that have been instrumental i
 *   **[JUnit5](https://junit.org/junit5/)**: Used for writing the extensive suite of unit and integration tests.
 *   **[Checkstyle](https://github.com/checkstyle/checkstyle)**: Used for maintaining a consistent and high-quality coding style across the project.
 
-
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
 
 ## **Setting up, getting started**
 
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
-
---------------------------------------------------------------------------------------------------------------------
 
 ## **Design**
 
@@ -53,6 +51,9 @@ Given below is a quick overview of main components and how they interact with ea
 **`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
+
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
 
 The bulk of the app's work is done by the following four components:
 
@@ -76,6 +77,8 @@ Each of the four main components (also shown in the diagram above),
 
 For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
 
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
 <img src="images/ComponentManagers.png" width="300" />
 
 The sections below give more details of each component.
@@ -87,6 +90,9 @@ The **API** of this component is specified in [`Ui.java`](https://github.com/se-
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
 
@@ -105,6 +111,9 @@ Here's a (partial) class diagram of the `Logic` component:
 
 <img src="images/LogicClassDiagram.png" width="550"/>
 
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
+
 The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 1")` API call as an example.
 
 ![Interactions Inside the Logic Component for the `delete 1` Command](images/DeleteSequenceDiagram.png)
@@ -122,11 +131,18 @@ How the `Logic` component works:
 
 Here are the other classes in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
 
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
+<div class="print-tight"></div>
+
 <img src="images/ParserClasses.png" width="600"/>
 
 How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
 
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
@@ -147,6 +163,8 @@ The `Model` component,
 
 </div>
 
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
 
 ### Storage component
 
@@ -163,7 +181,8 @@ The `Storage` component,
 
 Classes used by multiple components are in the `seedu.address.commons` package.
 
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
 
 ## **Implementation**
 
@@ -200,6 +219,9 @@ Given below is an example usage scenario and how the `createClass` mechanism beh
 
 **Step 2.** The `LogicManager` passes the command string to the `AddressBookParser`. The parser identifies the `createClass` command word and delegates the parsing of the arguments (`d/Monday ti/H14`) to the `CreateClassCommandParser`.
 
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
+
 **Step 3.** The `CreateClassCommandParser` tokenizes the arguments, validates that both `d/` and `ti/` prefixes are present, and parses the values into `Day.MONDAY` and `Time.H14` enums. It then instantiates and returns a `new CreateClassCommand(Day.MONDAY, Time.H14)`.
 
 **Step 4.** The `LogicManager` calls the `execute()` method on the returned `CreateClassCommand`.
@@ -219,7 +241,8 @@ The following sequence diagram illustrates the process:
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `CreateClassCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
 
----
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
 
 ### Link classes to a tutee/tutor: `linkClass` feature
 
@@ -256,6 +279,9 @@ Given below is an example usage scenario and how the `linkClass` mechanism behav
 - If the class already has the same tutor, an error is returned. If it has a different tutor, an error instructs to unlink before reassigning.
 - Otherwise, the class’s `tutorId` is set. The command then calls `Model#setTuitionClass(...)` and `Model#setPerson(...)` to persist and refresh the UI.
 
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
+
 <div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution (e.g. class/person not found, student already linked, tutor already teaching, class already has a different tutor), no call to `Model#setTuitionClass(...)` or `Model#setPerson(...)` is made, so no state is changed.
 
 </div>
@@ -266,7 +292,8 @@ The following sequence diagram shows how `linkClass` flows through the `Logic` a
 
 ![LinkClassSequenceDiagram](images/LinkClassSequenceDiagram-Logic.png)
 
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
 
 ## **Documentation, logging, testing, configuration, dev-ops**
 
@@ -276,7 +303,6 @@ The following sequence diagram shows how `linkClass` flows through the `Logic` a
 * [Configuration guide](Configuration.md)
 * [DevOps guide](DevOps.md)
 
---------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Requirements**
 
@@ -315,6 +341,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `*`      | expert user    | move a student from one class to another                       | easily accommodate schedule changes for students                         |
 | `*`      | expert user    | view a tutor's weekly schedule                                 | know when they are teaching, and when they are free                      |
 | `*`      | expert user    | tag students (eg. "Different GP syllabus", "Needs extra help") | group students by learning needs and create targeted lesson plans         |
+
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
 
 ### Use Cases
 
@@ -672,7 +701,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
          Use case ends.
 
 ---
- 
+
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
+
 ### Non-Functional Requirements
 
 1. Should work on any mainstream OS as long as it has Java 17 or above installed.
@@ -698,7 +730,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **JSON** (JavaScript Object Notation): The data format used by TutorFlow to persist information to disk.
 * **Tag**: A label attached to a contact to group or describe them (e.g., "Needs extra help").
 
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
 
 ## **Appendix: Instructions for manual testing**
 
