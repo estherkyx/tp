@@ -6,7 +6,7 @@ title: User Guide
 <div class="intro-para"><b>TutorFlow</b> is a desktop app for tuition centre managers. It helps you keep track of students, parents, tutors, and classes using simple type-and-press-Enter commands. For those comfortable with a command line, TutorFlow can get your contact management tasks done quickly and easily.</div><span class="short-break"></span>
 
 * Table of Contents
-  {:toc}
+{:toc}
 
 <div style="page-break-after: always;"></div>
 <div class="print-tight"></div>
@@ -27,17 +27,17 @@ title: User Guide
 5. Type a command in the box and press **Enter** to execute it. <br>
    Some example commands you can try:
 
-    * `help` : Opens the help window.
+   * `help` : Opens the help window.
 
-    * `list` : Lists all contacts.
+   * `list` : Lists all contacts.
 
-    * `add c/student n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a student named `John Doe` to the address book.
+   * `add c/student n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a student named `John Doe` to the address book.
 
-    * `delete 3` : Deletes the 3rd contact shown in the current list.
+   * `delete 3` : Deletes the 3rd contact shown in the current list.
 
-    * `clear` : Clears all contacts in the address book.
+   * `clear` : Clears all contacts in the address book.
 
-    * `exit` : Exits the app.
+   * `exit` : Exits the app.
 
 6. Refer to the [Features](#features) below for details of each command.
 
@@ -53,7 +53,7 @@ title: User Guide
 **:information_source: How to read command formats**<br>
 
 *  `UPPER_CASE`: Placeholders that you replace with your own information. <br>
-   Example: In `n/NAME`, you replace `NAME` with the actual name: `n/John Doe`.
+  Example: In `n/NAME`, you replace `NAME` with the actual name: `n/John Doe`.
 
 * `[square_brackets]`: Optional parts of a command. You can leave them out if you don't need them.<br>
   Example: `getClasses [n/TUTOR_NAME]` can be `getClasses n/Eric Hanson` or just `getClasses`.
@@ -274,7 +274,6 @@ Format: `linkClass d/*DAY ti/*TIME n/TUTOR_NAME or STUDENT_NAME [c/*CATEGORY]`
 
 * `NAME` must **exactly match** a student or a tutor in TutorFlow (case-sensitive).
 * The class identified by `DAY` and `TIME` must already exist (created using [`createClass`](#creating-a-class-createclass)).
-* If there is a student and a tutor with the exact same name, the optional category parameter can be used to differentiate them. Otherwise, the person who is higher in the list will be linked.
 
 The `linkClass` command works differently for students and tutors. Here’s what you need to know:
 
@@ -339,7 +338,6 @@ Format: `unlinkClass d/*DAY ti/*TIME n/TUTOR_NAME or STUDENT_NAME [c/*CATEGORY]`
 
 * `NAME` must **exactly match** a student or tutor currently linked to the class (case-sensitive).
 * The class identified by `DAY` and `TIME` must already exist (created using [`createClass`](#creating-a-class-createclass)).
-* If there is a student and a tutor with the exact same name, the optional category parameter can be used to differentiate them. Otherwise, the person who is higher in the list will be unlinked.
 
 Examples:
 * `unlinkClass d/MONDAY ti/H16 n/Roy Balakrishnan` removes tutor Roy Balakrishnan from the Monday 4:00 PM class.
@@ -362,8 +360,6 @@ Format: `getClassDetails d/*DAY ti/*TIME`
 
 Examples:
 * `getClassDetails d/MONDAY ti/H16` displays the tutor and students in the Monday 4:00 PM class.
-
-![img.png](images/getClassDetailsExample.png)
 
 • [Back to Command Summary](#command-summary)
 
@@ -453,11 +449,11 @@ Manual changes to the file may corrupt TutorFlow's data. Always save a backup of
   </tr>
   <tr>
     <td><a href="#linking-a-person-to-a-class-linkclass">Link Class</a></td>
-    <td><code>linkClass d/*DAY ti/*TIME n/NAME [c/*CATEGORY]</code><br>e.g., <code>linkClass d/MONDAY ti/H16 n/Roy Balakrishnan</code></td>
+    <td><code>linkClass d/*DAY ti/*TIME n/NAME</code><br>e.g., <code>linkClass d/MONDAY ti/H16 n/Roy Balakrishnan</code></td>
   </tr>
   <tr>
     <td><a href="#removing-a-person-from-a-class-unlinkclass">Unlink Class</a></td>
-    <td><code>unlinkClass d/*DAY ti/*TIME n/NAME [c/*CATEGORY]</code><br>e.g., <code>unlinkClass d/MONDAY ti/H16 n/Alice Pauline c/student</code></td>
+    <td><code>unlinkClass d/*DAY ti/*TIME n/NAME</code><br>e.g., <code>unlinkClass d/MONDAY ti/H16 n/Alice Pauline</code></td>
   </tr>
   <tr>
     <td><a href="#viewing-class-details-getclassdetails">Get Class Details</a></td>
