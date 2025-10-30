@@ -76,9 +76,8 @@ public class GetStudentsCommand extends Command {
         // Update UI to show filtered list of students
         model.updateFilteredPersonList(p ->
                 p instanceof Student && allStudentIds.contains(p.getId()));
-        int shown = model.getFilteredPersonList().size();
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, shown, tutor.getName()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, model.getFilteredPersonList().size(), tutor.getName()));
     }
 
     @Override

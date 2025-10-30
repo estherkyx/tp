@@ -3,10 +3,12 @@ package seedu.address.model;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.person.Category;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
@@ -121,6 +123,13 @@ public interface Model {
      * @return An Optional containing the Person if found, or an empty Optional otherwise.
      */
     Optional<Person> findPersonById(PersonId id);
+
+    /**
+     * Finds and returns a set of PersonId belonging to a specified category.
+     * @param category The category of people to be retrieved.
+     * @return A Set containing PersonId found.
+     */
+    Set<PersonId> getPersonIdsByCategory(Category category);
 
     //=========== TuitionClass =====================================================================
 

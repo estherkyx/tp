@@ -1,6 +1,9 @@
 package seedu.address.testutil;
 
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
 import seedu.address.model.AddressBook;
+import seedu.address.model.person.Category;
 import seedu.address.model.person.Person;
 import seedu.address.model.tuitionclass.TuitionClass;
 
@@ -34,6 +37,20 @@ public class AddressBookBuilder {
      */
     public AddressBookBuilder withTuitionClass(TuitionClass tuitionClass) {
         addressBook.addTuitionClass(tuitionClass);
+        return this;
+    }
+
+
+    /**
+     * Adds contacts that are not in the specified {@code Category} to the {@code AddressBook} that we are building.
+     */
+    public AddressBookBuilder withoutCategory(Category toRemove) {
+        addressBook = new AddressBook();
+        for (Person p : getTypicalAddressBook().getPersonList()) {
+            if (p.getCategory() != toRemove) {
+                addressBook.addPerson(p);
+            }
+        }
         return this;
     }
 

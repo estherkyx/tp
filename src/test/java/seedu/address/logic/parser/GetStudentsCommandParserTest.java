@@ -12,6 +12,8 @@ import seedu.address.model.person.Name;
 public class GetStudentsCommandParserTest {
 
     private final GetStudentsCommandParser parser = new GetStudentsCommandParser();
+    private final String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+            GetStudentsCommand.MESSAGE_USAGE);
 
     @Test
     public void parse_validArgs_success() {
@@ -25,23 +27,17 @@ public class GetStudentsCommandParserTest {
 
     @Test
     public void parse_missingPrefix_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, GetStudentsCommand.MESSAGE_USAGE);
-
         assertParseFailure(parser, " Aaron Tan", expectedMessage);
         assertParseFailure(parser, "", expectedMessage);
     }
 
     @Test
     public void parse_emptyName_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, GetStudentsCommand.MESSAGE_USAGE);
-
         assertParseFailure(parser, " n/   ", expectedMessage);
     }
 
     @Test
     public void parse_withPreamble_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, GetStudentsCommand.MESSAGE_USAGE);
-
         assertParseFailure(parser, " hello n/Aaron", expectedMessage);
     }
 }

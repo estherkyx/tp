@@ -10,11 +10,13 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.person.Category;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
@@ -174,6 +176,14 @@ public class ModelManager implements Model {
         return addressBook.getPersonList().stream()
                 .filter(person -> person.getId().equals(id))
                 .findFirst();
+    }
+
+    @Override
+    public Set<PersonId> getPersonIdsByCategory(Category category) {
+        return addressBook.getPersonList().stream()
+                .filter(p -> p.getCategory() == category)
+                .map(p -> p.getId())
+                .collect(Collectors.toSet());
     }
 
     @Override

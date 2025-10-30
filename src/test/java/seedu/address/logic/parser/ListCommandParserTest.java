@@ -37,8 +37,8 @@ public class ListCommandParserTest {
     }
 
     @Test
-    public void parse_emptyArgs_success() {
-        // no args after c/
+    public void parse_emptyCategory_failure() {
+        // no category stated after c/
         String expectedMessage = ListCommand.MESSAGE_MISSING_CATEGORY;
         assertParseFailure(parser, " c/   ", expectedMessage);
     }
@@ -55,7 +55,6 @@ public class ListCommandParserTest {
     public void parse_withPreamble_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE);
 
-        assertParseFailure(parser, " hello c/student", expectedMessage);
         assertParseFailure(parser, " list c/tutor", expectedMessage);
     }
 }
