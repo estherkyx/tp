@@ -189,10 +189,9 @@ public class PersonCard extends UiPart<Region> {
 
         if (person instanceof Student) {
             Student student = (Student) person;
-            Optional<TuitionClass> classOptional = student.findTuitionClass(tuitionClassLookup.apply(student));
-
-            if (classOptional.isPresent()) {
-                tuitionClass.setText("Class: " + classOptional.get().toSimpleString());
+            List<TuitionClass> studentClass = tuitionClassLookup.apply(student);
+            if (!studentClass.isEmpty()) {
+                tuitionClass.setText("Class: " + studentClass.get(0).toSimpleString());
                 tuitionClass.setVisible(true);
                 tuitionClass.setManaged(true);
             } else {

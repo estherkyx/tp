@@ -122,13 +122,18 @@ public class MainWindow extends UiPart<Stage> {
                 .filter(person -> person.getId().equals(personId))
                 .findFirst();
 
-        // Create a tuition class lookup function for tutors that always gets current data
+        // Create a tuition class lookup function for students or tutors that always gets current data
         Function<Person, List<TuitionClass>> tuitionClassLookup = person -> {
             if (person instanceof seedu.address.model.person.Tutor) {
                 // Always get the current tuition class list to ensure real-time updates
                 return logic.getAddressBook().getTuitionClassList().stream()
                     .filter(tc -> person.getId().equals(tc.getTutorId()))
                     .toList();
+            }
+            if (person instanceof seedu.address.model.person.Student) {
+                return logic.getAddressBook().getTuitionClassList().stream()
+                        .filter(tc -> tc.getStudentIds().contains(person.getId()))
+                        .toList();
             }
             return List.of();
         };
