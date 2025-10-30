@@ -34,6 +34,8 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tuitionclass.ClassId;
+import seedu.address.model.tuitionclass.TuitionClass;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -138,9 +140,7 @@ public class EditCommand extends Command {
             Tutor originalTutor = (Tutor) personToEdit;
             Tutor editedTutor = (Tutor) editedPerson;
 
-            // TODO: Preserve class relationships
         } else { // when personToEdit and editedPerson are not the same type
-            // Category changed - need to clean up old relationships
             cleanupOldRelationships(personToEdit, model);
         }
 
@@ -153,6 +153,7 @@ public class EditCommand extends Command {
      */
     private static void cleanupOldRelationships(Person personToEdit, Model model) {
         List<Person> allPersons = model.getAddressBook().getPersonList();
+        List<TuitionClass> allClasses = model.getTuitionClassList();
 
         if (personToEdit instanceof Student) {
             Student student = (Student) personToEdit;
@@ -167,6 +168,16 @@ public class EditCommand extends Command {
                     parent.removeChildId(student.getId());
                     model.setPerson(parentOpt.get(), parent);
                 }
+            }
+
+            // Remove from classes
+            if (student.getClassId().isPresent()) {
+                ClassId classId = student.getClassId().get();
+                TuitionClass tuitionClass = allClasses.stream()
+                        .filter(c -> c.getClassId().equals(classId))
+                        .findFirst().get();
+                tuitionClass.removeStudentId(student.getId());
+                model.setTuitionClass(tuitionClass, tuitionClass);
             }
 
         } else if (personToEdit instanceof Parent) {
@@ -189,7 +200,15 @@ public class EditCommand extends Command {
         } else if (personToEdit instanceof Tutor) {
             Tutor tutor = (Tutor) personToEdit;
 
-            // TODO: Remove class relationships
+            // remove tutor from classes
+            List<TuitionClass> tutorClasses = allClasses.stream()
+                    .filter(c -> c.getTutorId().equals(tutor.getId())).toList();
+            if (!tutorClasses.isEmpty()) {
+                for (TuitionClass tc : tutorClasses) {
+                    tc.removeTutorId();
+                    model.setTuitionClass(tc, tc);
+                }
+            }
         }
     }
 
