@@ -77,12 +77,11 @@ public class GetClassesCommand extends Command {
 
         // Filter classes by tutor
         List<TuitionClass> tutorClasses = model.getClassesByTutor(tutor);
+        model.updateFilteredPersonList(person -> person.getId().equals(tutor.getId()));
 
         if (tutorClasses.isEmpty()) {
             throw new CommandException(String.format(MESSAGE_NO_CLASSES_FOUND, tutorName));
         }
-
-        model.updateFilteredPersonList(person -> person.getId().equals(tutor.getId()));
 
         StringBuilder result = new StringBuilder(String.format("Classes taught by %s:\n", tutorName));
         int index = 1;
