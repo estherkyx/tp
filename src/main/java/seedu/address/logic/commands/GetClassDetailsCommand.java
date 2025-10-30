@@ -33,7 +33,8 @@ public class GetClassDetailsCommand extends Command {
             + PREFIX_TIME + "TIME\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_DAY + "Monday "
-            + PREFIX_TIME + "H14";
+            + PREFIX_TIME + "H14\n\n"
+            + "(To get back to the full list of contacts, run the 'list' command)";
 
     public static final String MESSAGE_CLASS_NOT_FOUND = "There is no class at the specified day and time";
 

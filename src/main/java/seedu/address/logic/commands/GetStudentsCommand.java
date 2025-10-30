@@ -24,7 +24,8 @@ public class GetStudentsCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all students taught by a tutor. \n"
             + "Parameters: n/TUTOR_NAME\n"
-            + "Example: " + COMMAND_WORD + " n/Aaron Tan";
+            + "Example: " + COMMAND_WORD + " n/Aaron Tan\n\n"
+            + "(To get back to the full list of contacts, run the 'list' command)";
 
     public static final String MESSAGE_SUCCESS = "Listed %d student(s) taught by '%s'.";
 

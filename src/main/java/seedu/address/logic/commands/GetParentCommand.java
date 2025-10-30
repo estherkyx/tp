@@ -20,7 +20,8 @@ public class GetParentCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Gets the parent of the given student.\n"
             + "Parameters: n/STUDENT_NAME\n"
-            + "Example: " + COMMAND_WORD + " " + " n/John Doe";
+            + "Example: " + COMMAND_WORD + " " + " n/John Doe\n\n"
+            + "(To get back to the full list of contacts, run the 'list' command)";
 
     public static final String MESSAGE_SUCCESS = "Parent of %s:\n%s";
     public static final String MESSAGE_STUDENT_NOT_FOUND = "Student with name '%s' not found.";
