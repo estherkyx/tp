@@ -192,4 +192,15 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    /**
+     * Unlinks a parent from all linked students by setting their parent IDs to null.
+     * @param parentId The ID of the parent to unlink.
+     */
+    void unlinkParentFromStudent(PersonId parentId);
+
+    /**
+     * Remove a student's ID from any parent records they are linked to.
+     * (if such parent holds a collection of student IDs)
+     */
+    void unlinkStudentFromParent(PersonId studentId);
 }

@@ -237,6 +237,16 @@ public class AddCommandTest {
         public List<Student> getStudentsInClass(TuitionClass tuitionClass) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public void unlinkParentFromStudent(PersonId parentId) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void unlinkStudentFromParent(PersonId studentId) {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**
@@ -291,6 +301,35 @@ public class AddCommandTest {
         public void addStudent(Student student) {
             requireNonNull(student);
             personsAdded.add(student);
+        }
+
+        @Override
+        public void unlinkParentFromStudent(PersonId parentId) {
+            requireNonNull(parentId);
+            for (Person p : personsAdded) {
+                if (p instanceof Student) {
+                    Student student = (Student) p;
+                    if (parentId.equals(student.getParentId())) {
+                        student.clearParent();
+                        personsAdded.add(student);
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void unlinkStudentFromParent(PersonId studentId) {
+            requireNonNull(studentId);
+            for (Person p : personsAdded) {
+                if (p instanceof Parent) {
+                    Parent parent = (Parent) p;
+                    List<PersonId> linkedStudentIds = new ArrayList<>(parent.getChildrenIds());
+                    if (linkedStudentIds.remove(studentId)) {
+                        parent.removeChildId(studentId);
+                        personsAdded.add(parent);
+                    }
+                }
+            }
         }
 
         @Override
