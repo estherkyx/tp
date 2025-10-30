@@ -26,6 +26,7 @@ Class Phone
 Class Tag
 Class UniqueClassList
 Class TuitionClass
+Class ClassId
 Class Day
 Class Time
 
@@ -55,8 +56,8 @@ UniqueClassList --> "~* all" TuitionClass
 Student -up-|> Person
 Tutor -up-|> Person
 Parent -up-|> Person
-Person *--> PersonId
-Person *--> Category
+Person *--> "1" PersonId
+Person *--> "1" Category
 Person *--> "*" Tag
 Person *--> "1" Name
 Person *--> "1" Phone
@@ -64,14 +65,15 @@ Person *--> "1" Email
 Person *--> "1" Address
 
 Student --> "0..1" PersonId : linkedParentId
-Student --> "0..1" Day : tuitionDay
-Student --> "0..1" Time : tuitionTime
+Student --> "0..1" ClassId
 Parent --> "*" PersonId : childrenIds
 
-TuitionClass *--> Day
-TuitionClass *--> Time
 TuitionClass --> "0..1" PersonId : tutorId
 TuitionClass --> "*" PersonId : studentIds
+TuitionClass --> "1" ClassId
+
+ClassId --> "1" Day
+ClassId --> "1" Time
 
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I
