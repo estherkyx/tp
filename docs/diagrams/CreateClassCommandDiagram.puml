@@ -5,9 +5,7 @@ skinparam ArrowFontStyle plain
 box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
 participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
-participant ":CreateClassCommandParser" as CreateClassCommandParser LOGIC_COLOR
-participant "c:CreateClassCommand" as CreateClassCommand LOGIC_COLOR
-participant "r:CommandResult" as CommandResult LOGIC_COLOR
+participant "cc:CreateClassCommand" as CreateClassCommand LOGIC_COLOR
 end box
 
 box Model MODEL_COLOR_T1
@@ -17,60 +15,41 @@ end box
 [-> LogicManager : execute("createClass d/Monday ti/H14")
 activate LogicManager
 
-LogicManager -> AddressBookParser : parseCommand("createClass d/Monday ti/H14")
+' The AddressBookParser handles the creation of the specific command object.
+' The CreateClassCommandParser is an implementation detail and is omitted for clarity.
+LogicManager -> AddressBookParser : parseCommand("createClass ...")
 activate AddressBookParser
 
-create CreateClassCommandParser
-AddressBookParser -> CreateClassCommandParser
-activate CreateClassCommandParser
-
-CreateClassCommandParser --> AddressBookParser
-deactivate CreateClassCommandParser
-
-AddressBookParser -> CreateClassCommandParser : parse("d/Monday ti/H14")
-activate CreateClassCommandParser
-
-create TuitionClass
-CreateClassCommandParser -> TuitionClass : new TuitionClass(day, time)
-
 create CreateClassCommand
-CreateClassCommandParser -> CreateClassCommand : new CreateClassCommand(day, time)
+AddressBookParser -> CreateClassCommand : new CreateClassCommand(day, time)
 activate CreateClassCommand
 
-CreateClassCommand --> CreateClassCommandParser
+CreateClassCommand --> AddressBookParser
 deactivate CreateClassCommand
 
-CreateClassCommandParser --> AddressBookParser : c
-deactivate CreateClassCommandParser
-'Hidden arrow to position the destroy marker below the end of the activation bar.'
-CreateClassCommandParser -[hidden]-> AddressBookParser
-destroy CreateClassCommandParser
-
-AddressBookParser --> LogicManager : c
+AddressBookParser --> LogicManager : cc
 deactivate AddressBookParser
 
 LogicManager -> CreateClassCommand : execute(model)
 activate CreateClassCommand
 
+' The command checks if the class already exists.
 CreateClassCommand -> Model : hasTuitionClass(toAdd)
 activate Model
 Model --> CreateClassCommand : false
 deactivate Model
 
+' If not, the command adds the new class to the model.
 CreateClassCommand -> Model : addTuitionClass(toAdd)
 activate Model
 Model --> CreateClassCommand
 deactivate Model
 
-create CommandResult
-CreateClassCommand -> CommandResult : new CommandResult(SUCCESS_MESSAGE)
-activate CommandResult
-
-CommandResult --> CreateClassCommand
-deactivate CommandResult
-
-CreateClassCommand --> LogicManager : r
+CreateClassCommand --> LogicManager : result
 deactivate CreateClassCommand
+' The command object is destroyed after execution.
+CreateClassCommand -[hidden]-> LogicManager
+destroy CreateClassCommand
 
 [<--LogicManager
 deactivate LogicManager
