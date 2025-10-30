@@ -98,9 +98,10 @@ Format: `exit`
 Adds a person to the address book.
 
 Format: `add c/CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+* Category must be one of `tutor`, `student`, `parent` (case-insensitive)
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0)
+A person can have zero or more tags
 </div>
 
 Examples:
@@ -189,10 +190,9 @@ Links an existing student to an existing parent in the address book.
 
 Format: `linkParent n/STUDENT_NAME n/PARENT_NAME`
 
-* Links the student identified by STUDENT_NAME to the parent identified by PARENT_NAME.
-* Both the student and the parent must already exist in the address book.
-* The names must be an exact match to the names stored in TutorFlow.
-* The person identified as the student must have the 'student' category, and the person identified as the parent must have the 'parent' category.
+* Links the student identified by  `STUDENT_NAME` to the parent identified by `PARENT_NAME`.
+* The names must **exactly match** a student or a parent in TutorFlow (case-sensitive).
+* The person identified as the student must have the `student` category, and the person identified as the parent must have the `parent` category.
 
 Example:
 * `linkParent n/Alice Pauline n/Daniel Meier` Links the student 'Alice Pauline' to the parent 'Daniel Meier', assuming both exist in the address book with the correct categories.
@@ -204,9 +204,8 @@ Example:
 Displays the parent of a specified student.
 
 Format: `getParent n/STUDENT_NAME`
-* The student must already exist in the address book.
-* The student name must be an exact match to the name stored in TutorFlow.
-* The student identified must have the 'student' category.
+* The student name must **exactly match** a student in TutorFlow (case-sensitive).
+* The student identified must have the `student` category.
 
 Examples:
 * `getParent n/John Doe` shows the parent of student John Doe.
@@ -218,12 +217,11 @@ Examples:
 Displays all students of a specified tutor.
 
 Format: `getStudents n/TUTOR_NAME`
-* The tutor must already exist in the address book.
-* The tutor name must be an exact match to the name stored in TutorFlow.
-* The tutor identified must have the 'tutor' category.
+* The tutor name must **exactly match** a tutor in TutorFlow (case-sensitive). 
+* The tutor identified must have the `tutor` category.
 
 Examples:
-* `getStudents n/Roy Balakrishnan` shows all students of  tutor Roy Balakrishnan.
+* `getStudents n/Roy Balakrishnan` shows all students of tutor Roy Balakrishnan.
 
 • [Back to Command Summary](#command-summary)
 
@@ -257,10 +255,10 @@ Links an existing student or tutor to an existing class.
 
 Format: `linkClass d/DAY ti/TIME n/NAME`
 
-* `NAME` must **exactly match** a person in TutorFlow.
+* `NAME` must **exactly match** a student or a tutor in TutorFlow (case-sensitive). 
 * The class identified by `DAY` and `TIME` (case-insensitive) must already exist (created using `createClass`).
 
-The `linkClass` command works differently for students and tutors. Here’s what you need to know.
+The `linkClass` command works differently for students and tutors. Here’s what you need to know:
 
 **Linking a Student to a Class**
 
@@ -295,7 +293,7 @@ Removes the person from an existing class.
 
 Format: `unlinkClass d/DAY ti/TIME n/NAME`
 
-* `NAME` must exactly match a person currently linked to the class.
+* `NAME` must **exactly match** a student or tutor currently linked to the class (case-sensitive).
 * The class identified by `DAY` and `TIME` (case-insensitive) must already exist.
 
 Examples:
@@ -331,6 +329,7 @@ Format: `getClasses [n/TUTOR_NAME]`
 
 * Without `n/TUTOR_NAME`: shows all classes in the system.
 * With `n/TUTOR_NAME`: shows only classes linked to the specified tutor.
+* The tutor name must **exactly match** a tutor in TutorFlow (case-sensitive).
 
 Examples:
 * `getClasses` shows all classes.
@@ -389,11 +388,11 @@ Furthermore, certain edits can cause TutorFlow to behave in unexpected ways (e.g
 Action | Format, Examples
 --------|------------------
 [Add](#adding-a-person-add) | `add c/CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add c/parent n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/J2 t/Trial lesson`
-[Clear](#clearing-all-entries--clear) | `clear`
-[Delete](#deleting-a-person--delete) | `delete INDEX`<br> e.g., `delete 3`
+[List](#listing-all-persons--list) | `list [c/CATEGORY]` <br> e.g., `list c/student`
 [Edit](#editing-a-person--edit) | `edit INDEX [c/CATEGORY] [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-[Link Parent](#linking-a-student-to-a-parent--linkparent) | `linkParent n/STUDENT_NAME n/PARENT_NAME`<br> e.g., `linkParent n/Alice Pauline n/Fiona Kunz`
 [Find](#locating-persons-by-name-find) | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+[Delete](#deleting-a-person--delete) | `delete INDEX`<br> e.g., `delete 3`
+[Link Parent](#linking-a-student-to-a-parent--linkparent) | `linkParent n/STUDENT_NAME n/PARENT_NAME`<br> e.g., `linkParent n/Alice Pauline n/Fiona Kunz`
 [Get Parent](#finding-a-students-parent-getparent) | `getParent n/STUDENT_NAME`<br> e.g., `getParent n/John Doe`
 [Get Students](#finding-all-students-of-a-tutor-getstudents) | `getStudents n/TUTOR_NAME`<br> e.g., `getStudents n/Roy Balakrishnan`
 [Create Class](#creating-a-class-createclass) | `createClass d/DAY ti/TIME`<br> e.g., `createClass d/MONDAY ti/H16`
@@ -401,5 +400,6 @@ Action | Format, Examples
 [Unlink Class](#removing-a-person-from-a-class-unlinkclass) | `unlinkClass d/DAY ti/TIME n/NAME`<br> e.g., `unlinkClass d/MONDAY ti/H16 n/Alice Pauline`
 [Get Class Details](#viewing-class-details-getclassdetails) | `getClassDetails d/DAY ti/TIME`<br> e.g., `getClassDetails d/MONDAY ti/H16`
 [Get Classes](#listing-classes-getclasses) | `getClasses [n/TUTOR_NAME]`<br> e.g., `getClasses n/Roy Balakrishnan`
-[List](#listing-all-persons--list) | `list`
+[Clear](#clearing-all-entries--clear) | `clear`
 [Help](#viewing-help--help) | `help`
+[Exit](#exiting-the-program--exit) | `exit`
