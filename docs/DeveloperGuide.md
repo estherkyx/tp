@@ -13,12 +13,12 @@ This project is based on the **AddressBook-Level3 (AB3)** project created by the
 
 We would like to acknowledge the following sources that have been instrumental in the development of this project:
 
-#### **Code and Ideas**
+#### Code and Ideas
 *   The overall architecture and a significant portion of the codebase were adapted from the original **AddressBook-Level3** project.
 *   The implementation pattern for creating new commands (such as `linkClass`, `createClass`, etc.) was heavily guided by the official [**AB3 Tutorial**](https://se-education.org/addressbook-level3/DeveloperGuide.html).
 *   The design of the GUI, including the layout and display of person cards, is an adaptation of the JavaFX structure provided by the AB3 project.
 
-#### **Third-Party Libraries**
+#### Third-Party Libraries
 *   **[JavaFX](https://openjfx.io/)**: Used for the Graphical User Interface (GUI).
 *   **[Jackson](https://github.com/FasterXML/jackson)**: Used for handling the serialization and deserialization of data to and from JSON format.
 *   **[JUnit5](https://junit.org/junit5/)**: Used for writing the extensive suite of unit and integration tests.
