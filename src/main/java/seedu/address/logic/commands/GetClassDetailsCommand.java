@@ -33,8 +33,7 @@ public class GetClassDetailsCommand extends Command {
             + PREFIX_TIME + "TIME\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_DAY + "Monday "
-            + PREFIX_TIME + "H14\n\n"
-            + "(To get back to the full list of contacts, run the 'list' command)";
+            + PREFIX_TIME + "H14";
 
     public static final String MESSAGE_CLASS_NOT_FOUND = "There is no class at the specified day and time";
 
@@ -78,6 +77,7 @@ public class GetClassDetailsCommand extends Command {
                     .map(s -> s.getName().toString())
                     .collect(Collectors.joining(", "));
             sb.append(" ").append(list);
+            sb.append("\n\n(To get back to the full list of contacts, run the 'list' command)");
         }
 
         model.updateFilteredPersonList(p -> studentIds.contains(p.getId())
