@@ -224,7 +224,7 @@ The following sequence diagram illustrates the process:
 
 ### Link classes to a tutee/tutor: `linkClass` feature
 
-Links an existing Student or Tutor to an existing TuitionClass identified by day and timeslot, enforcing one-class-per-student and one-tutor-per-class constraints while updating both the class roster and the person record.
+Links an existing Student or Tutor to an existing TuitionClass identified by day and timeslot (and optionally category), enforcing one-class-per-student and one-tutor-per-class constraints while updating both the class roster and the person record.
 
 #### Implementation
 
