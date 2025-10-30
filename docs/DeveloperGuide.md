@@ -148,9 +148,11 @@ How the parsing works:
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
 **Core Model Structure**
+
 <img src="images/CoreModelStructureClassDiagram.png" width="550" />
 
 **Domain Entities**
+
 <img src="images/DomainEntitiesClassDiagram.png" width="550" />
 
 The `Model` component,
