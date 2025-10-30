@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CATEGORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
@@ -13,6 +14,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.Category;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Student;
@@ -33,11 +35,13 @@ public class UnlinkClassCommand extends Command {
             + "Parameters: "
             + PREFIX_DAY + "DAY "
             + PREFIX_TIME + "TIME "
-            + PREFIX_NAME + "STUDENT_NAME or TUTOR_NAME\n"
+            + PREFIX_NAME + "NAME ["
+            + PREFIX_CATEGORY + "CATEGORY]\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_DAY + "Monday "
             + PREFIX_TIME + "H14 "
-            + PREFIX_NAME + "John Doe";
+            + PREFIX_NAME + "John Doe "
+            + PREFIX_CATEGORY + "student";
 
     public static final String MESSAGE_CLASS_NOT_FOUND = "The class at the specified timeslot does not exist.";
     public static final String MESSAGE_PERSON_NOT_STUDENT_OR_TUTOR = "The person provided is not a student or a tutor.";
@@ -49,13 +53,14 @@ public class UnlinkClassCommand extends Command {
 
     private final ClassId classId;
     private final Name personName;
+    private final Optional<Category> category;
 
     /**
-     * Creates an UnlinkClassCommand to unlink the specified student/tutor from a class.
+     * Creates an UnlinkClassCommand to unlink the specified person from a class.
      *
      * @param day the day of the class
      * @param time the time of the class
-     * @param personName the name of the student/tutor
+     * @param personName the name of the person
      */
     public UnlinkClassCommand(Day day, Time time, Name personName) {
         requireNonNull(day);
@@ -64,6 +69,26 @@ public class UnlinkClassCommand extends Command {
 
         this.classId = new ClassId(day, time);
         this.personName = personName;
+        this.category = Optional.empty();
+    }
+
+    /**
+     * Creates an UnlinkClassCommand to unlink the specified student/tutor from a class.
+     *
+     * @param day the day of the class
+     * @param time the time of the class
+     * @param personName the name of the student/tutor
+     * @param category the category of the person (student/tutor)
+     */
+    public UnlinkClassCommand(Day day, Time time, Name personName, Category category) {
+        requireNonNull(day);
+        requireNonNull(time);
+        requireNonNull(personName);
+        requireNonNull(category);
+
+        this.classId = new ClassId(day, time);
+        this.personName = personName;
+        this.category = Optional.of(category);
     }
 
     @Override
@@ -79,11 +104,13 @@ public class UnlinkClassCommand extends Command {
 
         // 2. Find the Person
         List<Person> personsNamed = model.findPersonByName(personName);
+        if (category.isPresent()) {
+            personsNamed = personsNamed.stream().filter(p -> category.get().equals(p.getCategory())).toList();
+        }
         if (personsNamed.isEmpty()) {
             throw new CommandException(Messages.messagePersonNotFound(personName));
         }
 
-        // wrong logic from here on out, takes first person from list of names with same name
         Person personToUnlink = personsNamed.get(0);
 
         // 3. Branch logic based on Person type
