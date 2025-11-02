@@ -13,6 +13,11 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
  */
 public class FindCommandParser implements Parser<FindCommand> {
 
+    public static final String MESSAGE_CONSTRAINTS =
+            "Keywords should only contain alphanumeric characters and spaces.";
+
+    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns a FindCommand object for execution.
@@ -26,8 +31,12 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
+        for (String keyword : nameKeywords) {
+            if (!keyword.matches(VALIDATION_REGEX)) {
+                throw new ParseException(MESSAGE_CONSTRAINTS);
+            }
+        }
 
         return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
     }
-
 }
