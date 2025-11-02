@@ -9,7 +9,8 @@ import static java.util.Objects.requireNonNull;
 public enum Time {
     H12, H14, H16, H18, H20; // Represents 12:00, 14:00, 16:00, 18:00, 20:00
 
-    public static final String MESSAGE_CONSTRAINTS = "Time must be one of the following: H12, H14, H16, H18, H20";
+    public static final String MESSAGE_CONSTRAINTS =
+            "Time must be one of the following: H12, H14, H16, H18, H20 (case-insensitive)";
 
     /**
      * Returns the {@code Time} enum corresponding to the given string, case-insensitively.
