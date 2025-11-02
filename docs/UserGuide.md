@@ -150,6 +150,10 @@ Format: `edit INDEX [c/*CATEGORY] [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TA
 * You must provide at least one field to change (e.g. n/, p/).
 * Editing tags will **replace all old tags** with the new ones you provide. To clear all tags, simply type t/ with nothing after it.
 
+<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+Editing a person's category will remove all existing relationships (i.e. parent-child relationships, class enrollments). 
+</div>
+
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
