@@ -112,7 +112,9 @@ Format: `add c/*CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 * `CATEGORY` must be one of `tutor`, `student`, `parent`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-You cannot add a duplicate person (i.e. same **category** and **name**)
+You cannot add a duplicate person (i.e. same **name**, case-insensitive)
+
+If you type multiple spaces between words or at the ends (e.g. "John&nbsp;&nbsp;&nbsp;&nbsp;Doe "), it will automatically be trimmed to one space between and none at the ends (John Doe).
 </div>
 
 Examples:
@@ -210,12 +212,12 @@ Links an existing student to an existing parent in the address book.
 
 Format: `linkParent n/STUDENT_NAME n/PARENT_NAME`
 
-* Links the student identified by  `STUDENT_NAME` to the parent identified by `PARENT_NAME`.
-* The names must **exactly match** a student or a parent in TutorFlow (case-sensitive).
+* Links the student identified by `STUDENT_NAME` to the parent identified by `PARENT_NAME`.
+* The names must **exactly match** a student or a parent in TutorFlow (case-insensitive).
 * The person identified as the student must have the `student` category, and the person identified as the parent must have the `parent` category.
 
 Example:
-* `linkParent n/Alice Pauline n/Daniel Meier` Links the student 'Alice Pauline' to the parent 'Daniel Meier', assuming both exist in the address book with the correct categories.
+* `linkParent n/alice pauline n/daniel meier` Links the student 'Alice Pauline' to the parent 'Daniel Meier', assuming both exist in the address book with the correct categories.
 
 • [Back to Command Summary](#command-summary)
 
@@ -224,7 +226,7 @@ Example:
 Displays the parent linked to the specified student.
 
 Format: `getParent n/STUDENT_NAME`
-* The student name must **exactly match** a student in TutorFlow (case-sensitive).
+* The student name must **exactly match** a student in TutorFlow (case-insensitive).
 * The student identified must have the `student` category.
 
 Examples:
@@ -237,7 +239,7 @@ Examples:
 Displays all students linked to the specified tutor.
 
 Format: `getStudents n/TUTOR_NAME`
-* The tutor name must **exactly match** a tutor in TutorFlow (case-sensitive).
+* The tutor name must **exactly match** a tutor in TutorFlow (case-insensitive).
 * The tutor identified must have the `tutor` category.
 
 Examples:
@@ -274,11 +276,10 @@ Examples:
 
 Links an existing student or tutor to an existing class.
 
-Format: `linkClass d/*DAY ti/*TIME n/TUTOR_NAME or STUDENT_NAME [c/*CATEGORY]`
+Format: `linkClass d/*DAY ti/*TIME n/TUTOR_NAME or STUDENT_NAME`
 
-* `NAME` must **exactly match** a student or a tutor in TutorFlow (case-sensitive).
+* `NAME` must **exactly match** a student or a tutor in TutorFlow (case-insensitive).
 * The class identified by `DAY` and `TIME` must already exist (created using [`createClass`](#creating-a-class-createclass)).
-* If there is a student and a tutor with the exact same name, the optional category parameter can be used to differentiate them. Otherwise, the person who is higher in the list will be linked.
 
 The `linkClass` command works differently for students and tutors. Here’s what you need to know:
 
@@ -331,7 +332,7 @@ Each class can only have one tutor, but a tutor can teach multiple classes.
 
 Examples:
 * `linkClass d/MONDAY ti/H16 n/Roy Balakrishnan` links tutor Roy Balakrishnan to the Monday 4:00 PM class.
-* `linkClass d/SATURDAY ti/H12 n/Alice Pauline c/student` links student Alice Pauline to the Saturday 12:00 PM class.
+* `linkClass d/SATURDAY ti/H12 n/Alice Pauline` links student Alice Pauline to the Saturday 12:00 PM class.
 
 • [Back to Command Summary](#command-summary)
 
@@ -339,15 +340,14 @@ Examples:
 
 Removes a person from an existing class.
 
-Format: `unlinkClass d/*DAY ti/*TIME n/TUTOR_NAME or STUDENT_NAME [c/*CATEGORY]`
+Format: `unlinkClass d/*DAY ti/*TIME n/TUTOR_NAME or STUDENT_NAME`
 
-* `NAME` must **exactly match** a student or tutor currently linked to the class (case-sensitive).
+* `NAME` must **exactly match** a student or tutor currently linked to the class (case-insensitive).
 * The class identified by `DAY` and `TIME` must already exist (created using [`createClass`](#creating-a-class-createclass)).
-* If there is a student and a tutor with the exact same name, the optional category parameter can be used to differentiate them. Otherwise, the person who is higher in the list will be unlinked.
 
 Examples:
 * `unlinkClass d/MONDAY ti/H16 n/Roy Balakrishnan` removes tutor Roy Balakrishnan from the Monday 4:00 PM class.
-* `unlinkClass d/SATURDAY ti/H12 n/Alice Pauline c/student` removes student Alice Pauline from the Saturday 12:00 PM class.
+* `unlinkClass d/SATURDAY ti/H12 n/Alice Pauline` removes student Alice Pauline from the Saturday 12:00 PM class.
 
 • [Back to Command Summary](#command-summary)
 
@@ -379,7 +379,7 @@ Format: `getClasses [n/TUTOR_NAME]`
 
 * Without `n/TUTOR_NAME`: shows all existing classes created using [`createClass`](#creating-a-class-createclass).
 * With `n/TUTOR_NAME`: shows only classes linked to the specified tutor using [`linkClass`](#linking-a-person-to-a-class-linkclass).
-* The tutor name must **exactly match** a tutor in TutorFlow (case-sensitive).
+* The tutor name must **exactly match** a tutor in TutorFlow (case-insensitive).
 
 Examples:
 * `getClasses` shows all classes.
@@ -441,15 +441,15 @@ Manual changes to the file may corrupt TutorFlow's data. Always save a backup of
   </tr>
   <tr>
     <td><a href="#linking-a-student-to-a-parent--linkparent">Link Parent</a></td>
-    <td><code>linkParent n/STUDENT_NAME n/PARENT_NAME</code><br>e.g., <code>linkParent n/Alice Pauline n/Fiona Kunz</code></td>
+    <td><code>linkParent n/*STUDENT_NAME n/*PARENT_NAME</code><br>e.g., <code>linkParent n/Alice Pauline n/Fiona Kunz</code></td>
   </tr>
   <tr>
     <td><a href="#finding-a-students-parent-getparent">Get Parent</a></td>
-    <td><code>getParent n/STUDENT_NAME</code><br>e.g., <code>getParent n/John Doe</code></td>
+    <td><code>getParent n/*STUDENT_NAME</code><br>e.g., <code>getParent n/John Doe</code></td>
   </tr>
   <tr>
     <td><a href="#finding-all-students-of-a-tutor-getstudents">Get Students</a></td>
-    <td><code>getStudents n/TUTOR_NAME</code><br>e.g., <code>getStudents n/Roy Balakrishnan</code></td>
+    <td><code>getStudents n/*TUTOR_NAME</code><br>e.g., <code>getStudents n/Roy Balakrishnan</code></td>
   </tr>
   <tr>
     <td><a href="#creating-a-class-createclass">Create Class</a></td>
@@ -457,11 +457,11 @@ Manual changes to the file may corrupt TutorFlow's data. Always save a backup of
   </tr>
   <tr>
     <td><a href="#linking-a-person-to-a-class-linkclass">Link Class</a></td>
-    <td><code>linkClass d/*DAY ti/*TIME n/NAME [c/*CATEGORY]</code><br>e.g., <code>linkClass d/MONDAY ti/H16 n/Roy Balakrishnan</code></td>
+    <td><code>linkClass d/*DAY ti/*TIME n/*NAME</code><br>e.g., <code>linkClass d/MONDAY ti/H16 n/Roy Balakrishnan</code></td>
   </tr>
   <tr>
     <td><a href="#removing-a-person-from-a-class-unlinkclass">Unlink Class</a></td>
-    <td><code>unlinkClass d/*DAY ti/*TIME n/NAME [c/*CATEGORY]</code><br>e.g., <code>unlinkClass d/MONDAY ti/H16 n/Alice Pauline c/student</code></td>
+    <td><code>unlinkClass d/*DAY ti/*TIME n/*NAME</code><br>e.g., <code>unlinkClass d/MONDAY ti/H16 n/Alice Pauline c/student</code></td>
   </tr>
   <tr>
     <td><a href="#viewing-class-details-getclassdetails">Get Class Details</a></td>
@@ -469,7 +469,7 @@ Manual changes to the file may corrupt TutorFlow's data. Always save a backup of
   </tr>
   <tr>
     <td><a href="#listing-classes-getclasses">Get Classes</a></td>
-    <td><code>getClasses [n/TUTOR_NAME]</code><br>e.g., <code>getClasses n/Roy Balakrishnan</code></td>
+    <td><code>getClasses [n/*TUTOR_NAME]</code><br>e.g., <code>getClasses n/Roy Balakrishnan</code></td>
   </tr>
   <tr>
     <td><a href="#clearing-all-entries--clear">Clear</a></td>
