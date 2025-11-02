@@ -4,15 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.model.person.Category.PARENT;
-import static seedu.address.model.person.Category.TUTOR;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.FIONA;
 import static seedu.address.testutil.TypicalPersons.GEORGE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
-import java.util.HashSet;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,12 +18,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Tutor;
 import seedu.address.model.tuitionclass.Day;
@@ -108,27 +100,6 @@ public class GetStudentsCommandTest {
 
         assertCommandFailure(cmd, model,
                 String.format(GetStudentsCommand.MESSAGE_TUTOR_NOT_FOUND, ghost));
-    }
-
-    @Test
-    public void execute_parentSameNameAsTutor_findsTutorSuccessfully() throws Exception {
-        Parent sameNameParent = new Parent(PARENT,
-                new Name("John Doe"),
-                new Phone("98765432"),
-                new Email("johnd@example.com"),
-                new Address("123 Street"),
-                new HashSet<>());
-        this.model.addPerson(sameNameParent);
-
-        Tutor sameNameTutor = new Tutor(TUTOR,
-                new Name("John Doe"),
-                new Phone("98765432"),
-                new Email("johnd@example.com"),
-                new Address("123 Street"),
-                new HashSet<>());
-        this.model.addPerson(sameNameTutor);
-
-        assertShowsNoStudents(new Name("John Doe"));
     }
 
     @Test

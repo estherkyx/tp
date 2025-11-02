@@ -101,8 +101,8 @@ public class Person {
         }
 
         return otherPerson != null
-                && otherPerson.getCategory().equals(getCategory())
-                && otherPerson.getName().equals(getName());
+                && otherPerson.getName().toString().trim().replaceAll("\\s+", " ")
+                .equalsIgnoreCase(getName().toString().trim().replaceAll("\\s+", " "));
     }
 
     /**
