@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Category;
@@ -22,8 +23,6 @@ import seedu.address.model.tuitionclass.Time;
  */
 public class ParserUtil {
 
-    public static final String MESSAGE_INVALID_INDEX = "Index is not a positive integer. Please provide a valid index.";
-
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
@@ -31,9 +30,18 @@ public class ParserUtil {
      */
     public static Index parseIndex(String oneBasedIndex) throws ParseException, NumberFormatException {
         String trimmedIndex = oneBasedIndex.trim();
-        int value = Integer.parseInt(trimmedIndex);
+        int value;
+        try {
+            value = Integer.parseInt(trimmedIndex);
+        } catch (NumberFormatException nfe) {
+            if (trimmedIndex.matches("-?\\d+")) {
+                throw new ParseException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, nfe);
+            } else {
+                throw nfe;
+            }
+        }
         if (value <= 0 || trimmedIndex.startsWith("+")) {
-            throw new ParseException(MESSAGE_INVALID_INDEX);
+            throw new ParseException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
         return Index.fromOneBased(value);
     }
