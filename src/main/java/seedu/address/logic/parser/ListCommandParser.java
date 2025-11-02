@@ -33,6 +33,8 @@ public class ListCommandParser implements Parser<ListCommand> {
                     MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
         }
 
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_CATEGORY);
+
         // user input is "list"
         Optional<String> categoryPrefix = argMultimap.getValue(PREFIX_CATEGORY);
         if (categoryPrefix.isEmpty()) {
