@@ -23,8 +23,8 @@ public class LinkParentCommand extends Command {
             + ": Links a student to a parent by their names. "
             + "Existing parent will be overwritten if a new parent is linked. \n"
             + "Parameters: "
-            + PREFIX_NAME + "STUDENT_NAME "
-            + PREFIX_NAME + "PARENT_NAME\n"
+            + PREFIX_NAME + "*STUDENT_NAME "
+            + PREFIX_NAME + "*PARENT_NAME\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_NAME + "Amy Tan";

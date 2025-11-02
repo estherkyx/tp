@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
@@ -20,9 +21,9 @@ public class GetClassesCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Lists all tuition classes or those of a specific tutor.\n"
-            + "Parameters: [n/TUTOR NAME]\n"
+            + "Parameters: [" + PREFIX_NAME + "*TUTOR NAME]\n"
             + "Example 1: " + COMMAND_WORD + "\n"
-            + "Example 2: " + COMMAND_WORD + " n/Roy Balakrishnan";
+            + "Example 2: " + COMMAND_WORD + " " + PREFIX_NAME + "Roy Balakrishnan";
 
     public static final String MESSAGE_TUTOR_NOT_FOUND = "Tutor with name '%1$s' not found.";
     public static final String MESSAGE_NO_CLASSES_FOUND = "No classes found for tutor '%1$s'.";
