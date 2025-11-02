@@ -278,6 +278,7 @@ Format: `linkClass d/*DAY ti/*TIME n/TUTOR_NAME or STUDENT_NAME [c/*CATEGORY]`
 
 * `NAME` must **exactly match** a student or a tutor in TutorFlow (case-sensitive).
 * The class identified by `DAY` and `TIME` must already exist (created using [`createClass`](#creating-a-class-createclass)).
+* If there is a student and a tutor with the exact same name, the optional category parameter can be used to differentiate them. Otherwise, the person who is higher in the list will be linked.
 
 The `linkClass` command works differently for students and tutors. Here’s what you need to know:
 
@@ -342,6 +343,7 @@ Format: `unlinkClass d/*DAY ti/*TIME n/TUTOR_NAME or STUDENT_NAME [c/*CATEGORY]`
 
 * `NAME` must **exactly match** a student or tutor currently linked to the class (case-sensitive).
 * The class identified by `DAY` and `TIME` must already exist (created using [`createClass`](#creating-a-class-createclass)).
+* If there is a student and a tutor with the exact same name, the optional category parameter can be used to differentiate them. Otherwise, the person who is higher in the list will be unlinked.
 
 Examples:
 * `unlinkClass d/MONDAY ti/H16 n/Roy Balakrishnan` removes tutor Roy Balakrishnan from the Monday 4:00 PM class.
@@ -364,6 +366,8 @@ Format: `getClassDetails d/*DAY ti/*TIME`
 
 Examples:
 * `getClassDetails d/MONDAY ti/H16` displays the tutor and students in the Monday 4:00 PM class.
+
+![example of getClassDetails](images/getClassDetailsExample.png)
 
 • [Back to Command Summary](#command-summary)
 
@@ -453,11 +457,11 @@ Manual changes to the file may corrupt TutorFlow's data. Always save a backup of
   </tr>
   <tr>
     <td><a href="#linking-a-person-to-a-class-linkclass">Link Class</a></td>
-    <td><code>linkClass d/*DAY ti/*TIME n/NAME</code><br>e.g., <code>linkClass d/MONDAY ti/H16 n/Roy Balakrishnan</code></td>
+    <td><code>linkClass d/*DAY ti/*TIME n/NAME [c/*CATEGORY]</code><br>e.g., <code>linkClass d/MONDAY ti/H16 n/Roy Balakrishnan</code></td>
   </tr>
   <tr>
     <td><a href="#removing-a-person-from-a-class-unlinkclass">Unlink Class</a></td>
-    <td><code>unlinkClass d/*DAY ti/*TIME n/NAME</code><br>e.g., <code>unlinkClass d/MONDAY ti/H16 n/Alice Pauline</code></td>
+    <td><code>unlinkClass d/*DAY ti/*TIME n/NAME [c/*CATEGORY]</code><br>e.g., <code>unlinkClass d/MONDAY ti/H16 n/Alice Pauline c/student</code></td>
   </tr>
   <tr>
     <td><a href="#viewing-class-details-getclassdetails">Get Class Details</a></td>
