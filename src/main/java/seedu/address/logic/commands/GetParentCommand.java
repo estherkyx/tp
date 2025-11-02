@@ -47,7 +47,9 @@ public class GetParentCommand extends Command {
         // Find the student with the matching name
         Person targetStudent = null;
         for (Person person : personList) {
-            if (person.getCategory().equals(STUDENT) && person.getName().equals(studentName)) {
+            if (person.getCategory().equals(STUDENT)
+                    && person.getName().toString().trim().replaceAll("\\s+", " ")
+                    .equalsIgnoreCase(studentName.toString().trim().replaceAll("\\s+", " "))) {
                 targetStudent = person;
                 break;
             }
@@ -64,7 +66,7 @@ public class GetParentCommand extends Command {
         // If student has no linked parent, throw exception
         if (parentId == null) {
             model.updateFilteredPersonList(p -> false);
-            throw new CommandException(String.format(MESSAGE_NO_PARENT_LINKED, studentName));
+            throw new CommandException(String.format(MESSAGE_NO_PARENT_LINKED, targetStudent.getName()));
         }
 
         // Find parent with the matching ID
@@ -81,7 +83,7 @@ public class GetParentCommand extends Command {
                 person.getId().equals(parentId));
 
         // Return parent details
-        return new CommandResult(String.format(MESSAGE_SUCCESS, studentName, targetParent.getName()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, targetStudent.getName(), targetParent.getName()));
     }
 
     @Override

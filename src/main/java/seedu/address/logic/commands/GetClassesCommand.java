@@ -80,10 +80,10 @@ public class GetClassesCommand extends Command {
         model.updateFilteredPersonList(person -> person.getId().equals(tutor.getId()));
 
         if (tutorClasses.isEmpty()) {
-            throw new CommandException(String.format(MESSAGE_NO_CLASSES_FOUND, tutorName));
+            throw new CommandException(String.format(MESSAGE_NO_CLASSES_FOUND, tutor.getName()));
         }
 
-        StringBuilder result = new StringBuilder(String.format("Classes taught by %s:\n", tutorName));
+        StringBuilder result = new StringBuilder(String.format("Classes taught by %s:\n", tutor.getName()));
         int index = 1;
         for (TuitionClass tc : tutorClasses) {
             result.append(String.format("%d. %s %s\n", index++, tc.getDay(), tc.getTime().toDisplayString()));
