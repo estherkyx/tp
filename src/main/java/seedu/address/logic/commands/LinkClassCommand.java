@@ -35,13 +35,11 @@ public class LinkClassCommand extends Command {
             + "Parameters: "
             + PREFIX_DAY + "*DAY "
             + PREFIX_TIME + "*TIME "
-            + PREFIX_NAME + "*TUTOR_NAME or *STUDENT_NAME ["
-            + PREFIX_CATEGORY + "*CATEGORY]\n"
+            + PREFIX_NAME + "*TUTOR_NAME or *STUDENT_NAME\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_DAY + "Monday "
             + PREFIX_TIME + "H14 "
-            + PREFIX_NAME + "John Doe "
-            + PREFIX_CATEGORY + "student";
+            + PREFIX_NAME + "John Doe ";
 
     public static final String MESSAGE_LINK_STUDENT_SUCCESS = "Linked Student %1$s to Class on %2$s, %3$s";
     public static final String MESSAGE_ASSIGN_TUTOR_SUCCESS = "Assigned Tutor %1$s to Class on %2$s, %3$s";
