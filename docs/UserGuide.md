@@ -112,7 +112,7 @@ Format: `add c/*CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 * `CATEGORY` must be one of `tutor`, `student`, `parent`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-To prevent errors, TutorFlow will not allow you to create a duplicate person (i.e. exact same name). If you must add two individuals who share the same name, please add a unique identifier. For example: `John Lee (Student)` and `John Lee (Parent)`. 
+To prevent errors, TutorFlow will not allow you to create a duplicate person (i.e. exact same name, case-insensitive). To help keep your data clean, the system also automatically fixes names by removing any extra spaces between words. For example, if you type "John&nbsp;&nbsp;&nbsp;&nbsp;Lee", it will be saved as "John Lee". <br><br> If you must add two individuals who share the same name, please add a unique identifier. For example: `John Lee (Student)` and `John Lee (Parent)`. 
 </div>
 
 Examples:
@@ -149,6 +149,7 @@ Format: `edit INDEX [c/*CATEGORY] [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TA
 * The index must be a **positive number** (e.g. 1, 2, 3, …)
 * You must provide at least one field to change (e.g. n/, p/).
 * Editing tags will **replace all old tags** with the new ones you provide. To clear all tags, simply type t/ with nothing after it.
+* The edit will be **rejected** if the new name already exists in the address book. This duplicate check is case-insensitive and ignores extra spaces (e.g. "john&nbsp;&nbsp;&nbsp;&nbsp;lee" is treated as the same as "John Lee").
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
 Editing a person's category will remove all existing relationships (i.e. parent-child relationships, class enrollments). 
