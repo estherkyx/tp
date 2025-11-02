@@ -59,54 +59,53 @@ public class AddressBookParser {
         // Lower level log messages are used sparingly to minimize noise in the code.
         logger.fine("Command word: " + commandWord + "; Arguments: " + arguments);
 
-        switch (commandWord) {
-
-        case AddCommand.COMMAND_WORD:
+        switch (commandWord.toLowerCase()) {
+        case "add":
             return new AddCommandParser().parse(arguments);
 
-        case EditCommand.COMMAND_WORD:
+        case "edit":
             return new EditCommandParser().parse(arguments);
 
-        case DeleteCommand.COMMAND_WORD:
+        case "delete":
             return new DeleteCommandParser().parse(arguments);
 
-        case ClearCommand.COMMAND_WORD:
+        case "clear":
             return new ClearCommand();
 
-        case FindCommand.COMMAND_WORD:
+        case "find":
             return new FindCommandParser().parse(arguments);
 
-        case ListCommand.COMMAND_WORD:
+        case "list":
             return new ListCommandParser().parse(arguments);
 
-        case GetStudentsCommand.COMMAND_WORD:
+        case "getstudents":
             return new GetStudentsCommandParser().parse(arguments);
 
-        case GetParentCommand.COMMAND_WORD:
+        case "getparent":
             return new GetParentCommandParser().parse(arguments);
 
-        case ExitCommand.COMMAND_WORD:
+        case "exit":
             return new ExitCommand();
 
-        case HelpCommand.COMMAND_WORD:
+        case "help":
             return new HelpCommand();
 
-        case LinkParentCommand.COMMAND_WORD:
+        case "linkparent":
             return new LinkParentCommandParser().parse(arguments);
 
-        case CreateClassCommand.COMMAND_WORD:
+        case "createclass":
             return new CreateClassCommandParser().parse(arguments);
 
-        case LinkClassCommand.COMMAND_WORD:
+        case "linkclass":
             return new LinkClassCommandParser().parse(arguments);
 
-        case UnlinkClassCommand.COMMAND_WORD:
+        case "unlinkclass":
             return new UnlinkClassCommandParser().parse(arguments);
 
-        case GetClassesCommand.COMMAND_WORD:
+        case "getclasses":
             return new GetClassesCommandParser().parse(arguments);
 
-        case GetClassDetailsCommand.COMMAND_WORD:
+        case "getclassdetails":
             return new GetClassDetailsCommandParser().parse(arguments);
 
         default:
