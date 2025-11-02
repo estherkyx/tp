@@ -50,8 +50,7 @@ public class PersonListPanel extends UiPart<Region> {
         // This ensures that relationship displays are updated in real-time
         personList.addListener((javafx.collections.ListChangeListener<Person>) change -> {
             while (change.next()) {
-                if (change.wasUpdated()) {
-                    // When a person is updated, refresh all visible cells to update relationship displays
+                if (change.wasUpdated() || change.wasReplaced() || change.wasAdded()) {
                     personListView.refresh();
                 }
             }
