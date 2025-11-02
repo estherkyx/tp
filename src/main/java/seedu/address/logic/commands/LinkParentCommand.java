@@ -30,9 +30,14 @@ public class LinkParentCommand extends Command {
             + PREFIX_NAME + "Amy Tan";
 
     public static final String MESSAGE_LINK_SUCCESS = "Linked Student %1$s to Parent %2$s.";
+    public static final String MESSAGE_UNLINK_AND_LINK_SUCCESS = "Unlinked Student %1$s from Parent %2$s and "
+            + "linked to Parent %3$s.";
     public static final String MESSAGE_LINK_SAME_PARENT = "Parent %1$s is already linked to Student %2$s.";
-    public static final String MESSAGE_PERSON_NOT_FOUND = "The person with name %s could not be found.";
-    public static final String MESSAGE_WRONG_PERSON_TYPE = "The person %s is not a %s.";
+    public static final String MESSAGE_PERSON_NOT_FOUND = "The person with name %s could not be found."
+            + " Please check that you've entered the names correctly.";
+    public static final String MESSAGE_WRONG_PERSON_TYPE = "The person %s is not a %s.\n"
+            + "Please check that you've entered names in the right order:\n"
+            + "    " + COMMAND_WORD + " " + PREFIX_NAME + "STUDENT_NAME " + PREFIX_NAME + "PARENT_NAME";
 
     private final Name studentName;
     private final Name parentName;
@@ -81,14 +86,18 @@ public class LinkParentCommand extends Command {
                 .orElseThrow(() -> new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND, parentName)));
 
         // Find the old parent, if any
+        boolean hasOldParent = false;
+        Parent oldParent = null;
+
         if (student.getParentId() != null) {
+            hasOldParent = true;
             Optional<Person> oldParentOpt = personList.stream()
                     .filter(p -> p instanceof Parent && p.getId().equals(student.getParentId()))
                     .findFirst();
             if (oldParentOpt.isPresent() && oldParentOpt.get().equals(parent)) {
                 throw new CommandException(String.format(MESSAGE_LINK_SAME_PARENT, parentName, studentName));
             }
-            Parent oldParent = (Parent) oldParentOpt.get();
+            oldParent = (Parent) oldParentOpt.get();
             oldParent.removeChildId(student.getId());
             model.setPerson(oldParent, oldParent);
         }
@@ -101,8 +110,13 @@ public class LinkParentCommand extends Command {
         model.setPerson(student, student);
         model.setPerson(parent, parent);
 
-        return new CommandResult(String.format(MESSAGE_LINK_SUCCESS,
-                student.getName(), parent.getName()));
+        if (hasOldParent) {
+            return new CommandResult(String.format(MESSAGE_UNLINK_AND_LINK_SUCCESS,
+                    studentName, oldParent.getName(), parentName));
+        } else {
+            return new CommandResult(String.format(MESSAGE_LINK_SUCCESS,
+                    studentName, parentName));
+        }
     }
 
     @Override

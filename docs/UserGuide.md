@@ -72,6 +72,12 @@ title: User Guide
 
 ### App Basics
 
+<div markdown="span" class="alert alert-info">
+
+**:information_source: Note:** All command words are case-insensitive. For example, you can use `list`, `List`, `LIST`, or any other case variation, and they will work the same way.
+
+</div>
+
 #### Viewing help : `help`
 
 Displays a window with a link to the help page.

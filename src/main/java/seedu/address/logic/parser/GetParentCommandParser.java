@@ -34,6 +34,8 @@ public class GetParentCommandParser implements Parser<GetParentCommand> {
                     MESSAGE_INVALID_COMMAND_FORMAT, GetParentCommand.MESSAGE_USAGE));
         }
 
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME);
+
         Name studentName;
         try {
             studentName = new Name(rawName);

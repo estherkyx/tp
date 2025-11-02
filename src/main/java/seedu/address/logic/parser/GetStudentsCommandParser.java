@@ -35,6 +35,8 @@ public class GetStudentsCommandParser implements Parser<GetStudentsCommand> {
                     MESSAGE_INVALID_COMMAND_FORMAT, GetStudentsCommand.MESSAGE_USAGE));
         }
 
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME);
+
         Name tutorName;
         try {
             tutorName = new Name(rawName);

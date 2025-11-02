@@ -96,7 +96,12 @@ public class PersonCard extends UiPart<Region> {
         email.setText(person.getEmail().value);
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+                .forEach(tag -> {
+                    Label tagLabel = new Label(tag.tagName);
+                    tagLabel.setMaxWidth(200);
+                    tagLabel.setWrapText(true);
+                    tags.getChildren().add(tagLabel);
+                });
 
         // Ensure relationship rows don't take space unless shown
         hide(parent);

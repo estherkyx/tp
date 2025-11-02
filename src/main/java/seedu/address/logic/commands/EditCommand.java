@@ -97,6 +97,17 @@ public class EditCommand extends Command {
         }
 
         model.setPerson(personToEdit, editedPerson);
+        if (editedPerson instanceof Student) {
+            Student editedStudent = (Student) editedPerson;
+            if (editedStudent.getParentId() != null) {
+                Optional<Person> parentOpt = model.getAddressBook().getPersonList().stream()
+                    .filter(p -> p.getId().equals(editedStudent.getParentId())).findFirst();
+                if (parentOpt.isPresent() && parentOpt.get() instanceof Parent) {
+                    Parent parent = (Parent) parentOpt.get();
+                    model.setPerson(parentOpt.get(), parent);
+                }
+            }
+        }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         String success = String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
         boolean hasChangedCategory = !personToEdit.getCategory().equals(editedPerson.getCategory());
