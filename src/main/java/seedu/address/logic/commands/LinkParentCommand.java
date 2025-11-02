@@ -31,8 +31,11 @@ public class LinkParentCommand extends Command {
 
     public static final String MESSAGE_LINK_SUCCESS = "Linked Student %1$s to Parent %2$s.";
     public static final String MESSAGE_LINK_SAME_PARENT = "Parent %1$s is already linked to Student %2$s.";
-    public static final String MESSAGE_PERSON_NOT_FOUND = "The person with name %s could not be found.";
-    public static final String MESSAGE_WRONG_PERSON_TYPE = "The person %s is not a %s.";
+    public static final String MESSAGE_PERSON_NOT_FOUND = "The person with name %s could not be found."
+            + " Please check that you've entered the names correctly.";
+    public static final String MESSAGE_WRONG_PERSON_TYPE = "The person %s is not a %s.\n"
+            + "Please check that you've entered names in the right order:\n"
+            + "    " + COMMAND_WORD + " " + PREFIX_NAME + "STUDENT_NAME " + PREFIX_NAME + "PARENT_NAME";
 
     private final Name studentName;
     private final Name parentName;
