@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.model.person.Category.PARENT;
 import static seedu.address.model.person.Category.STUDENT;
 
@@ -19,8 +20,8 @@ public class GetParentCommand extends Command {
     public static final String COMMAND_WORD = "getParent";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Gets the parent of the given student.\n"
-            + "Parameters: n/STUDENT_NAME\n"
-            + "Example: " + COMMAND_WORD + " " + " n/John Doe";
+            + "Parameters: " + PREFIX_NAME + "*STUDENT_NAME\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "John Doe";
 
     public static final String MESSAGE_SUCCESS = "Parent of %s:\n%s\n\n"
             + "(To get back to the full list of contacts, run the 'list' command)";
@@ -47,7 +48,9 @@ public class GetParentCommand extends Command {
         // Find the student with the matching name
         Person targetStudent = null;
         for (Person person : personList) {
-            if (person.getCategory().equals(STUDENT) && person.getName().equals(studentName)) {
+            if (person.getCategory().equals(STUDENT)
+                    && person.getName().toString().trim().replaceAll("\\s+", " ")
+                    .equalsIgnoreCase(studentName.toString().trim().replaceAll("\\s+", " "))) {
                 targetStudent = person;
                 break;
             }
@@ -64,7 +67,7 @@ public class GetParentCommand extends Command {
         // If student has no linked parent, throw exception
         if (parentId == null) {
             model.updateFilteredPersonList(p -> false);
-            throw new CommandException(String.format(MESSAGE_NO_PARENT_LINKED, studentName));
+            throw new CommandException(String.format(MESSAGE_NO_PARENT_LINKED, targetStudent.getName()));
         }
 
         // Find parent with the matching ID
@@ -81,7 +84,7 @@ public class GetParentCommand extends Command {
                 person.getId().equals(parentId));
 
         // Return parent details
-        return new CommandResult(String.format(MESSAGE_SUCCESS, studentName, targetParent.getName()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, targetStudent.getName(), targetParent.getName()));
     }
 
     @Override
