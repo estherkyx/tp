@@ -8,7 +8,7 @@ title: TutorFlow
 
 ### Run a modern tuition centre — without spreadsheets!
 
-**TutorFlow** is the desktop app for **GP tuition centre receptionists** to manage **JC-level tutees, tutors, and parents** in one place. Keep contacts, classes, schedules, and key notes organized and searchable — so you can spend less time coordinating and more time growing your centre.
+**TutorFlow** is the desktop app for **GP tuition centre receptionists** to manage **JC-level tutees, tutors, and parents** in one place. Keep contacts, classes, schedules, and key notes organised and searchable — so you can spend less time coordinating and more time growing your centre.
 
 - **Who it's for**: GP tuition centres and small-to-mid tuition teams
 - **What it replaces**: Excel/Google Sheets class rosters, contacts lists, class scheduling
@@ -24,7 +24,7 @@ title: TutorFlow
 ### Key capabilities
 
 - **Unified contact management**: Store and search tutees, tutors, and parents with essential details.
-- **Class scheduling & tracking**: Organize classes, and assign tutees/tutors to them.
+- **Class scheduling & tracking**: Organise classes, and assign tutees/tutors to them.
 - **Fast keyboard-first commands**: Power users can manage data quickly with commands and shortcuts.
 - **Reliable offline desktop app**: JavaFX-based app that runs locally and works without internet.
 

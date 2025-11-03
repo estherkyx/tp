@@ -22,7 +22,7 @@ title: User Guide
 
 4. Open a command terminal, navigate to that folder, and run: `java -jar TutorFlow.jar`<br>
    The app window should appear with sample data so you can try things out.<br>
-   ![Ui](images/Ui.png)
+   ![Sample](images/SampleUi.png)
 
 5. Type a command in the box and press **Enter** to execute it. <br>
    Some example commands you can try:
@@ -122,7 +122,9 @@ Format: `add c/*CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 * `ADDRESS` can take any values, and it should not be blank
 * `TAG` is optional and can be specified multiple times. However, tag names should not consist of only whitespace(s), and duplicate(s) will be ignored.
 
-Collecting all personal details (i.e. phone number, email and address) are necessary for tuition centres to be able to contact their customers. JC students should have the relevant contact details for their school life, so there is no need to account for persons who might not have them.
+<div markdown="span" class="alert alert-primary">:memo: **Note:**
+Collecting all personal detail fields (i.e. phone number, email and address) is essential for tuition centres to contact students, parents and tutors.
+</div>
 
 Examples:
 * `add c/student n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
@@ -164,7 +166,7 @@ Edits an existing person in the address book.
 
 Format: `edit INDEX [c/*CATEGORY] [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
-* Edits the person at the specified `INDEX` in the currently displayed list.
+* Edits the person at the specified `INDEX` in the **currently displayed list**.
 * The index must be a **positive number** (e.g. 1, 2, 3, …)
 * You must provide at least one field to change (e.g. n/, p/).
 * Editing tags will **replace all old tags** with the new ones you provide. To clear all tags, simply type t/ with nothing after it.
@@ -348,7 +350,7 @@ Format: `getClassDetails d/*DAY ti/*TIME`
 * To add people to a class, see [`linkClass`](#linking-a-person-to-a-class-linkclass).
 
 Examples:
-* `getClassDetails d/MONDAY ti/H16` displays the tutor and students in the Monday 4:00 PM class.
+* `getClassDetails d/MONDAY ti/H14` displays the tutor and students in the Monday 2:00 PM class.
 
 ![example of getClassDetails](images/getClassDetailsExample.png)
 

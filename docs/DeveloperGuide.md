@@ -752,7 +752,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Index**: The 1-based number that identifies a contact's position in the displayed list.
 * **Mainstream OS**: Windows, Linux, Unix, MacOS.
 * **MSS** (Main Success Scenario): A term used in use cases to describe the ideal workflow where everything happens as expected without any errors.
-* **Class** (tuition class)**: A scheduled GP tuition session identified by a day and timeslot.
+* **Class** (tuition class): A scheduled GP tuition session identified by a day and timeslot.
 * **Command**: A textual instruction executed in the CLI to perform an action (e.g., `add`, `delete`).
 * **Dataset**: The collection of all stored contacts and classes used by the application.
 * **JSON** (JavaScript Object Notation): The data format used by TutorFlow to persist information to disk.
@@ -899,7 +899,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisite: Load the sample dataset for testing as described above.
 
-      1. run `linkParent n/Bernice Yu n/David Li`
+      1. Run `linkParent n/Bernice Yu n/David Li`
 
    1. Test case: `getParent n/Bernice Yu`<br>
       Expected: List is filtered to show "David Li". Command result indicates that "David Li" is the parent.
@@ -938,9 +938,9 @@ testers are expected to do more *exploratory* testing.
 
       1. Load the sample dataset for testing as described above.
 
-      1. run `createClass d/monday ti/h14`
+      1. Run `createClass d/monday ti/h14`
 
-      1. run `createClass d/thursday ti/h18`
+      1. Run `createClass d/thursday ti/h18`
 
    1. Test case: `getClasses`<br>
       Expected: Both classes are displayed in the list.
@@ -954,9 +954,9 @@ testers are expected to do more *exploratory* testing.
 
       1. Load the sample dataset for testing as described above.
 
-      1. run `createClass d/monday ti/h14`
+      1. Run `createClass d/monday ti/h14`
 
-      1. run `createClass d/thursday ti/h18`
+      1. Run `createClass d/thursday ti/h18`
 
    1. Test case: `linkClass d/monday ti/h14 n/Alex Yeoh`<br>
       Expected: The class is successfully linked to the student.
@@ -982,13 +982,13 @@ testers are expected to do more *exploratory* testing.
 
       1. Load the sample dataset for testing as described above.
 
-      1. run `createClass d/monday ti/h14`
+      1. Run `createClass d/monday ti/h14`
 
-      1. run `createClass d/thursday ti/h18`
+      1. Run `createClass d/thursday ti/h18`
 
-      1. run `linkClass d/monday ti/h14 n/Eric Hanson`
+      1. Run `linkClass d/monday ti/h14 n/Eric Hanson`
 
-      1. run `linkClass d/monday ti/h14 n/Alex Yeoh`
+      1. Run `linkClass d/monday ti/h14 n/Alex Yeoh`
 
    1. Test case: `unlinkClass d/monday ti/h14 n/Eric Hanson`<br>
       Expected: The class is successfully unlinked from the tutor "Eric Hanson".
@@ -1011,13 +1011,13 @@ testers are expected to do more *exploratory* testing.
 
       1. Load the sample dataset for testing as described above.
 
-      1. run `createClass d/monday ti/h14`
+      1. Run `createClass d/monday ti/h14`
 
-      1. run `createClass d/thursday ti/h18`
+      1. Run `createClass d/thursday ti/h18`
 
-      1. run `linkClass d/monday ti/h14 n/Eric Hanson`
+      1. Run `linkClass d/monday ti/h14 n/Eric Hanson`
 
-      1. run `linkClass d/thursday ti/h18 n/Eric Hanson`
+      1. Run `linkClass d/thursday ti/h18 n/Eric Hanson`
 
    1. Test case: `getClasses n/Eric Hanson`<br>
       Expected: The Monday 1400 and Thursday 1800 classes are displayed in the list.
@@ -1033,7 +1033,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Close the app, and open the `addressbook,json` file. Create missing/corrupted data by editing any data such that it no longer fits the valid format. Examples include:
 
-      1. Phone numbers being less than 3 digits
+      1. Phone numbers that are not 8 digits
 
       1. Emails containing a domain of less than 2 characters
 
