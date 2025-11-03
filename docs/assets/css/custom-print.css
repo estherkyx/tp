@@ -81,7 +81,7 @@
   }
 
   img[src$="images/Ui.png"] {
-    width: 60%;
+    width: 100%;
     height: auto;
     display: block;
     margin-left: auto;
@@ -89,7 +89,7 @@
   }
 
   img[src$="images/delete2Result.png"] {
-    width: 60%;
+    width: 100%;
     height: auto;
     display: block;
     margin-left: auto;
@@ -97,7 +97,7 @@
   }
 
   img[src$="images/findAlexDavidResult.png"] {
-    width: 60%;
+    width: 100%;
     height: auto;
     display: block;
     margin-left: auto;
