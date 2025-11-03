@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.model.person.Category.PARENT;
 import static seedu.address.model.person.Category.STUDENT;
 
@@ -19,8 +20,8 @@ public class GetParentCommand extends Command {
     public static final String COMMAND_WORD = "getParent";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Gets the parent of the given student.\n"
-            + "Parameters: n/STUDENT_NAME\n"
-            + "Example: " + COMMAND_WORD + " " + " n/John Doe";
+            + "Parameters: " + PREFIX_NAME + "*STUDENT_NAME\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "John Doe";
 
     public static final String MESSAGE_SUCCESS = "Parent of %s:\n%s\n\n"
             + "(To get back to the full list of contacts, run the 'list' command)";

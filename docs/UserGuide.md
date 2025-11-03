@@ -341,6 +341,8 @@ Format: `getClassDetails d/*DAY ti/*TIME`
 Examples:
 * `getClassDetails d/MONDAY ti/H16` displays the tutor and students in the Monday 4:00 PM class.
 
+![example of getClassDetails](images/getClassDetailsExample.png)
+
 • [Back to Command Summary](#command-summary)
 
 #### Listing classes: `getClasses`
