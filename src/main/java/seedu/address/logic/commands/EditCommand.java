@@ -64,6 +64,7 @@ public class EditCommand extends Command {
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String MESSAGE_CATEGORY_CHANGED_WARNING =
             "\nWarning: Category was changed. All relationships (parent/child links, classes) have been removed.";
+    public static final String MESSAGE_NO_CHANGES_MADE = "No changes will be made by running this edit command.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -91,6 +92,12 @@ public class EditCommand extends Command {
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor, model);
+
+        if (personToEdit.isSamePerson(editedPerson)) {
+            if (personToEdit.equals(editedPerson)) {
+                throw new CommandException(MESSAGE_NO_CHANGES_MADE);
+            }
+        }
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
