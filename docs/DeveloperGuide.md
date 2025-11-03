@@ -390,8 +390,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
         Use case ends.
 
-*   1e. The user provides an invalid phone number (e.g., not at least 3 digits/contains non-numbers).
-    *   1e1. TutorFlow shows an error message: _"Phone numbers should only contain numbers, and it should be at least 3 digits long"._
+*   1e. The user provides an invalid phone number (e.g., not exactly 8 digits starting with 3, 6, 8, or 9/contains non-numbers).
+    *   1e1. TutorFlow shows an error message: _"Phone numbers should be Singaporean numbers: exactly 8 digits starting with 3, 6, 8, or 9"._
 
         Use case ends.
 
@@ -689,8 +689,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
          Use case ends.
 
- *   3e. The user provides an invalid phone number (e.g., not at least 3 digits/contains non-numbers).
-     *   3e1. TutorFlow shows an error message: _"Phone numbers should only contain numbers, and it should be at least 3 digits long"._
+ *   3e. The user provides an invalid phone number (e.g., not exactly 8 digits starting with 3, 6, 8, or 9/contains non-numbers).
+     *   3e1. TutorFlow shows an error message: _"Phone numbers should be Singaporean numbers: exactly 8 digits starting with 3, 6, 8, or 9"._
 
          Use case ends.
 

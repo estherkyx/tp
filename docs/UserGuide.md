@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-<div class="intro-para"><b>TutorFlow</b> is a desktop app for tuition centre managers. It helps you keep track of students, parents, tutors, and classes using simple type-and-press-Enter commands. For those comfortable with a command line, TutorFlow can get your contact management tasks done quickly and easily.</div><span class="short-break"></span>
+<div class="intro-para"><b>TutorFlow</b> is a desktop app for small Singaporean tuition centre managers. It helps you keep track of students, parents, tutors, and classes using simple type-and-press-Enter commands. For those comfortable with a command line, TutorFlow can get your contact management tasks done quickly and easily.</div><span class="short-break"></span>
 
 * Table of Contents
 {:toc}
@@ -119,7 +119,7 @@ Format: `add c/*CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 
 Examples:
 * `add c/student n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add c/TUTOR n/Betsy Crowe t/GP Paper 1 e/betsycrowe@example.com a/Newgate Prison p/1234567 t/New hire`
+* `add c/TUTOR n/Betsy Crowe t/GP Paper 1 e/betsycrowe@example.com a/Newgate Prison p/31234567 t/New hire`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 To prevent errors, TutorFlow will not allow you to create a duplicate person (i.e. exact same name, case-insensitive). To help keep your data clean, the system also automatically fixes names by removing any extra spaces between words. For example, if you type "John&nbsp;&nbsp;&nbsp;&nbsp;Lee", it will be saved as "John Lee". <br><br> If you must add two individuals who share the same name, please add a unique identifier. For example: `John Lee Student` and `John Lee Parent`. 
@@ -434,7 +434,7 @@ Manual changes to the file may corrupt TutorFlow's data. Always save a backup of
   </tr>
   <tr>
     <td><a href="#adding-a-person-add">Add</a></td>
-    <td><code>add c/*CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​</code><br>e.g., <code>add c/parent n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/J2 t/Trial lesson</code></td>
+    <td><code>add c/*CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​</code><br>e.g., <code>add c/parent n/James Ho p/32224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/J2 t/Trial lesson</code></td>
   </tr>
   <tr>
     <td><a href="#listing-all-persons--list">List</a></td>
