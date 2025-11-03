@@ -115,7 +115,12 @@ Format: `exit`
 Adds a person to the address book.
 
 Format: `add c/*CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
-* `CATEGORY` must be one of `tutor`, `student`, `parent`
+* `CATEGORY` must be one of `tutor`, `student`, or `parent` (case-insensitive)
+* `NAME` should only contain alphanumeric characters and spaces, and it should not be blank
+* `PHONE_NUMBER` should be a Singaporean number: exactly 8 digits starting with 3, 6, 8, or 9
+* `EMAIL` should be of the format `local-part@domain`
+* `ADDRESS` can take any values, and it should not be blank
+* `TAG` is optional and can be specified multiple times. Tag names should not consist of only whitespace(s).
 
 Examples:
 * `add c/student n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
