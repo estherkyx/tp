@@ -117,13 +117,13 @@ Adds a person to the address book.
 Format: `add c/*CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 * `CATEGORY` must be one of `tutor`, `student`, `parent`
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-To prevent errors, TutorFlow will not allow you to create a duplicate person (i.e. exact same name, case-insensitive). To help keep your data clean, the system also automatically fixes names by removing any extra spaces between words. For example, if you type "John&nbsp;&nbsp;&nbsp;&nbsp;Lee", it will be saved as "John Lee". <br><br> If you must add two individuals who share the same name, please add a unique identifier. For example: `John Lee Student` and `John Lee Parent`. 
-</div>
-
 Examples:
 * `add c/student n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add c/TUTOR n/Betsy Crowe t/GP Paper 1 e/betsycrowe@example.com a/Newgate Prison p/1234567 t/New hire`
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+To prevent errors, TutorFlow will not allow you to create a duplicate person (i.e. exact same name, case-insensitive). To help keep your data clean, the system also automatically fixes names by removing any extra spaces between words. For example, if you type "John&nbsp;&nbsp;&nbsp;&nbsp;Lee", it will be saved as "John Lee". <br><br> If you must add two individuals who share the same name, please add a unique identifier. For example: `John Lee Student` and `John Lee Parent`. 
+</div>
 
 • [Back to Command Summary](#command-summary)
 
