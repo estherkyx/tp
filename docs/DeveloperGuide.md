@@ -149,16 +149,20 @@ How the parsing works:
 
 **Core Model Structure**
 
+The diagram below shows the class structure of the `Model` component and how `ModelManager` coordinates the various data structures and interfaces.
+
 <img src="images/CoreModelStructureClassDiagram.png" width="550" />
 
 **Domain Entities**
 
+The diagram below illustrates the internal structure and relationships of the core domain entities (Person and TuitionClass) managed by the Model component:
 <img src="images/DomainEntitiesClassDiagram.png" width="550" />
 
 The `Model` component,
 
-* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the address book data i.e., all `Person` and `TuitionClass` objects (which are contained in a `UniquePersonList` object and `UniqueClassList` object respectively).
+* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate filtered list `filteredPersons` which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* the filtered tuition class list `filteredTuitionClasses` is architecturally in place to support a future Ul panel for tuition classes. The mechanism exists within `Model` to support filtering and display.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
