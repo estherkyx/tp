@@ -122,6 +122,8 @@ Format: `add c/*CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 * `ADDRESS` can take any values, and it should not be blank
 * `TAG` is optional and can be specified multiple times. Tag names should not consist of only whitespace(s).
 
+Collecting all personal details (i.e. phone number, email and address) are necessary for tuition centres to be able to contact their customers. JC students should have the relevant contact details for their school life, so there is no need to account for persons who might not have them.
+
 Examples:
 * `add c/student n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add c/TUTOR n/Betsy Crowe t/GP Paper 1 e/betsycrowe@example.com a/Betsy Street, blk 7, #02-02 p/31234567 t/New hire`
@@ -140,6 +142,7 @@ Format: `list [c/*CATEGORY]`
 
 * Without `c/*CATEGORY`: shows all persons in the system.
 * With `c/*CATEGORY`: shows all persons belonging to the specified category `tutor`, `student` or `parent`.
+* Only one category can be provided.
 
 Examples:
 * `list` shows all persons.
@@ -257,7 +260,7 @@ The `linkClass` command works differently for students and tutors. Here’s what
 
 **Linking a Student to a Class**
 
-Each student can be only be enrolled in one class at a time.
+Each student can be only be enrolled in one class at a time. (TutorFlow currently caters to GP tuition centres at a small scale. As such, it is not built for users who need multi-class enrolment.)
 
 <table class="indent-table">
   <tr>
@@ -389,6 +392,7 @@ Displays the parent linked to the specified student.
 Format: `getParent n/*STUDENT_NAME`
 * The student name must match an existing student in TutorFlow.
 * The student identified must have the `student` category.
+* Only one student name can be provided.
 
 Examples:
 * `getParent n/John Doe` shows the parent of student John Doe.
@@ -402,6 +406,7 @@ Displays all students linked to the specified tutor.
 Format: `getStudents n/*TUTOR_NAME`
 * The tutor name must match an existing tutor in TutorFlow.
 * The tutor identified must have the `tutor` category.
+* Only one tutor name can be provided.
 
 Examples:
 * `getStudents n/Roy Balakrishnan` shows all students of tutor Roy Balakrishnan.
