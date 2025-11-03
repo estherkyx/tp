@@ -543,7 +543,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to link a student to a class by specifying the student name and class index (or identifier).
+1.  User requests to link a student to a class by specifying the student name and class timeslot (day and time).
 2.  TutorFlow validates the student exists and the class exists.
 3.  TutorFlow links the student to the class.
 4.  TutorFlow shows a success message confirming the link.
@@ -557,7 +557,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
         Use case ends.
 
-*   1b. The class identifier is invalid.
+*   1b. The class timeslot is invalid or does not exist.
     *   1b1. TutorFlow shows an error message: _"The class at the specified timeslot does not exist."_
 
         Use case ends.
@@ -575,7 +575,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to unlink a student from a class by specifying the student name and class index (or identifier).
+1.  User requests to unlink a student from a class by specifying the student name and class timeslot (day and time).
 2.  TutorFlow validates the link exists.
 3.  TutorFlow removes the link.
 4.  TutorFlow shows a success message confirming the unlink.
@@ -589,7 +589,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
         Use case ends.
 
-*   1b. The class identifier is invalid.
+*   1b. The class timeslot is invalid or does not exist.
     *   1b1. TutorFlow shows an error message: _"The class at the specified timeslot does not exist."_
 
         Use case ends.
