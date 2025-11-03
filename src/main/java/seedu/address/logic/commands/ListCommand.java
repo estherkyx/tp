@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CATEGORY;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Optional;
@@ -19,9 +20,9 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Lists all people, or only those in a particular category if specified. \n"
-            + "Parameters: [c/CATEGORY]\n"
+            + "Parameters: [" + PREFIX_CATEGORY + "*CATEGORY]\n"
             + "Example 1: " + COMMAND_WORD + "\n"
-            + "Example 2: " + COMMAND_WORD + " c/student";
+            + "Example 2: " + COMMAND_WORD + " " + PREFIX_CATEGORY + "student";
 
     public static final String MESSAGE_SUCCESS = "Listed all people in the '%s' category.";
 
