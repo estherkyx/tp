@@ -54,6 +54,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 <div style="page-break-after: always;"></div>
 <div class="print-tight"></div>
+<div class="print-tight"></div>
 
 The bulk of the app's work is done by the following four components:
 
@@ -79,6 +80,8 @@ For example, the `Logic` component defines its API in the `Logic.java` interface
 
 <div style="page-break-after: always;"></div>
 <div class="print-tight"></div>
+<div class="print-tight"></div>
+
 <img src="images/ComponentManagers.png" width="300" />
 
 The sections below give more details of each component.
@@ -166,8 +169,6 @@ The `Model` component,
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
-<div style="page-break-after: always;"></div>
-<div class="print-tight"></div>
 
 ### Storage component
 
@@ -375,7 +376,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 
 &emsp;1c. The user provides an invalid category (not "student", "tutor", or "parent").<br>
-&emsp;&emsp;&emsp;1c1. TutorFlow shows an error message: _"Invalid category"._
+&emsp;&emsp;&emsp;1c1. TutorFlow shows an error message: _"Invalid category. Use student, tutor or parent."._
 
 &emsp;&emsp;&emsp;Use case ends.
 
@@ -401,6 +402,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 &emsp;&emsp;&emsp;Use case ends.
 
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
+
 --------------------------------------------------------------------------------------------------------------------
 
 **Use case: UC2 - Delete a person**
@@ -421,13 +425,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 &emsp;&emsp;&emsp;Use case ends.
 
-&emsp;3a. The given index is not a positive integer.<br>
-&emsp;&emsp;&emsp;3a1. TutorFlow shows an error message: _"Invalid command format!"_
-
-&emsp;&emsp;&emsp;Use case ends.
-
-&emsp;3b. The given index is out of range (e.g., greater than the list size).<br>
-&emsp;&emsp;&emsp;3b1. TutorFlow shows an error message: _"The person index provided is invalid"._
+&emsp;3a. The given index is not a positive integer or is out of range (e.g., greater than the list size).<br>
+&emsp;&emsp;&emsp;3a1. TutorFlow shows an error message: _"The person index provided is invalid. Please provide a
+&emsp;&emsp;&emsp;valid index in the displayed list."_
 
 &emsp;&emsp;&emsp;Use case ends.
 
@@ -452,7 +452,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 &emsp;1b. The user provides an invalid time format.<br>
 &emsp;&emsp;&emsp;1b1. TutorFlow shows an error message: _"Time must be one of the following: H12, H14, H16,<br>
-&emsp;&emsp;&emsp;&emsp;&emsp;H18, H20."
+&emsp;&emsp;&emsp;&emsp;&emsp;H18, H20."_
 
 &emsp;&emsp;&emsp;Use case ends.
 
@@ -460,6 +460,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 &emsp;&emsp;&emsp;1c1. TutorFlow shows an error message: _"This class time slot already exists"._
 
 &emsp;&emsp;&emsp;Use case ends.
+
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -500,6 +503,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 &emsp;&emsp;&emsp;Use case ends.
 
+&emsp;2a. The tutor has no linked classes.<br>
+&emsp;&emsp;&emsp;2a1. TutorFlow shows an empty list and displays the message: _"No classes found for<br>
+&emsp;&emsp;&emsp;&emsp;&emsp;tutor [TUTOR_NAME]."_
+
+&emsp;&emsp;&emsp;Use case ends.
+
 --------------------------------------------------------------------------------------------------------------------
 
 **Use case: UC6 - Link a parent to a student**
@@ -513,6 +522,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 3.  TutorFlow shows a success message confirming the link.
 
 &emsp;Use case ends.
+
+<div class="print-tight"></div>
+<div class="print-tight"></div>
 
 **Extensions**
 
@@ -533,7 +545,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 &emsp;&emsp;&emsp;Use case ends.
 
 &emsp;1d. The parent is already linked to the student.<br>
-&emsp;&emsp;&emsp;1d1. TutorFlow shows an error message: _"Parent already linked to this student."_
+&emsp;&emsp;&emsp;1d1. TutorFlow shows an error message: _"Parent [PARENT_NAME] is already linked to Student
+&emsp;&emsp;&emsp;[STUDENT_NAME]."_
 
 &emsp;&emsp;&emsp;Use case ends.
 
@@ -566,9 +579,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 &emsp;&emsp;&emsp;Use case ends.
 
 &emsp;1c. The student is already linked to a class.<br>
-&emsp;&emsp;&emsp;1c1. TutorFlow shows an error message: _"The student is already linked to a class."_
+&emsp;&emsp;&emsp;1c1. TutorFlow shows an error message: _"The student is already linked to a class ([DAY]
+&emsp;&emsp;&emsp;&emsp;&emsp;[TIME])."_
 
 &emsp;&emsp;&emsp;Use case ends.
+
+<div class="print-tight"></div>
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -629,6 +645,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 &emsp;&emsp;&emsp;Use case ends.
 
+<div class="print-tight"></div>
+
 --------------------------------------------------------------------------------------------------------------------
 
 **Use case: UC10 - Get all students in the system**
@@ -643,14 +661,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 &emsp;2a. There are no students to display.<br>
-&emsp;&emsp;&emsp;2a1. TutorFlow shows an empty list and displays the message: _"There are no students<br>
-&emsp;&emsp;&emsp;&emsp;&emsp;in the system."_
-
-&emsp;&emsp;&emsp;Use case ends.
-
-&emsp;2a. The tutor has no linked classes.<br>
-&emsp;&emsp;&emsp;2a1. TutorFlow shows an empty list and displays the message: _"No classes found for<br>
-&emsp;&emsp;&emsp;&emsp;&emsp;tutor [TUTOR_NAME]."_
+&emsp;&emsp;&emsp;2a1. TutorFlow shows an empty list and displays the message: _"There is no one belonging<br>
+&emsp;&emsp;&emsp;&emsp;&emsp;to the category 'student'."_
 
 &emsp;&emsp;&emsp;Use case ends.
 
@@ -697,7 +709,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 &emsp;&emsp;&emsp;Use case ends.
 
-&emsp;3e. The user provides an invalid phone number (e.g., not exactly 8 digits starting with 3, 6, 8, or 9/contains non-numbers).<br>
+&emsp;3e. The user provides an invalid phone number (e.g., not exactly 8 digits starting with 3, 6, 8, or 9/
+&emsp;&emsp;&emsp;contains non-numbers).<br>
 &emsp;&emsp;&emsp;3e1. TutorFlow shows an error message: _"Phone numbers should be Singaporean numbers:<br>
 &emsp;&emsp;&emsp;&emsp;&emsp;exactly 8 digits starting with 3, 6, 8, or 9"._
 
@@ -792,6 +805,9 @@ testers are expected to do more *exploratory* testing.
    1. Close the app by using the operating system's default keyboard shortcut for closing apps (Alt + F4 for Windows, Command + Q for MacOS).<br>
       Expected: The app will close. All data will be saved and loaded on the next launch, except for any text in the command box.
 
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
+
 ### Adding a person
 
 1. **Adding a person**
@@ -816,9 +832,12 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `add c/student n/John Doe p/91234567 e/johndoe@example.com a/Computing 1, 13 Computing Drive, 117417`<br>followed by `add c/parent n/john doe p/12345678 e/johnny@example.com a/University Town 138607`<br>
       Expected: The second person is not added. An error is printed in the command result indicating that the second person is a duplicate.
 
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>      
+
 ### Deleting a person
 
-1. Deleting a person while all persons are being shown
+1. **Deleting a person while all persons are being shown**
 
    1. Prerequisite: List all persons using the `list` command. There should be multiple persons in the list.
 
@@ -833,13 +852,13 @@ testers are expected to do more *exploratory* testing.
 
 ### Test dataset (for subsequent test cases)
 
-1. Use the sample dataset provided when launching TutorFlow for the first time.
+1. **Use the sample dataset provided when launching TutorFlow for the first time.**
 
     1. You can also obtain the sample dataset in TutorFlow by closing the app, deleting the current `addressbook.json` file and reopening the app. Running any command other than `help` and `clear` will generate the new `addressbook.json` file.
 
 ### Listing persons
 
-1. Listing by category
+1. **Listing by category**
 
    1. Prerequisite: Load the sample dataset for testing as described above.
 
@@ -855,10 +874,12 @@ testers are expected to do more *exploratory* testing.
    1. Incorrect test cases: e.g. `list c/person`, `list 123`, `list n/John Doe`, etc.
       Expected: Person display list is not updated. An error is printed in the command result.
 
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
 
 ### Linking parents + Getting the parent of a student
 
-1. Linking a parent
+1. **Linking a parent**
 
    1. Prerequisite: Load the sample dataset for testing as described above.
 
@@ -877,7 +898,7 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `linkParent n/Bernice Yu n/David Li`<br>followed by `linkParent n/Alex Yeoh n/David Li`<br>
       Expected: Both students are successfully linked to the same parent.
 
-1. Getting the parent of a student
+1. **Getting the parent of a student**
 
    1. Prerequisite: Load the sample dataset for testing as described above.
 
@@ -895,9 +916,12 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `getParent n/Ben Teo`<br>
       Expected: Same as above.
 
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
+
 ### Creating classes + Getting classes
 
-1. Creating classes
+1. **Creating classes**
 
    1. Test case: `createClass d/monday ti/h14`<br>
       Expected: A class is created for the Monday, 1400 timeslot.
@@ -911,7 +935,7 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `createClass d/sunday ti/h15`<br>
       Expected: No class is created. An error is printed in the command result regarding the time parameter, as it must be one of five set timings.
 
-1. Getting classes
+1. **Getting classes**
 
    1. Prerequisite:
 
@@ -927,7 +951,7 @@ testers are expected to do more *exploratory* testing.
 
 ### Linking/unlinking classes + Getting the classes of a tutor
 
-1. Linking classes
+1. **Linking classes**
 
    1. Prerequisite:
 
@@ -955,7 +979,7 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `linkClass d/monday ti/h14 n/Eric Hanson`<br>followed by `linkClass d/monday ti/h14 n/Roy Balakrishnan`<br>
       Expected: Upon running the second command, no linkage is updated. An error is printed in the command result regarding the class already being assigned to "Eric Hanson".
 
-1. Unlinking classes
+1. **Unlinking classes**
 
    1. Prerequisite:
 
@@ -984,7 +1008,7 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `unlinkClass d/monday ti/h14 n/Ben Teo`<br>
       Expected: No linkages are removed. An error is printed in the command result regarding "Ben Teo" not being a person in the data.
 
-1. Getting classes of a tutor
+1. **Getting classes of a tutor**
 
    1. Prerequisite:
 
@@ -1004,7 +1028,7 @@ testers are expected to do more *exploratory* testing.
 
 ### Saving data
 
-1. Dealing with missing/corrupted data files
+1. **Dealing with missing/corrupted data files**
 
    1. Load the sample dataset as described above.
 
@@ -1023,6 +1047,9 @@ testers are expected to do more *exploratory* testing.
 ## **Appendix: Effort**
 TutorFlow evolved from the AddressBook Level 3 (AB3) codebase. While AB3 supports only one entity type (`Person`), TutorFlow introduces and manages three person-based entity types (`Student`, `Tutor`, and `Parent`) as well as a non-person entity (`TuitionClass`). Extending AB3 into a multi-entity, relationship-aware system required major redesigns to its model, command logic, storage, and tests.
 
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
+
 ### Key Challenges and Effort
 
 | Feature / Area                                 | Description of Work                                                                                                                                                          | AB3 Reuse                                                                            | Additional Complexity                                                                                       |
@@ -1033,6 +1060,8 @@ TutorFlow evolved from the AddressBook Level 3 (AB3) codebase. While AB3 support
 | **UI Enhancements**                            | Enhanced JavaFX UI to display categories (*student*, *tutor*, *parent*), relationships (linked parents/children), and class timings.                                         | ~60% (Reused AB3’s UI layout and `MainWindow`/`CommandBox` components)               | Implementing dynamic data bindings, relational displays, and contextual command feedback.                   |
 | **Testing and Integration**                    | Rebuilt tests for all new features and relationships, extended utilities like `CommandTestUtil` for multi-entity support.                                                    | ~10% (Reused testing structure but rewrote test cases for new entities and commands) | Extensive testing, cross-entity validation, and coverage for complex interactions.                          |
 
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
 
 ### Achievements
 * Expanded AB3’s single-entity model into a multi-entity, relationship-aware system.
@@ -1040,8 +1069,11 @@ TutorFlow evolved from the AddressBook Level 3 (AB3) codebase. While AB3 support
 * Enhanced the UI to visualise categories, relationships, and class timings.
 * Preserved AB3’s structure while substantially increasing functionality and technical depth.
 
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
+
 ## **Appendix: Planned Enhancements**
-Team size: 5
+Team Size: 5
 
 1. **Broaden `Name` field validation to allow special characters:** The current input validation for the `Name` field is overly restrictive, rejecting legitimate special characters. This flaw prevents users from entering realistic or legal names, such as those containing slashes, apostrophes and hyphens. We plan to relax the validation logic for the `Name` field to permit common special characters, including `/`, `'`, `-` and so on. This will allow a command like `edit 1 n/Mei-Ling` to be successfully executed, rather than being rejected as invalid.
 
