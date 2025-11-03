@@ -64,7 +64,8 @@ public class LinkParentCommand extends Command {
         }
         boolean namedNotStudent = personsNamedStudent.stream().noneMatch(p -> p instanceof Student);
         if (namedNotStudent) {
-            throw new CommandException(String.format(MESSAGE_WRONG_PERSON_TYPE, studentName, "Student"));
+            throw new CommandException(
+                    String.format(MESSAGE_WRONG_PERSON_TYPE, personsNamedStudent.get(0).getName(), "Student"));
         }
         Student student = (Student) personsNamedStudent.stream()
                 .filter(p -> p instanceof Student)
@@ -78,7 +79,8 @@ public class LinkParentCommand extends Command {
         }
         boolean namedNotParent = personsNamedParent.stream().noneMatch(p -> p instanceof Parent);
         if (namedNotParent) {
-            throw new CommandException(String.format(MESSAGE_WRONG_PERSON_TYPE, parentName, "Parent"));
+            throw new CommandException(
+                    String.format(MESSAGE_WRONG_PERSON_TYPE, personsNamedParent.get(0).getName(), "Parent"));
         }
         Parent parent = (Parent) personsNamedParent.stream()
                 .filter(p -> p instanceof Parent)
@@ -95,7 +97,8 @@ public class LinkParentCommand extends Command {
                     .filter(p -> p instanceof Parent && p.getId().equals(student.getParentId()))
                     .findFirst();
             if (oldParentOpt.isPresent() && oldParentOpt.get().equals(parent)) {
-                throw new CommandException(String.format(MESSAGE_LINK_SAME_PARENT, parentName, studentName));
+                throw new CommandException(
+                        String.format(MESSAGE_LINK_SAME_PARENT, parent.getName(), student.getName()));
             }
             oldParent = (Parent) oldParentOpt.get();
             oldParent.removeChildId(student.getId());
@@ -112,10 +115,10 @@ public class LinkParentCommand extends Command {
 
         if (hasOldParent) {
             return new CommandResult(String.format(MESSAGE_UNLINK_AND_LINK_SUCCESS,
-                    studentName, oldParent.getName(), parentName));
+                    student.getName(), oldParent.getName(), parent.getName()));
         } else {
             return new CommandResult(String.format(MESSAGE_LINK_SUCCESS,
-                    studentName, parentName));
+                    student.getName(), parent.getName()));
         }
     }
 
