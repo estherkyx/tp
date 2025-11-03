@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-<div class="intro-para"><b>TutorFlow</b> is a desktop app for small Singaporean tuition centre managers. It helps you keep track of students, parents, tutors, and classes using simple type-and-press-Enter commands. For those comfortable with a command line, TutorFlow can get your contact management tasks done quickly and easily.</div><span class="short-break"></span>
+<div class="intro-para"><b>TutorFlow</b> is a desktop app for small Singaporean GP tuition centre receptionists. It helps you keep track of students, parents, tutors, and classes using simple type-and-press-Enter commands. For those comfortable with a command line, TutorFlow can get your contact management tasks done quickly and easily.</div><span class="short-break"></span>
 
 * Table of Contents
 {:toc}
