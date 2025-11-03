@@ -44,7 +44,7 @@ public class LinkClassCommand extends Command {
     public static final String MESSAGE_ASSIGN_TUTOR_SUCCESS = "Assigned Tutor %1$s to Class on %2$s, %3$s";
     public static final String MESSAGE_CLASS_NOT_FOUND = "The class at the specified timeslot does not exist.";
     public static final String MESSAGE_PERSON_NOT_STUDENT_OR_TUTOR = "The person provided is not a student or a tutor.";
-    public static final String MESSAGE_STUDENT_ALREADY_LINKED = "The student is already linked to a class.";
+    public static final String MESSAGE_STUDENT_ALREADY_LINKED = "The student is already linked to a class (%1$s).";
     public static final String MESSAGE_TUTOR_ALREADY_TEACHING = "The tutor is already assigned to this class.";
     public static final String MESSAGE_CLASS_ALREADY_HAS_TUTOR =
             "This class is already assigned to Tutor %s. Unlink before reassigning.";
@@ -116,7 +116,8 @@ public class LinkClassCommand extends Command {
     private CommandResult linkStudent(Model model, Student student, TuitionClass tuitionClass) throws CommandException {
         // Student must not be in another class
         if (student.getClassId().isPresent()) {
-            throw new CommandException(MESSAGE_STUDENT_ALREADY_LINKED);
+            TuitionClass existingClass = model.findTuitionClass(student.getClassId().get()).get();
+            throw new CommandException(String.format(MESSAGE_STUDENT_ALREADY_LINKED, existingClass.toSimpleString()));
         }
 
         // Perform the link
