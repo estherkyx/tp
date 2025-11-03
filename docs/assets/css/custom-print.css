@@ -43,7 +43,10 @@
     padding-top: 0;
   }
 
-  div.alert.alert-info,div.alert.alert-primary, div.alert.alert-warning {
+  div.alert.alert-info,
+  div.alert.alert-primary,
+  div.alert.alert-warning,
+  div.alert.alert-danger {
     margin-left: 2.0rem;
     margin-right: 2.0rem;
   }
