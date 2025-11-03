@@ -13,7 +13,6 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Category;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Student;
@@ -50,7 +49,6 @@ public class UnlinkClassCommand extends Command {
 
     private final ClassId classId;
     private final Name personName;
-    private final Optional<Category> category;
 
     /**
      * Creates an UnlinkClassCommand to unlink the specified person from a class.
@@ -66,26 +64,6 @@ public class UnlinkClassCommand extends Command {
 
         this.classId = new ClassId(day, time);
         this.personName = personName;
-        this.category = Optional.empty();
-    }
-
-    /**
-     * Creates an UnlinkClassCommand to unlink the specified student/tutor from a class.
-     *
-     * @param day the day of the class
-     * @param time the time of the class
-     * @param personName the name of the student/tutor
-     * @param category the category of the person (student/tutor)
-     */
-    public UnlinkClassCommand(Day day, Time time, Name personName, Category category) {
-        requireNonNull(day);
-        requireNonNull(time);
-        requireNonNull(personName);
-        requireNonNull(category);
-
-        this.classId = new ClassId(day, time);
-        this.personName = personName;
-        this.category = Optional.of(category);
     }
 
     @Override
@@ -101,9 +79,6 @@ public class UnlinkClassCommand extends Command {
 
         // 2. Find the Person
         List<Person> personsNamed = model.findPersonByName(personName);
-        if (category.isPresent()) {
-            personsNamed = personsNamed.stream().filter(p -> category.get().equals(p.getCategory())).toList();
-        }
         if (personsNamed.isEmpty()) {
             throw new CommandException(Messages.messagePersonNotFound(personName));
         }

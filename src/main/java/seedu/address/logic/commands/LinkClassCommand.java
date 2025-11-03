@@ -12,7 +12,6 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Category;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonId;
@@ -51,7 +50,6 @@ public class LinkClassCommand extends Command {
 
     private final ClassId classId;
     private final Name personName;
-    private final Optional<Category> category;
 
     /**
      * Creates a LinkClassCommand to link the specified person to a class.
@@ -62,20 +60,6 @@ public class LinkClassCommand extends Command {
         requireNonNull(personName);
         this.classId = new ClassId(day, time);
         this.personName = personName;
-        this.category = Optional.empty();
-    }
-
-    /**
-     * Creates a LinkClassCommand to link the specified student/tutor to a class.
-     */
-    public LinkClassCommand(Day day, Time time, Name personName, Category category) {
-        requireNonNull(day);
-        requireNonNull(time);
-        requireNonNull(personName);
-        requireNonNull(category);
-        this.classId = new ClassId(day, time);
-        this.personName = personName;
-        this.category = Optional.of(category);
     }
 
     @Override
@@ -91,9 +75,6 @@ public class LinkClassCommand extends Command {
 
         // 2. Find the Person
         List<Person> personsNamed = model.findPersonByName(personName);
-        if (category.isPresent()) {
-            personsNamed = personsNamed.stream().filter(p -> category.get().equals(p.getCategory())).toList();
-        }
         if (personsNamed.isEmpty()) {
             throw new CommandException(Messages.messagePersonNotFound(personName));
         }
