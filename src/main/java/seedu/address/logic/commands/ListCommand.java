@@ -24,13 +24,15 @@ public class ListCommand extends Command {
             + "Example 1: " + COMMAND_WORD + "\n"
             + "Example 2: " + COMMAND_WORD + " " + PREFIX_CATEGORY + "student";
 
-    public static final String MESSAGE_SUCCESS = "Listed all people in the '%s' category.";
+    public static final String MESSAGE_SUCCESS = "Listed all people in the '%s' category.\n\n" +
+            "(To get back to the full list of contacts, run the 'list' command)";
 
     public static final String MESSAGE_SUCCESS_ALL = "Listed all people in the address book.";
 
     public static final String MESSAGE_MISSING_CATEGORY = "Category is not stated. Use student, tutor or parent.";
 
-    public static final String MESSAGE_EMPTY_CATEGORY = "There is no one belonging to the category '%s'";
+    public static final String MESSAGE_EMPTY_CATEGORY = "There is no one belonging to the category '%s'.\n\n" +
+            "(To get back to the full list of contacts, run the 'list' command)";
 
     public static final String MESSAGE_INVALID_CATEGORY = "Invalid category. Use student, tutor or parent.";
 
