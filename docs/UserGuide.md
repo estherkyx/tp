@@ -213,52 +213,6 @@ The full list view will be returned after the command is used.
 <div style="page-break-after: always;"></div>
 <div class="print-tight"></div>
 
-### Relationship Management
-
-#### Linking a student to a parent : `linkParent`
-
-Links an existing student to an existing parent in the address book.
-
-Format: `linkParent n/*STUDENT_NAME n/*PARENT_NAME`
-
-* Links the student identified by  `STUDENT_NAME` to the parent identified by `PARENT_NAME`.
-* The names must match an existing student or parent in TutorFlow.
-* The person identified as the student must have the `student` category, and the person identified as the parent must have the `parent` category.
-
-Example:
-* `linkParent n/Alice Pauline n/Daniel Meier` Links the student 'Alice Pauline' to the parent 'Daniel Meier', assuming both exist in the address book with the correct categories.
-
-• [Back to Command Summary](#command-summary)
-
-#### Finding a student's parent: `getParent`
-
-Displays the parent linked to the specified student.
-
-Format: `getParent n/*STUDENT_NAME`
-* The student name must match an existing student in TutorFlow.
-* The student identified must have the `student` category.
-
-Examples:
-* `getParent n/John Doe` shows the parent of student John Doe.
-
-• [Back to Command Summary](#command-summary)
-
-#### Finding all students of a tutor: `getStudents`
-
-Displays all students linked to the specified tutor.
-
-Format: `getStudents n/*TUTOR_NAME`
-* The tutor name must match an existing tutor in TutorFlow.
-* The tutor identified must have the `tutor` category.
-
-Examples:
-* `getStudents n/Roy Balakrishnan` shows all students of tutor Roy Balakrishnan.
-
-• [Back to Command Summary](#command-summary)
-
-<div style="page-break-after: always;"></div>
-<div class="print-tight"></div>
-
 ### Class Management
 
 #### Creating a class: `createClass`
@@ -278,6 +232,10 @@ Each timeslot (combination of a day and a time) is unique. You cannot create a c
 Examples:
 * `createClass d/MONDAY ti/H16` creates a class on Monday at 4:00 PM.
 * `createClass d/tuesday ti/h12` creates a class on Tuesday at 12:00 PM.
+
+**See also:** 
+* [`getClassDetails`](#viewing-class-details-getclassdetails) - View details of this class
+* [`getClasses`](#listing-classes-getclasses) - List all classes
 
 • [Back to Command Summary](#command-summary)
 
@@ -343,6 +301,8 @@ Examples:
 * `linkClass d/MONDAY ti/H16 n/Roy Balakrishnan` links tutor Roy Balakrishnan to the Monday 4:00 PM class.
 * `linkClass d/SATURDAY ti/H12 n/Alice Pauline` links student Alice Pauline to the Saturday 12:00 PM class.
 
+**See also:** [`getClasses n/TUTOR_NAME`](#listing-classes-getclasses) - List all classes for a specific tutor
+
 • [Back to Command Summary](#command-summary)
 
 #### Removing a person from a class: `unlinkClass`
@@ -393,6 +353,52 @@ Examples:
 * `getClasses n/Roy Balakrishnan` shows classes linked to tutor Roy Balakrishnan.
 
 • [Back to Command Summary](#command-summary)
+
+### Relationship Management
+
+#### Linking a student to a parent : `linkParent`
+
+Links an existing student to an existing parent in the address book.
+
+Format: `linkParent n/*STUDENT_NAME n/*PARENT_NAME`
+
+* Links the student identified by  `STUDENT_NAME` to the parent identified by `PARENT_NAME`.
+* The names must match an existing student or parent in TutorFlow.
+* The person identified as the student must have the `student` category, and the person identified as the parent must have the `parent` category.
+
+Example:
+* `linkParent n/Alice Pauline n/Daniel Meier` Links the student 'Alice Pauline' to the parent 'Daniel Meier', assuming both exist in the address book with the correct categories.
+
+• [Back to Command Summary](#command-summary)
+
+#### Finding a student's parent: `getParent`
+
+Displays the parent linked to the specified student.
+
+Format: `getParent n/*STUDENT_NAME`
+* The student name must match an existing student in TutorFlow.
+* The student identified must have the `student` category.
+
+Examples:
+* `getParent n/John Doe` shows the parent of student John Doe.
+
+• [Back to Command Summary](#command-summary)
+
+#### Finding all students of a tutor: `getStudents`
+
+Displays all students linked to the specified tutor.
+
+Format: `getStudents n/*TUTOR_NAME`
+* The tutor name must match an existing tutor in TutorFlow.
+* The tutor identified must have the `tutor` category.
+
+Examples:
+* `getStudents n/Roy Balakrishnan` shows all students of tutor Roy Balakrishnan.
+
+• [Back to Command Summary](#command-summary)
+
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
 
 ### Data Storage
 * TutorFlow data is saved in the hard disk automatically after any command that changes the data. This data is stored in `[TutorFlow.jar location]/data/addressbook.json`
