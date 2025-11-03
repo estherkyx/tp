@@ -721,7 +721,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 3. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 4. Typical commands (e.g., list, add, delete) should complete within 200 ms on a dataset of 1000 persons on a standard laptop from the last 5 years.
 5. The system should work without internet access.
-6. A user should be able to learn how to use TutorFlow to a reasonable degree within an hour of usage.
+6. A new user should be able to perform basic operations (add, list, edit, delete, find persons) without referring to the user guide after spending up to one hour reading the user guide and practicing with the application.
 7. The application should not be larger than 50Mb.
 8. The application should never crash during execution, and should only show warning messages.
 
