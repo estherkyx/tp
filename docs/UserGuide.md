@@ -157,13 +157,13 @@ Format: `edit INDEX [c/*CATEGORY] [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TA
 * Editing tags will **replace all old tags** with the new ones you provide. To clear all tags, simply type t/ with nothing after it.
 * The edit will be **rejected** if the new name already exists in the address book. This duplicate check is case-insensitive and ignores extra spaces (e.g. "john&nbsp;&nbsp;&nbsp;&nbsp;lee" is treated as the same as "John Lee").
 
-<div markdown="span" class="alert alert-danger">:exclamation: **Caution:**
-Editing a person's category will remove all existing relationships (i.e. parent-child relationships, class enrollments). 
-</div>
-
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+<div markdown="span" class="alert alert-danger">:exclamation: **Caution:**
+Editing a person's category will remove all existing relationships (i.e. parent-child relationships, class enrollments). In addition, the full list view will be returned after the command is used.
+</div>
 
 • [Back to Command Summary](#command-summary)
 
@@ -203,6 +203,10 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
 
 ![result for 'delete 2'](images/delete2Result.png)
+
+<div markdown="span" class="alert alert-danger">:exclamation: **Caution:**
+The full list view will be returned after the command is used.
+</div>
 
 • [Back to Command Summary](#command-summary)
 
