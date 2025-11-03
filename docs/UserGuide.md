@@ -222,7 +222,7 @@ Format: `linkParent n/*STUDENT_NAME n/*PARENT_NAME`
 * The person identified as the student must have the `student` category, and the person identified as the parent must have the `parent` category.
 
 Example:
-* `linkParent n/Alice Pauline n/Daniel Meier` Links the student 'Alice Pauline' to the parent 'Daniel Meier', assuming both exist in the address book with the correct categories.
+* `linkParent n/alice pauline n/daniel meier` Links the student 'Alice Pauline' to the parent 'Daniel Meier', assuming both exist in the address book with the correct categories.
 
 • [Back to Command Summary](#command-summary)
 
@@ -371,6 +371,8 @@ Format: `getClassDetails d/*DAY ti/*TIME`
 
 Examples:
 * `getClassDetails d/MONDAY ti/H16` displays the tutor and students in the Monday 4:00 PM class.
+
+![example of getClassDetails](images/getClassDetailsExample.png)
 
 • [Back to Command Summary](#command-summary)
 
