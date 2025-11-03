@@ -149,27 +149,25 @@ How the parsing works:
 
 **Core Model Structure**
 
+The diagram below shows the class structure of the `Model` component and how `ModelManager` coordinates the various data structures and interfaces.
+
 <img src="images/CoreModelStructureClassDiagram.png" width="550" />
 
 **Domain Entities**
 
+The diagram below illustrates the internal structure and relationships of the core domain entities (Person and TuitionClass) managed by the Model component:
 <img src="images/DomainEntitiesClassDiagram.png" width="550" />
 
 The `Model` component,
 
-* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the address book data i.e., all `Person` and `TuitionClass` objects (which are contained in a `UniquePersonList` object and `UniqueClassList` object respectively).
+* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate filtered list `filteredPersons` which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* the filtered tuition class list `filteredTuitionClasses` is architecturally in place to support a future Ul panel for tuition classes. The mechanism exists within `Model` to support filtering and display.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
 <div style="page-break-after: always;"></div>
 <div class="print-tight"></div>
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
-
-<img src="images/BetterModelClassDiagram.png" width="450" />
-
-</div>
 
 ### Storage component
 
@@ -376,7 +374,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 &emsp;&emsp;&emsp;Use case ends.
 
 
-&emsp;1c. The user enters an invalid category (not "student", "tutor", or "parent").<br>
+&emsp;1c. The user provides an invalid category (not "student", "tutor", or "parent").<br>
 &emsp;&emsp;&emsp;1c1. TutorFlow shows an error message: _"Invalid category"._
 
 &emsp;&emsp;&emsp;Use case ends.
@@ -488,6 +486,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Preconditions**: At least 1 tutor exists in the system
 
+**MSS**
+
 1.  User requests to view classes for a specific tutor.
 2.  TutorFlow displays a filtered list of classes taught by that tutor.
 
@@ -545,7 +545,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to link a student to a class by specifying the student name and class index (or identifier).
+1.  User requests to link a student to a class by specifying the student name and class timeslot (day and time).
 2.  TutorFlow validates the student exists and the class exists.
 3.  TutorFlow links the student to the class.
 4.  TutorFlow shows a success message confirming the link.
@@ -560,7 +560,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 &emsp;&emsp;&emsp;Use case ends.
 
-&emsp;1b. The class identifier is invalid.<br>
+&emsp;1b. The class timeslot is invalid or does not exist.<br>
 &emsp;&emsp;&emsp;1b1. TutorFlow shows an error message: _"The class at the specified timeslot does not exist."_
 
 &emsp;&emsp;&emsp;Use case ends.
@@ -578,7 +578,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to unlink a student from a class by specifying the student name and class index (or identifier).
+1.  User requests to unlink a student from a class by specifying the student name and class timeslot (day and time).
 2.  TutorFlow validates the link exists.
 3.  TutorFlow removes the link.
 4.  TutorFlow shows a success message confirming the unlink.
@@ -593,7 +593,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 &emsp;&emsp;&emsp;Use case ends.
 
-&emsp;1b. The class identifier is invalid.<br>
+&emsp;1b. The class timeslot is invalid or does not exist.<br>
 &emsp;&emsp;&emsp;1b1. TutorFlow shows an error message: _"The class at the specified timeslot does not exist."_
 
 &emsp;&emsp;&emsp;Use case ends.
@@ -665,7 +665,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
  1.  User requests to list persons.
  2.  TutorFlow shows a list of persons.
  3.  User requests to edit a specific person in the list by their index, providing one or more updated fields (e.g., name, phone, email, address, category, tags).
- 5.  TutorFlow updates the person, refreshes the contact list, and shows a success message.
+ 4.  TutorFlow updates the person, refreshes the contact list, and shows a success message.
 
 &emsp;Use case ends.
 
@@ -697,7 +697,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 &emsp;&emsp;&emsp;Use case ends.
 
-&emsp;3e. The user provides an invalid phone number (e.g., not at least 3 digits/contains non-numbers).<br>
+&emsp;3e. The user provides an invalid phone number (e.g., not exactly 8 digits starting with 3, 6, 8, or 9/contains non-numbers).<br>
 &emsp;&emsp;&emsp;3e1. TutorFlow shows an error message: _"Phone numbers should be Singaporean numbers:<br>
 &emsp;&emsp;&emsp;&emsp;&emsp;exactly 8 digits starting with 3, 6, 8, or 9"._
 
@@ -726,11 +726,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Non-Functional Requirements
 
 1. Should work on any mainstream OS as long as it has Java 17 or above installed.
-2. Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+2. The system should be able to store and manage up to 1000 persons while maintaining acceptable performance for common operations (add, list, edit, delete, find). Performance should remain within the thresholds specified in requirement 4.
 3. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 4. Typical commands (e.g., list, add, delete) should complete within 200 ms on a dataset of 1000 persons on a standard laptop from the last 5 years.
 5. The system should work without internet access.
-6. A user should be able to learn how to use TutorFlow to a reasonable degree within an hour of usage.
+6. A new user should be able to perform basic operations (add, list, edit, delete, find persons) without referring to the user guide after spending up to one hour reading the user guide and practicing with the application.
 7. The application should not be larger than 50Mb.
 8. The application should never crash during execution, and should only show warning messages.
 
@@ -762,45 +762,262 @@ testers are expected to do more *exploratory* testing.
 
 ### Launch and shutdown
 
-1. Initial launch
+1. **Initial launch**
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   1. Double-click the jar file<br>
+      Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
-1. Saving window preferences
+1. **Saving window preferences**
 
    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
    1. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
+      Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+1. **Exit via command**
+
+   1. Test case: `exit`<br>
+      Expected: The app will close. All data will be saved and loaded on the next launch.
+
+   1. Test case: `exit 123`<br>
+      Expected: The app will close. The `123` will have no effect on the program exit. All data will be saved and loaded on the next launch.
+
+1. **Exit via app closure**
+
+   1. Close the app by clicking the close button on the app window ("X" in the top right for Windows, "X" in the top left for MacOS).<br>
+      Expected: The app will close. All data will be saved and loaded on the next launch, except for any text in the command box.
+
+   1. Close the app by using the operating system's default keyboard shortcut for closing apps (Alt + F4 for Windows, Command + Q for MacOS).<br>
+      Expected: The app will close. All data will be saved and loaded on the next launch, except for any text in the command box.
+
+### Adding a person
+
+1. **Adding a person**
+
+   1. Test case: `add c/student n/John Doe p/91234567 e/johndoe@example.com a/Computing 1, 13 Computing Drive, 117417`<br>
+      Expected: A student is added to TutorFlow with the data provided above.
+
+   1. Test case: `add c/parent n/Joy Doe p/81234567 e/joydoe@example.com a/Computing 1, 13 Computing Drive, 117417 t/works in IT`<br>
+      Expected: A parent is added to TutorFlow with the data provided above, including the optional tag.
+
+   1. Test case: `add c/tutor n/steven lee p/12 e/stevenlee@example.com a/somewhere`<br>
+      Expected: No person is added. An error is printed in the command result regarding the phone number.
+
+   1. Test case: `add c/person n/Bob p/99999999 e/bob@example.com a/anywhere`<br>
+      Expected: No person is added. An error is printed in the command result regarding the category.
+
+   1. Test case: `add c/student n/Amy p/88888888 e/bob@e.a a/anywhere`<br>
+      Expected: No person is added. An error is printed in the command result regarding the email.
+
+1. **Adding a duplicate person**
+
+   1. Test case: `add c/student n/John Doe p/91234567 e/johndoe@example.com a/Computing 1, 13 Computing Drive, 117417`<br>followed by `add c/parent n/john doe p/12345678 e/johnny@example.com a/University Town 138607`<br>
+      Expected: The second person is not added. An error is printed in the command result indicating that the second person is a duplicate.
 
 ### Deleting a person
 
 1. Deleting a person while all persons are being shown
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   1. Prerequisite: List all persons using the `list` command. There should be multiple persons in the list.
 
    1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+      Expected: First person is deleted from the list. Details of the deleted person shown in the status message. All links to this person are removed as well.
 
    1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+      Expected: No person is deleted. An error is printed in the command result.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+   1. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size), `delete n/John Doe`, etc.<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+### Test dataset (for subsequent test cases)
+
+1. Use the sample dataset provided when launching TutorFlow for the first time.
+
+    1. You can also obtain the sample dataset in TutorFlow by closing the app, deleting the current `addressbook.json` file and reopening the app. Running any command other than `help` and `clear` will generate the new `addressbook.json` file.
+
+### Listing persons
+
+1. Listing by category
+
+   1. Prerequisite: Load the sample dataset for testing as described above.
+
+   1. Test case: `list c/student`<br>
+      Expected: Display the students only (if there are any).
+
+   1. Test case: `list c/parent`<br>
+      Expected: Display the parents only (if there are any).
+
+   1. Test case: `list c/tutor`<br>
+      Expected: Display the tutors only (if there are any).
+
+   1. Incorrect test cases: e.g. `list c/person`, `list 123`, `list n/John Doe`, etc.
+      Expected: Person display list is not updated. An error is printed in the command result.
+
+
+### Linking parents + Getting the parent of a student
+
+1. Linking a parent
+
+   1. Prerequisite: Load the sample dataset for testing as described above.
+
+   1. Test case: `linkParent n/Bernice Yu n/David Li`<br>
+      Expected: The parent is successfully linked to the student. Both persons are updated in the display to reflect the new link.
+
+   1. Test case: `linkParent n/David Li n/Alex Yeoh`<br>
+      Expected: No linkage is made. An error is printed in the command result regarding the first person not being a student.
+
+   1. Test case: `linkParent n/Bernice Yu n/David Li`<br>followed by `linkParent n/Bernice Yu n/Shelley Yeo`<br>
+      Expected: Upon running the second command, the student is successfully linked to the new parent. The old parent is unlinked.
+
+   1. Test case: `linkParent n/Bernice Yu n/David Li`<br>followed by `linkParent n/Bernice Yu n/David Li`<br>
+      Expected: Upon running the second command, no linkage is made. An error is printed in the command result regarding the already existing link between both persons.
+
+   1. Test case: `linkParent n/Bernice Yu n/David Li`<br>followed by `linkParent n/Alex Yeoh n/David Li`<br>
+      Expected: Both students are successfully linked to the same parent.
+
+1. Getting the parent of a student
+
+   1. Prerequisite: Load the sample dataset for testing as described above.
+
+      1. run `linkParent n/Bernice Yu n/David Li`
+
+   1. Test case: `getParent n/Bernice Yu`<br>
+      Expected: List is filtered to show "David Li". Command result indicates that "David Li" is the parent.
+
+   1. Test case: `getParent n/Alex Yeoh`<br>
+      Expected: List is filtered and becomes empty. Command result indicates that the student has no parent.
+
+   1. Test case: `getParent n/David Li`<br>
+      Expected: Command result indicates that the provided person is not a student. Display reverts to full list.
+
+   1. Test case: `getParent n/Ben Teo`<br>
+      Expected: Same as above.
+
+### Creating classes + Getting classes
+
+1. Creating classes
+
+   1. Test case: `createClass d/monday ti/h14`<br>
+      Expected: A class is created for the Monday, 1400 timeslot.
+
+   1. Test case: `createClass d/mon ti/h16`<br>
+      Expected: No class is created. An error is printed in the command result regarding the day parameter, as it must be spelt out in full.
+
+   1. Test case: `createClass d/Tuesday ti/h12`<br>followed by `createClass d/tuesday ti/h12`<br>
+      Expected: Upon running the second command, no class is created. An error is printed in the command result regarding the duplicate class timing.
+
+   1. Test case: `createClass d/sunday ti/h15`<br>
+      Expected: No class is created. An error is printed in the command result regarding the time parameter, as it must be one of five set timings.
+
+1. Getting classes
+
+   1. Prerequisite:
+
+      1. Load the sample dataset for testing as described above.
+
+      1. run `createClass d/monday ti/h14`
+
+      1. run `createClass d/thursday ti/h18`
+
+   1. Test case: `getClasses`<br>
+      Expected: Both classes are displayed in the list.
+   
+
+### Linking/unlinking classes + Getting the classes of a tutor
+
+1. Linking classes
+
+   1. Prerequisite:
+
+      1. Load the sample dataset for testing as described above.
+
+      1. run `createClass d/monday ti/h14`
+
+      1. run `createClass d/thursday ti/h18`
+
+   1. Test case: `linkClass d/monday ti/h14 n/Alex Yeoh`<br>
+      Expected: The class is successfully linked to the student.
+
+   1. Test case: `linkClass d/monday ti/h14 n/Alex Yeoh`<br>followed by `linkClass d/thursday ti/h18 n/Alex Yeoh`<br>
+      Expected: Upon running the second command, no linkage is updated. An error is printed in the command result regarding the student already being assigned to a class.
+
+   1. Test case: `linkClass d/monday ti/h14 n/Alex Yeoh`<br>followed by `linkClass d/monday ti/h14 n/Bernice Yu`<br>
+      Expected: Both students are successfully linked to the same class.
+
+   1. Test case: `linkClass d/monday ti/h14 n/Eric Hanson`<br>
+      Expected: The class is successfully linked to the tutor.
+
+   1. Test case: `linkClass d/monday ti/h14 n/Eric Hanson`<br>followed by `linkClass d/thursday ti/h18 n/Eric Hanson`<br>
+      Expected: Both classes are successfully linked to the tutor.
+
+   1. Test case: `linkClass d/monday ti/h14 n/Eric Hanson`<br>followed by `linkClass d/monday ti/h14 n/Roy Balakrishnan`<br>
+      Expected: Upon running the second command, no linkage is updated. An error is printed in the command result regarding the class already being assigned to "Eric Hanson".
+
+1. Unlinking classes
+
+   1. Prerequisite:
+
+      1. Load the sample dataset for testing as described above.
+
+      1. run `createClass d/monday ti/h14`
+
+      1. run `createClass d/thursday ti/h18`
+
+      1. run `linkClass d/monday ti/h14 n/Eric Hanson`
+
+      1. run `linkClass d/monday ti/h14 n/Alex Yeoh`
+
+   1. Test case: `unlinkClass d/monday ti/h14 n/Eric Hanson`<br>
+      Expected: The class is successfully unlinked from the tutor "Eric Hanson".
+
+   1. Test case: `unlinkClass d/monday ti/h14 n/Alex Yeoh`<br>
+      Expected: The class is successfully unlinked from the student "Alex Yeoh".
+
+   1. Test case: `unlinkClass d/monday ti/h14 n/Roy Balakrishnan`<br>
+      Expected: No linkages are removed. An error is printed in the command result regarding this tutor not being assigned to the class.
+
+   1. Test case: `unlinkClass d/monday ti/h14 n/Bernice Yu`<br>
+      Expected: No linkages are removed. An error is printed in the command result regarding this student not being assigned to the class.
+
+   1. Test case: `unlinkClass d/monday ti/h14 n/Ben Teo`<br>
+      Expected: No linkages are removed. An error is printed in the command result regarding "Ben Teo" not being a person in the data.
+
+1. Getting classes of a tutor
+
+   1. Prerequisite:
+
+      1. Load the sample dataset for testing as described above.
+
+      1. run `createClass d/monday ti/h14`
+
+      1. run `createClass d/thursday ti/h18`
+
+      1. run `linkClass d/monday ti/h14 n/Eric Hanson`
+
+   1. Test case: `getClasses n/Eric Hanson`<br>
+      Expected: The Monday, 1400 class is displayed in the list.
+
+   1. Test case: `getClasses n/Roy Balakrishnan`<br>
+      Expected: The list does not update. An error is printed in the command result regarding there being no classes for the tutor.
 
 ### Saving data
 
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+   1. Load the sample dataset as described above.
 
-1. _{ more test cases …​ }_
+   1. Close the app, and open the `addressbook,json` file. Create missing/corrupted data by editing any data such that it no longer fits the valid format. Examples include:
+
+      1. Phone numbers being less than 3 digits
+
+      1. Emails containing a domain of less than 2 characters
+
+      1. Class days and times no longer matching with one of the enumerated values.
+
+   1. Launch the app again.<br>
+      Expected: The app will not be able to load the data file properly and load an empty list. Upon running any command that updates the data file, the corrupted data file will be overridden with the data in the active app instance.
 
 ---
 ## **Appendix: Effort**

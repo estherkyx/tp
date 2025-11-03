@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-<div class="intro-para"><b>TutorFlow</b> is a desktop app for tuition centre managers. It helps you keep track of students, parents, tutors, and classes using simple type-and-press-Enter commands. For those comfortable with a command line, TutorFlow can get your contact management tasks done quickly and easily.</div><span class="short-break"></span>
+<div class="intro-para"><b>TutorFlow</b> is a desktop app for small Singaporean tuition centre managers. It helps you keep track of students, parents, tutors, and classes using simple type-and-press-Enter commands. For those comfortable with a command line, TutorFlow can get your contact management tasks done quickly and easily.</div><span class="short-break"></span>
 
 * Table of Contents
 {:toc}
@@ -115,15 +115,20 @@ Format: `exit`
 Adds a person to the address book.
 
 Format: `add c/*CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
-* `CATEGORY` must be one of `tutor`, `student`, `parent`
-
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-You cannot add a duplicate person (i.e. same **category** and **name**)
-</div>
+* `CATEGORY` must be one of `tutor`, `student`, or `parent` (case-insensitive)
+* `NAME` should only contain alphanumeric characters and spaces, and it should not be blank
+* `PHONE_NUMBER` should be a Singaporean number: exactly 8 digits starting with 3, 6, 8, or 9
+* `EMAIL` should be of the format `local-part@domain`
+* `ADDRESS` can take any values, and it should not be blank
+* `TAG` is optional and can be specified multiple times. Tag names should not consist of only whitespace(s).
 
 Examples:
 * `add c/student n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add c/TUTOR n/Betsy Crowe t/GP Paper 1 e/betsycrowe@example.com a/Newgate Prison p/1234567 t/New hire`
+* `add c/TUTOR n/Betsy Crowe t/GP Paper 1 e/betsycrowe@example.com a/Betsy Street, blk 7, #02-02 p/31234567 t/New hire`
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+To prevent errors, TutorFlow will not allow you to create a duplicate person (i.e. exact same name, case-insensitive). To help keep your data clean, the system also automatically fixes names by removing any extra spaces between words. For example, if you type "John&nbsp;&nbsp;&nbsp;&nbsp;Lee", it will be saved as "John Lee". <br><br> If you must add two individuals who share the same name, please add a unique identifier. For example: `John Lee Student` and `John Lee Parent`. 
+</div>
 
 • [Back to Command Summary](#command-summary)
 
@@ -155,14 +160,15 @@ Format: `edit INDEX [c/*CATEGORY] [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TA
 * The index must be a **positive number** (e.g. 1, 2, 3, …)
 * You must provide at least one field to change (e.g. n/, p/).
 * Editing tags will **replace all old tags** with the new ones you provide. To clear all tags, simply type t/ with nothing after it.
-
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-Editing a person's category will remove all existing relationships (i.e. parent-child relationships, class enrollments). 
-</div>
+* The edit will be **rejected** if the new name already exists in the address book. This duplicate check is case-insensitive and ignores extra spaces (e.g. "john&nbsp;&nbsp;&nbsp;&nbsp;lee" is treated as the same as "John Lee").
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+<div markdown="span" class="alert alert-danger">:exclamation: **Caution:**
+Editing a person's category will remove all existing relationships (i.e. parent-child relationships, class enrollments). In addition, the full list view will be returned after the command is used.
+</div>
 
 • [Back to Command Summary](#command-summary)
 
@@ -203,51 +209,9 @@ Examples:
 
 ![result for 'delete 2'](images/delete2Result.png)
 
-• [Back to Command Summary](#command-summary)
-
-<div style="page-break-after: always;"></div>
-<div class="print-tight"></div>
-
-### Relationship Management
-
-#### Linking a student to a parent : `linkParent`
-
-Links an existing student to an existing parent in the address book.
-
-Format: `linkParent n/STUDENT_NAME n/PARENT_NAME`
-
-* Links the student identified by  `STUDENT_NAME` to the parent identified by `PARENT_NAME`.
-* The names must **exactly match** a student or a parent in TutorFlow (case-sensitive).
-* The person identified as the student must have the `student` category, and the person identified as the parent must have the `parent` category.
-
-Example:
-* `linkParent n/Alice Pauline n/Daniel Meier` Links the student 'Alice Pauline' to the parent 'Daniel Meier', assuming both exist in the address book with the correct categories.
-
-• [Back to Command Summary](#command-summary)
-
-#### Finding a student's parent: `getParent`
-
-Displays the parent linked to the specified student.
-
-Format: `getParent n/STUDENT_NAME`
-* The student name must **exactly match** a student in TutorFlow (case-sensitive).
-* The student identified must have the `student` category.
-
-Examples:
-* `getParent n/John Doe` shows the parent of student John Doe.
-
-• [Back to Command Summary](#command-summary)
-
-#### Finding all students of a tutor: `getStudents`
-
-Displays all students linked to the specified tutor.
-
-Format: `getStudents n/TUTOR_NAME`
-* The tutor name must **exactly match** a tutor in TutorFlow (case-sensitive).
-* The tutor identified must have the `tutor` category.
-
-Examples:
-* `getStudents n/Roy Balakrishnan` shows all students of tutor Roy Balakrishnan.
+<div markdown="span" class="alert alert-danger">:exclamation: **Caution:**
+The full list view will be returned after the command is used.
+</div>
 
 • [Back to Command Summary](#command-summary)
 
@@ -274,15 +238,19 @@ Examples:
 * `createClass d/MONDAY ti/H16` creates a class on Monday at 4:00 PM.
 * `createClass d/tuesday ti/h12` creates a class on Tuesday at 12:00 PM.
 
+**See also:** 
+* [`getClassDetails`](#viewing-class-details-getclassdetails) - View details of this class
+* [`getClasses`](#listing-classes-getclasses) - List all classes
+
 • [Back to Command Summary](#command-summary)
 
 #### Linking a person to a class: `linkClass`
 
 Links an existing student or tutor to an existing class.
 
-Format: `linkClass d/*DAY ti/*TIME n/TUTOR_NAME or STUDENT_NAME [c/*CATEGORY]`
+Format: `linkClass d/*DAY ti/*TIME n/*TUTOR_NAME or *STUDENT_NAME`
 
-* `NAME` must **exactly match** a student or a tutor in TutorFlow (case-sensitive).
+* The name must match an existing student or a tutor in TutorFlow. 
 * The class identified by `DAY` and `TIME` must already exist (created using [`createClass`](#creating-a-class-createclass)).
 
 The `linkClass` command works differently for students and tutors. Here’s what you need to know:
@@ -336,7 +304,9 @@ Each class can only have one tutor, but a tutor can teach multiple classes.
 
 Examples:
 * `linkClass d/MONDAY ti/H16 n/Roy Balakrishnan` links tutor Roy Balakrishnan to the Monday 4:00 PM class.
-* `linkClass d/SATURDAY ti/H12 n/Alice Pauline c/student` links student Alice Pauline to the Saturday 12:00 PM class.
+* `linkClass d/SATURDAY ti/H12 n/Alice Pauline` links student Alice Pauline to the Saturday 12:00 PM class.
+
+**See also:** [`getClasses n/TUTOR_NAME`](#listing-classes-getclasses) - List all classes for a specific tutor
 
 • [Back to Command Summary](#command-summary)
 
@@ -344,14 +314,14 @@ Examples:
 
 Removes a person from an existing class.
 
-Format: `unlinkClass d/*DAY ti/*TIME n/TUTOR_NAME or STUDENT_NAME [c/*CATEGORY]`
+Format: `unlinkClass d/*DAY ti/*TIME n/*TUTOR_NAME or *STUDENT_NAME`
 
-* `NAME` must **exactly match** a student or tutor currently linked to the class (case-sensitive).
+* The name must match a student or tutor currently linked to the class.
 * The class identified by `DAY` and `TIME` must already exist (created using [`createClass`](#creating-a-class-createclass)).
 
 Examples:
 * `unlinkClass d/MONDAY ti/H16 n/Roy Balakrishnan` removes tutor Roy Balakrishnan from the Monday 4:00 PM class.
-* `unlinkClass d/SATURDAY ti/H12 n/Alice Pauline c/student` removes student Alice Pauline from the Saturday 12:00 PM class.
+* `unlinkClass d/SATURDAY ti/H12 n/Alice Pauline` removes student Alice Pauline from the Saturday 12:00 PM class.
 
 • [Back to Command Summary](#command-summary)
 
@@ -371,17 +341,19 @@ Format: `getClassDetails d/*DAY ti/*TIME`
 Examples:
 * `getClassDetails d/MONDAY ti/H16` displays the tutor and students in the Monday 4:00 PM class.
 
+![example of getClassDetails](images/getClassDetailsExample.png)
+
 • [Back to Command Summary](#command-summary)
 
 #### Listing classes: `getClasses`
 
 Shows all existing classes. If you add a tutor's name, it displays only classes linked to that tutor.
 
-Format: `getClasses [n/TUTOR_NAME]`
+Format: `getClasses [n/*TUTOR_NAME]`
 
-* Without `n/TUTOR_NAME`: shows all existing classes created using [`createClass`](#creating-a-class-createclass).
-* With `n/TUTOR_NAME`: shows only classes linked to the specified tutor using [`linkClass`](#linking-a-person-to-a-class-linkclass).
-* The tutor name must **exactly match** a tutor in TutorFlow (case-sensitive).
+* Without `n/*TUTOR_NAME`: shows all existing classes created using [`createClass`](#creating-a-class-createclass).
+* With `n/*TUTOR_NAME`: shows only classes linked to the specified tutor using [`linkClass`](#linking-a-person-to-a-class-linkclass).
+* The tutor name must match an existing tutor in TutorFlow.
 
 Examples:
 * `getClasses` shows all classes.
@@ -389,11 +361,61 @@ Examples:
 
 • [Back to Command Summary](#command-summary)
 
+### Relationship Management
+
+#### Linking a student to a parent : `linkParent`
+
+Links an existing student to an existing parent in the address book.
+
+Format: `linkParent n/*STUDENT_NAME n/*PARENT_NAME`
+
+* Links the student identified by  `STUDENT_NAME` to the parent identified by `PARENT_NAME`.
+* The names must match an existing student or parent in TutorFlow.
+* The person identified as the student must have the `student` category, and the person identified as the parent must have the `parent` category.
+
+Example:
+* `linkParent n/Alice Pauline n/Daniel Meier` Links the student 'Alice Pauline' to the parent 'Daniel Meier', assuming both exist in the address book with the correct categories.
+
+<div markdown="span" class="alert alert-danger">:exclamation: **Caution:**
+**Only one parent can be linked to a student at a time.** If a student already has a linked parent, linking a new parent will automatically replace the previous parent link.
+</div>
+
+• [Back to Command Summary](#command-summary)
+
+#### Finding a student's parent: `getParent`
+
+Displays the parent linked to the specified student.
+
+Format: `getParent n/*STUDENT_NAME`
+* The student name must match an existing student in TutorFlow.
+* The student identified must have the `student` category.
+
+Examples:
+* `getParent n/John Doe` shows the parent of student John Doe.
+
+• [Back to Command Summary](#command-summary)
+
+#### Finding all students of a tutor: `getStudents`
+
+Displays all students linked to the specified tutor.
+
+Format: `getStudents n/*TUTOR_NAME`
+* The tutor name must match an existing tutor in TutorFlow.
+* The tutor identified must have the `tutor` category.
+
+Examples:
+* `getStudents n/Roy Balakrishnan` shows all students of tutor Roy Balakrishnan.
+
+• [Back to Command Summary](#command-summary)
+
+<div style="page-break-after: always;"></div>
+<div class="print-tight"></div>
+
 ### Data Storage
 * TutorFlow data is saved in the hard disk automatically after any command that changes the data. This data is stored in `[TutorFlow.jar location]/data/addressbook.json`
 * Advanced users are welcome to update data directly by editing the data file.
 
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+<div markdown="span" class="alert alert-danger">:exclamation: **Caution:**
 Manual changes to the file may corrupt TutorFlow's data. Always save a backup of the file before editing it.
 </div>
 
@@ -423,7 +445,7 @@ Manual changes to the file may corrupt TutorFlow's data. Always save a backup of
   </tr>
   <tr>
     <td><a href="#adding-a-person-add">Add</a></td>
-    <td><code>add c/*CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​</code><br>e.g., <code>add c/parent n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/J2 t/Trial lesson</code></td>
+    <td><code>add c/*CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​</code><br>e.g., <code>add c/parent n/James Ho p/32224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/J2 t/Trial lesson</code></td>
   </tr>
   <tr>
     <td><a href="#listing-all-persons--list">List</a></td>
@@ -443,15 +465,15 @@ Manual changes to the file may corrupt TutorFlow's data. Always save a backup of
   </tr>
   <tr>
     <td><a href="#linking-a-student-to-a-parent--linkparent">Link Parent</a></td>
-    <td><code>linkParent n/STUDENT_NAME n/PARENT_NAME</code><br>e.g., <code>linkParent n/Alice Pauline n/Fiona Kunz</code></td>
+    <td><code>linkParent n/*STUDENT_NAME n/*PARENT_NAME</code><br>e.g., <code>linkParent n/Alice Pauline n/Fiona Kunz</code></td>
   </tr>
   <tr>
     <td><a href="#finding-a-students-parent-getparent">Get Parent</a></td>
-    <td><code>getParent n/STUDENT_NAME</code><br>e.g., <code>getParent n/John Doe</code></td>
+    <td><code>getParent n/*STUDENT_NAME</code><br>e.g., <code>getParent n/John Doe</code></td>
   </tr>
   <tr>
     <td><a href="#finding-all-students-of-a-tutor-getstudents">Get Students</a></td>
-    <td><code>getStudents n/TUTOR_NAME</code><br>e.g., <code>getStudents n/Roy Balakrishnan</code></td>
+    <td><code>getStudents n/*TUTOR_NAME</code><br>e.g., <code>getStudents n/Roy Balakrishnan</code></td>
   </tr>
   <tr>
     <td><a href="#creating-a-class-createclass">Create Class</a></td>
@@ -459,11 +481,11 @@ Manual changes to the file may corrupt TutorFlow's data. Always save a backup of
   </tr>
   <tr>
     <td><a href="#linking-a-person-to-a-class-linkclass">Link Class</a></td>
-    <td><code>linkClass d/*DAY ti/*TIME n/NAME</code><br>e.g., <code>linkClass d/MONDAY ti/H16 n/Roy Balakrishnan</code></td>
+    <td><code>linkClass d/*DAY ti/*TIME n/*TUTOR_NAME or *STUDENT_NAME</code><br>e.g., <code>linkClass d/MONDAY ti/H16 n/Roy Balakrishnan</code></td>
   </tr>
   <tr>
     <td><a href="#removing-a-person-from-a-class-unlinkclass">Unlink Class</a></td>
-    <td><code>unlinkClass d/*DAY ti/*TIME n/NAME</code><br>e.g., <code>unlinkClass d/MONDAY ti/H16 n/Alice Pauline</code></td>
+    <td><code>unlinkClass d/*DAY ti/*TIME n/*TUTOR_NAME or *STUDENT_NAME</code><br>e.g., <code>unlinkClass d/MONDAY ti/H16 n/Alice Pauline</code></td>
   </tr>
   <tr>
     <td><a href="#viewing-class-details-getclassdetails">Get Class Details</a></td>
@@ -471,7 +493,7 @@ Manual changes to the file may corrupt TutorFlow's data. Always save a backup of
   </tr>
   <tr>
     <td><a href="#listing-classes-getclasses">Get Classes</a></td>
-    <td><code>getClasses [n/TUTOR_NAME]</code><br>e.g., <code>getClasses n/Roy Balakrishnan</code></td>
+    <td><code>getClasses [n/*TUTOR_NAME]</code><br>e.g., <code>getClasses n/Roy Balakrishnan</code></td>
   </tr>
   <tr>
     <td><a href="#clearing-all-entries--clear">Clear</a></td>

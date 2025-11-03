@@ -101,8 +101,7 @@ public class Person {
         }
 
         return otherPerson != null
-                && otherPerson.getName().toString().trim().replaceAll("\\s+", " ")
-                .equalsIgnoreCase(getName().toString().trim().replaceAll("\\s+", " "));
+                && otherPerson.getName().toString().equalsIgnoreCase(getName().toString());
     }
 
     /**

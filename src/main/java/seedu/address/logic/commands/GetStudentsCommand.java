@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 import java.util.List;
 import java.util.Set;
@@ -23,8 +24,8 @@ public class GetStudentsCommand extends Command {
     public static final String COMMAND_WORD = "getStudents";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all students taught by a tutor. \n"
-            + "Parameters: n/TUTOR_NAME\n"
-            + "Example: " + COMMAND_WORD + " n/Aaron Tan";
+            + "Parameters: " + PREFIX_NAME + "*TUTOR_NAME\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "Aaron Tan";
 
     public static final String MESSAGE_SUCCESS = "Listed %d student(s) taught by '%s'.\n\n"
             + "(To get back to the full list of contacts, run the 'list' command)";
@@ -59,7 +60,7 @@ public class GetStudentsCommand extends Command {
         // Tutor has no classes, hence no students
         if (tutorClasses.isEmpty()) {
             model.updateFilteredPersonList(p -> false);
-            return new CommandResult(String.format(MESSAGE_NO_STUDENT_LINKED, tutorName));
+            return new CommandResult(String.format(MESSAGE_NO_STUDENT_LINKED, tutor.getName()));
         }
 
         Set<PersonId> allStudentIds = tutorClasses.stream()
@@ -70,7 +71,7 @@ public class GetStudentsCommand extends Command {
         // Tutor's classes have no students
         if (allStudentIds.isEmpty()) {
             model.updateFilteredPersonList(p -> false);
-            return new CommandResult(String.format(MESSAGE_NO_STUDENT_LINKED, tutorName));
+            return new CommandResult(String.format(MESSAGE_NO_STUDENT_LINKED, tutor.getName()));
         }
 
         // Update UI to show filtered list of students

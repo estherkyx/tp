@@ -41,13 +41,13 @@ public class TypicalPersons {
             .withEmail("cornelia@example.com").withAddress("10th street").withTags("friends")
             .build();
     public static final Person ELLE = new PersonBuilder().withCategory("parent")
-        .withName("Elle Meyer").withPhone("9482224")
+        .withName("Elle Meyer").withPhone("94822240")
             .withEmail("werner@example.com").withAddress("michegan ave").build();
     public static final Person FIONA = new PersonBuilder().withCategory("tutor")
-        .withName("Fiona Kunz").withPhone("9482427")
+        .withName("Fiona Kunz").withPhone("94824270")
             .withEmail("lydia@example.com").withAddress("little tokyo").build();
     public static final Person GEORGE = new PersonBuilder().withCategory("tutor")
-        .withName("George Best").withPhone("9482442")
+        .withName("George Best").withPhone("94824420")
             .withEmail("anna@example.com").withAddress("4th street").build();
     public static final Person BENSON2 = new PersonBuilder().withCategory("student")
             .withName("Benson Two").withPhone("91234567")
@@ -58,10 +58,10 @@ public class TypicalPersons {
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withCategory("student")
-        .withName("Hoon Meier").withPhone("8482424")
+        .withName("Hoon Meier").withPhone("84824240")
             .withEmail("stefan@example.com").withAddress("little india").build();
     public static final Person IDA = new PersonBuilder().withCategory("student")
-        .withName("Ida Mueller").withPhone("8482131")
+        .withName("Ida Mueller").withPhone("84821310")
             .withEmail("hans@example.com").withAddress("chicago ave").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
