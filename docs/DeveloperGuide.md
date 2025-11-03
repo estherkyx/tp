@@ -361,45 +361,47 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  User requests to add a person with a specific category (student, parent, or tutor), name, phone number, address, and email.
 2.  TutorFlow shows the newly added contact at the top of the list with a success message.
 
-    Use case ends.
+&emsp;Use case ends.
 
 **Extensions**
 
-*   1a. The user enters an invalid command.
-    *   1a1. TutorFlow shows an error message: _"Unknown command"._
+&emsp;1a. The user enters an invalid command.<br>
+&emsp;&emsp;&emsp;1a1. TutorFlow shows an error message: _"Unknown command"._
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
-*   1b. The user enters a command with an invalid format.
-    *   1b1. TutorFlow shows an error message: _"Invalid command format!"_
+&emsp;1b. The user enters a command with an invalid format.<br>
+&emsp;&emsp;&emsp;1b1. TutorFlow shows an error message: _"Invalid command format!"_
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
 
-*   1c. The user enters an invalid category (not "student", "tutor", or "parent").
-    *   1c1. TutorFlow shows an error message: _"Invalid category"._
+&emsp;1c. The user enters an invalid category (not "student", "tutor", or "parent").<br>
+&emsp;&emsp;&emsp;1c1. TutorFlow shows an error message: _"Invalid category"._
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
-*   1d. The user provides an empty name.
-    *   1d1. TutorFlow shows an error message: _"Names should only contain alphanumeric characters and spaces, and it should not be blank"._
+&emsp;1d. The user provides an empty name.<br>
+&emsp;&emsp;&emsp;1d1. TutorFlow shows an error message: _"Names should only contain alphanumeric characters<br>
+&emsp;&emsp;&emsp;&emsp;&emsp;and spaces, and it should not be blank"._
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
-*   1e. The user provides an invalid phone number (e.g., not at least 3 digits/contains non-numbers).
-    *   1e1. TutorFlow shows an error message: _"Phone numbers should only contain numbers, and it should be at least 3 digits long"._
+&emsp;1e. The user provides an invalid phone number (e.g., not at least 3 digits/contains non-numbers).<br>
+&emsp;&emsp;&emsp;1e1. TutorFlow shows an error message: _"Phone numbers should be Singaporean numbers:<br>
+&emsp;&emsp;&emsp;&emsp;&emsp;exactly 8 digits starting with 3, 6, 8, or 9"._
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
-*   1f. The user provides an invalid email format.
-    *   1f1. TutorFlow shows an error message: _"Emails should be of the format local-part@domain"._
+&emsp;1f. The user provides an invalid email format.<br>
+&emsp;&emsp;&emsp;1f1. TutorFlow shows an error message: _"Emails should be of the format local-part@domain"._
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
-*   1g. The provided name and category already exists in the contact list. (Person already exists)
-    *   1g1. TutorFlow shows an error message: _"This person already exists in the address book"._
+&emsp;1g. The provided name and category already exists in the contact list (person already exists).<br>
+&emsp;&emsp;&emsp;1g1. TutorFlow shows an error message: _"This person already exists in the address book"._
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -413,23 +415,23 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 4.  TutorFlow deletes the person.
 5.  TutorFlow refreshes the contact list and shows a success message.
 
-    Use case ends.
+&emsp;Use case ends.
 
 **Extensions**
 
-*   2a. The list is empty.
+&emsp;2a. The list is empty.
 
-    Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
-*   3a. The given index is not a positive integer.
-    *   3a1. TutorFlow shows an error message: _"Invalid command format!"_
+&emsp;3a. The given index is not a positive integer.<br>
+&emsp;&emsp;&emsp;3a1. TutorFlow shows an error message: _"Invalid command format!"_
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
-*   3b. The given index is out of range (e.g., greater than the list size).
-    *   3b1. TutorFlow shows an error message: _"The person index provided is invalid"._
+&emsp;3b. The given index is out of range (e.g., greater than the list size).<br>
+&emsp;&emsp;&emsp;3b1. TutorFlow shows an error message: _"The person index provided is invalid"._
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -440,24 +442,26 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  User requests to create a new class with specific timing and details.
 2.  TutorFlow shows a success message confirming the class creation.
 
-    Use case ends.
+&emsp;Use case ends.
 
 **Extensions**
 
-*   1a. The user provides an invalid day format.
-    *   1a1. TutorFlow shows an error message: _"Day must be a valid day of the week (e.g., MONDAY, Tuesday)."_
+&emsp;1a. The user provides an invalid day format.<br>
+&emsp;&emsp;&emsp;1a1. TutorFlow shows an error message: _"Day must be a valid day of the week (e.g., MONDAY,<br>
+&emsp;&emsp;&emsp;&emsp;&emsp;Tuesday)."_
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
-*   1b. The user provides an invalid time format.
-    *   1b1. TutorFlow shows an error message: _"Time must be one of the following: H12, H14, H16, H18, H20"._
+&emsp;1b. The user provides an invalid time format.<br>
+&emsp;&emsp;&emsp;1b1. TutorFlow shows an error message: _"Time must be one of the following: H12, H14, H16,<br>
+&emsp;&emsp;&emsp;&emsp;&emsp;H18, H20."
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
-*   1c. The user provides a day and timing that conflicts with an existing class.
-    *   1c1. TutorFlow shows an error message: _"This class time slot already exists"._
+&emsp;1c. The user provides a day and timing that conflicts with an existing class.<br>
+&emsp;&emsp;&emsp;1c1. TutorFlow shows an error message: _"This class time slot already exists"._
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -468,14 +472,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  User requests to view all classes.
 2.  TutorFlow displays the full numbered list of all classes with their days and timings.
 
-    Use case ends.
+&emsp;Use case ends.
 
 **Extensions**
 
-*   2a. There are no classes to display.
-    *   2a1. TutorFlow shows an empty list and displays the message: _"There are no tuition classes in the system."_
+&emsp;2a. There are no classes to display.<br>
+&emsp;&emsp;&emsp;2a1. TutorFlow shows an empty list and displays the message: _"There are no tuition classes<br>
+&emsp;&emsp;&emsp;&emsp;&emsp;in the system."_
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -486,14 +491,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  User requests to view classes for a specific tutor.
 2.  TutorFlow displays a filtered list of classes taught by that tutor.
 
-    Use case ends.
+&emsp;Use case ends.
 
 **Extensions**
 
-*   1a. The name given is not a tutor.
-    * 1a1. TutorFlow shows an error message: _"Tutor with name '[tutor_name]' not found."_
+&emsp;1a. The name given is not a tutor.<br>
+&emsp;&emsp;&emsp;1a1. TutorFlow shows an error message: _"Tutor with name '[TUTOR_NAME]' not found."_
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -507,29 +512,30 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2.  TutorFlow links the parent to the student.
 3.  TutorFlow shows a success message confirming the link.
 
-    Use case ends.
+&emsp;Use case ends.
 
 **Extensions**
 
-*   1a. Either the student or parent name is not found.
-    *   1a1. TutorFlow shows an error message: _"The person with name [student_name/parent_name] could not be found."_
+&emsp;1a. Either the student or parent name is not found.<br>
+&emsp;&emsp;&emsp;1a1. TutorFlow shows an error message: _"The person with name [STUDENT_NAME/<br>
+&emsp;&emsp;&emsp;&emsp;&emsp;PARENT_NAME] could not be found."_
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
-*   1b. The specified parent is not categorized as `parent`.
-    *   1b1. TutorFlow shows an error message: _"The person [person_name] is not a Parent."_
+&emsp;1b. The specified parent is not categorised as `parent`.<br>
+&emsp;&emsp;&emsp;1b1. TutorFlow shows an error message: _"The person [PERSON_NAME] is not a Parent."_
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
-*   1c. The specified student is not categorized as `student`.
-    *   1c1. TutorFlow shows an error message: _"The person [person_name] is not a Student."_
+&emsp;1c. The specified student is not categorised as `student`.<br>
+&emsp;&emsp;&emsp;1c1. TutorFlow shows an error message: _"The person [PERSON_NAME] is not a Student."_
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
-*   1d. The parent is already linked to the student.
-    *   1d1. TutorFlow shows an error message: _"Parent already linked to this student."_
+&emsp;1d. The parent is already linked to the student.<br>
+&emsp;&emsp;&emsp;1d1. TutorFlow shows an error message: _"Parent already linked to this student."_
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -544,24 +550,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 3.  TutorFlow links the student to the class.
 4.  TutorFlow shows a success message confirming the link.
 
-    Use case ends.
+&emsp;Use case ends.
 
 **Extensions**
 
-*   1a. The student name is not found.
-    *   1a1. TutorFlow shows an error message: _"The person with the name '[person_name]' could not be found."_
+&emsp;1a. The student name is not found.<br>
+&emsp;&emsp;&emsp;1a1. TutorFlow shows an error message: _"The person with the name '[PERSON_NAME]'<br>
+&emsp;&emsp;&emsp;&emsp;&emsp;could not be found."_
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
-*   1b. The class identifier is invalid.
-    *   1b1. TutorFlow shows an error message: _"The class at the specified timeslot does not exist."_
+&emsp;1b. The class identifier is invalid.<br>
+&emsp;&emsp;&emsp;1b1. TutorFlow shows an error message: _"The class at the specified timeslot does not exist."_
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
-*   1c. The student is already linked to a class.
-    *   1c1. TutorFlow shows an error message: _"The student is already linked to a class."_
+&emsp;1c. The student is already linked to a class.<br>
+&emsp;&emsp;&emsp;1c1. TutorFlow shows an error message: _"The student is already linked to a class."_
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -576,24 +583,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 3.  TutorFlow removes the link.
 4.  TutorFlow shows a success message confirming the unlink.
 
-    Use case ends.
+&emsp;Use case ends.
 
 **Extensions**
 
-*   1a. The student name is not found.
-    *   1a1. TutorFlow shows an error message: _"The person with the name '[person_name]' could not be found."_
+&emsp;1a. The student name is not found.<br>
+&emsp;&emsp;&emsp;1a1. TutorFlow shows an error message: _"The person with the name '[PERSON_NAME]'<br>
+&emsp;&emsp;&emsp;&emsp;&emsp;could not be found."_
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
-*   1b. The class identifier is invalid.
-    *   1b1. TutorFlow shows an error message: _"The class at the specified timeslot does not exist."_
+&emsp;1b. The class identifier is invalid.<br>
+&emsp;&emsp;&emsp;1b1. TutorFlow shows an error message: _"The class at the specified timeslot does not exist."_
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
-*   1c. The student is not linked to the class.
-    *   1c1. TutorFlow shows an error message: _"The student is not linked to this class"._
+&emsp;1c. The student is not linked to the class.<br>
+&emsp;&emsp;&emsp;1c1. TutorFlow shows an error message: _"The student is not linked to this class"._
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -607,19 +615,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2.  TutorFlow retrieves the class information (day, time, assigned tutor, enrolled students).
 3.  TutorFlow displays the class details.
 
-    Use case ends.
+&emsp;Use case ends.
 
 **Extensions**
 
-*   1a. The class day or time is invalid.
-    *   1a1. TutorFlow shows an error message: _"There is no class at the specified day and time"._
+&emsp;1a. The class day or time is invalid.<br>
+&emsp;&emsp;&emsp;1a1. TutorFlow shows an error message: _"There is no class at the specified day and time"._
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
-*   2a. The class has no enrolled students or no assigned tutor.
-    *   2a1. TutorFlow displays placeholders indicating missing information (e.g., _"Tutor: None"_).
+&emsp;2a. The class has no enrolled students or no assigned tutor.<br>
+&emsp;&emsp;&emsp;2a1. TutorFlow displays placeholders indicating missing information (e.g., _"Tutor: None"_).
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -628,21 +636,23 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1.  User requests to view all students.
-2.  TutorFlow displays a filtered list containing only contacts categorized as `student`.
+2.  TutorFlow displays a filtered list containing only contacts categorised as `student`.
 
-    Use case ends.
+&emsp;Use case ends.
 
 **Extensions**
 
-*   2a. There are no students to display.
-    *   2a1. TutorFlow shows an empty list and displays the message: _"There    are no students in the system."_
+&emsp;2a. There are no students to display.<br>
+&emsp;&emsp;&emsp;2a1. TutorFlow shows an empty list and displays the message: _"There are no students<br>
+&emsp;&emsp;&emsp;&emsp;&emsp;in the system."_
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
-*   2a. The tutor has no linked classes.
-    *   2a1. TutorFlow shows an empty list and displays the message: _"No classes found for tutor [tutor_name]."_
+&emsp;2a. The tutor has no linked classes.<br>
+&emsp;&emsp;&emsp;2a1. TutorFlow shows an empty list and displays the message: _"No classes found for<br>
+&emsp;&emsp;&emsp;&emsp;&emsp;tutor [TUTOR_NAME]."_
 
-        Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -657,53 +667,56 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
  3.  User requests to edit a specific person in the list by their index, providing one or more updated fields (e.g., name, phone, email, address, category, tags).
  5.  TutorFlow updates the person, refreshes the contact list, and shows a success message.
 
-     Use case ends.
+&emsp;Use case ends.
 
  **Extensions**
 
- *   2a. The list is empty.
+&emsp;2a. The list is empty.
 
-     Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
- *   3a. The given index is not a positive integer.
-     *   3a1. TutorFlow shows an error message: _"Invalid command format!"_
+&emsp;3a. The given index is not an integer.<br>
+&emsp;&emsp;&emsp;3a1. TutorFlow shows an error message: _"Invalid command format!"_
 
-         Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
- *   3b. The given index is out of range (e.g., greater than the list size).
-     *   3b1. TutorFlow shows an error message: _"The person index provided is invalid."_
+&emsp;3b. The given index is out of range (e.g., greater than the list size).<br>
+&emsp;&emsp;&emsp;3b1. TutorFlow shows an error message: _"The person index provided is invalid. Please<br>
+&emsp;&emsp;&emsp;&emsp;&emsp;provide a valid index in the displayed list."_
 
-         Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
- *   3c. No fields are provided to edit.
-     *   3c1. TutorFlow shows an error message: _"At least one field to edit must be provided."_
+&emsp;3c. No fields are provided to edit.<br>
+&emsp;&emsp;&emsp;3c1. TutorFlow shows an error message: _"At least one field to edit must be provided."_
 
-         Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
- *   3d. The user provides an invalid name.
-     *   3d1. TutorFlow shows an error message: _"Names should only contain alphanumeric characters and spaces, and it should not be blank"._
+&emsp;3d. The user provides an invalid name.<br>
+&emsp;&emsp;&emsp;3d1. TutorFlow shows an error message: _"Names should only contain alphanumeric characters<br>
+&emsp;&emsp;&emsp;&emsp;&emsp;and spaces, and it should not be blank"._
 
-         Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
- *   3e. The user provides an invalid phone number (e.g., not at least 3 digits/contains non-numbers).
-     *   3e1. TutorFlow shows an error message: _"Phone numbers should only contain numbers, and it should be at least 3 digits long"._
+&emsp;3e. The user provides an invalid phone number (e.g., not at least 3 digits/contains non-numbers).<br>
+&emsp;&emsp;&emsp;3e1. TutorFlow shows an error message: _"Phone numbers should be Singaporean numbers:<br>
+&emsp;&emsp;&emsp;&emsp;&emsp;exactly 8 digits starting with 3, 6, 8, or 9"._
 
-         Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
- *   3f. The user provides an invalid email format.
-     *   3f1. TutorFlow shows an error message: _"Emails should be of the format local-part@domain"._
+&emsp;3f. The user provides an invalid email format.<br>
+&emsp;&emsp;&emsp;3f1. TutorFlow shows an error message: _"Emails should be of the format local-part@domain"._
 
-         Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
- *   3g. The user provides an invalid category.
-     *   3g1. TutorFlow shows an error message: _"Invalid category"._
+&emsp;3g. The user provides an invalid category.<br>
+&emsp;&emsp;&emsp;3g1. TutorFlow shows an error message: _"Invalid category"._
 
-         Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
- *   3h. The edited details would duplicate an existing person (same identifying fields).
-     *   3h1. TutorFlow shows an error message: _"This person already exists in the address book"._
+&emsp;3h. The edited details would duplicate an existing person (same identifying fields).<br>
+&emsp;&emsp;&emsp;3h1. TutorFlow shows an error message: _"This person already exists in the address book"._
 
-         Use case ends.
+&emsp;&emsp;&emsp;Use case ends.
 
 ---
 
