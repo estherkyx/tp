@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CATEGORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
@@ -33,15 +32,13 @@ public class UnlinkClassCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unlinks a student or tutor from a tuition class. \n"
             + "Parameters: "
-            + PREFIX_DAY + "DAY "
-            + PREFIX_TIME + "TIME "
-            + PREFIX_NAME + "NAME ["
-            + PREFIX_CATEGORY + "CATEGORY]\n"
+            + PREFIX_DAY + "*DAY "
+            + PREFIX_TIME + "*TIME "
+            + PREFIX_NAME + "*TUTOR_NAME or *STUDENT_NAME\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_DAY + "Monday "
             + PREFIX_TIME + "H14 "
-            + PREFIX_NAME + "John Doe "
-            + PREFIX_CATEGORY + "student";
+            + PREFIX_NAME + "John Doe";
 
     public static final String MESSAGE_CLASS_NOT_FOUND = "The class at the specified timeslot does not exist.";
     public static final String MESSAGE_PERSON_NOT_STUDENT_OR_TUTOR = "The person provided is not a student or a tutor.";

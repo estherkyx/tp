@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CATEGORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
@@ -33,15 +32,13 @@ public class LinkClassCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Links a student or tutor to a tuition class. \n"
             + "Parameters: "
-            + PREFIX_DAY + "DAY "
-            + PREFIX_TIME + "TIME "
-            + PREFIX_NAME + "NAME ["
-            + PREFIX_CATEGORY + "CATEGORY]\n"
+            + PREFIX_DAY + "*DAY "
+            + PREFIX_TIME + "*TIME "
+            + PREFIX_NAME + "*TUTOR_NAME or *STUDENT_NAME\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_DAY + "Monday "
             + PREFIX_TIME + "H14 "
-            + PREFIX_NAME + "John Doe "
-            + PREFIX_CATEGORY + "student";
+            + PREFIX_NAME + "John Doe ";
 
     public static final String MESSAGE_LINK_STUDENT_SUCCESS = "Linked Student %1$s to Class on %2$s, %3$s";
     public static final String MESSAGE_ASSIGN_TUTOR_SUCCESS = "Assigned Tutor %1$s to Class on %2$s, %3$s";
