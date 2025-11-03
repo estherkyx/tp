@@ -370,10 +370,13 @@ Format: `linkParent n/*STUDENT_NAME n/*PARENT_NAME`
 * Links the student identified by  `STUDENT_NAME` to the parent identified by `PARENT_NAME`.
 * The names must match an existing student or parent in TutorFlow.
 * The person identified as the student must have the `student` category, and the person identified as the parent must have the `parent` category.
-* **Only one parent can be linked to a student at a time.** If a student already has a linked parent, linking a new parent will automatically replace the previous parent link.
 
 Example:
 * `linkParent n/Alice Pauline n/Daniel Meier` Links the student 'Alice Pauline' to the parent 'Daniel Meier', assuming both exist in the address book with the correct categories.
+
+<div markdown="span" class="alert alert-danger">:exclamation: **Caution:**
+**Only one parent can be linked to a student at a time.** If a student already has a linked parent, linking a new parent will automatically replace the previous parent link.
+</div>
 
 • [Back to Command Summary](#command-summary)
 
