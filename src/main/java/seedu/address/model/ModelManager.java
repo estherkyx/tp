@@ -166,7 +166,8 @@ public class ModelManager implements Model {
     public List<Person> findPersonByName(Name name) {
         requireNonNull(name);
         return addressBook.getPersonList().stream()
-                .filter(person -> person.getName().equals(name))
+                .filter(person -> person.getName().toString().trim().replaceAll("\\s+", " ")
+                        .equalsIgnoreCase(name.toString().trim().replaceAll("\\s+", " ")))
                 .toList();
     }
 

@@ -59,7 +59,7 @@ public class GetStudentsCommand extends Command {
         // Tutor has no classes, hence no students
         if (tutorClasses.isEmpty()) {
             model.updateFilteredPersonList(p -> false);
-            return new CommandResult(String.format(MESSAGE_NO_STUDENT_LINKED, tutorName));
+            return new CommandResult(String.format(MESSAGE_NO_STUDENT_LINKED, tutor.getName()));
         }
 
         Set<PersonId> allStudentIds = tutorClasses.stream()
@@ -70,7 +70,7 @@ public class GetStudentsCommand extends Command {
         // Tutor's classes have no students
         if (allStudentIds.isEmpty()) {
             model.updateFilteredPersonList(p -> false);
-            return new CommandResult(String.format(MESSAGE_NO_STUDENT_LINKED, tutorName));
+            return new CommandResult(String.format(MESSAGE_NO_STUDENT_LINKED, tutor.getName()));
         }
 
         // Update UI to show filtered list of students
