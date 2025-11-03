@@ -60,7 +60,8 @@ public class LinkClassCommandTest {
                 new UserPrefs());
         LinkClassCommand command = new LinkClassCommand(classToLink.getDay(), classToLink.getTime(),
                 linkedStudent.getName());
-        assertCommandFailure(command, model, LinkClassCommand.MESSAGE_STUDENT_ALREADY_LINKED);
+        assertCommandFailure(command, model,
+                String.format(LinkClassCommand.MESSAGE_STUDENT_ALREADY_LINKED, classToLink.toSimpleString()));
     }
 
     @Test
