@@ -826,7 +826,7 @@ testers are expected to do more *exploratory* testing.
 
 1. **Adding a duplicate person**
 
-   1. Test case: `add c/student n/John Doe p/91234567 e/johndoe@example.com a/Computing 1, 13 Computing Drive, 117417`<br>followed by `add c/parent n/john doe p/12345678 e/johnny@example.com a/University Town 138607`<br>
+   1. Test case: `add c/student n/John Doe p/91234567 e/johndoe@example.com a/Computing 1, 13 Computing Drive, 117417`<br>followed by `add c/parent n/john doe p/96462222 e/johnny@example.com a/University Town 138607`<br>
       Expected: The second person is not added. An error is printed in the command result indicating that the second person is a duplicate.
 
 <div style="page-break-after: always;"></div>
@@ -908,7 +908,7 @@ testers are expected to do more *exploratory* testing.
       Expected: List is filtered and becomes empty. Command result indicates that the student has no parent.
 
    1. Test case: `getParent n/David Li`<br>
-      Expected: Command result indicates that the provided person is not a student. Display reverts to full list.
+      Expected: Command result indicates that a student with the provided name is not found. Display reverts to full list.
 
    1. Test case: `getParent n/Ben Teo`<br>
       Expected: Same as above.
@@ -1017,8 +1017,10 @@ testers are expected to do more *exploratory* testing.
 
       1. run `linkClass d/monday ti/h14 n/Eric Hanson`
 
+      1. run `linkClass d/thursday ti/h18 n/Eric Hanson`
+
    1. Test case: `getClasses n/Eric Hanson`<br>
-      Expected: The Monday, 1400 class is displayed in the list.
+      Expected: The Monday 1400 and Thursday 1800 classes are displayed in the list.
 
    1. Test case: `getClasses n/Roy Balakrishnan`<br>
       Expected: The list does not update. An error is printed in the command result regarding there being no classes for the tutor.
